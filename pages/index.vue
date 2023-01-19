@@ -43,3 +43,18 @@ export default {
   </div>
 </template>
 
+<style scoped lang="scss">
+$primary-color: rgb(42, 89, 98);
+$hovered-color: rgb(76, 94, 193);
+.lang {
+  color: $primary-color;
+  text-decoration: none;
+  font-size: 1.5rem;
+
+  &:hover {
+    text-decoration: underline;
+    color: $hovered-color;
+    cursor: pointer;
+  }
+}
+</style>
