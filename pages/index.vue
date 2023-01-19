@@ -1,6 +1,8 @@
 <template>
   <div>
-    <h1>Index Page</h1>
+    <nuxt-link :to="switchLocalePath('en')">English</nuxt-link>
+    <nuxt-link :to="switchLocalePath('fr')">Français</nuxt-link>
+    <h1>{{ $t('welcome') }} to Index Page</h1>
     <p>
       This is the index page. You can edit this page in <code>pages/index.vue</code>
     </p>
