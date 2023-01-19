@@ -1,7 +1,15 @@
 export const state = () => ({
   list: [
     {
-      name: 'Learn Nuxt',
+      name: 'vuex',
+      done: false,
+    },
+    {
+      name: 'vuex2',
+      done: false,
+    },
+    {
+      name: 'vuex3',
       done: false,
     },
   ],
