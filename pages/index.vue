@@ -1,60 +1,13 @@
+<template>
+  <TodoApp />
+</template>
 <script>
-import { mapMutations } from 'vuex'
+import TodoApp from '../components/todo/Index.vue'
 
 export default {
-  name: 'LandingPage',
-  data() {
-    return {
-      
-    }
+  name: 'Todo',
+  components: {
+    TodoApp,
   },
-  computed: {
-    todos() {
-      return this.$store?.state?.todos?.list || []
-    }
-  },
-  methods: {
-    addTodo (e) {
-      this.$store.commit('todos/add', e.target.value)
-      e.target.value = ''
-    },
-    ...mapMutations({
-      toggle: 'todos/toggle'
-    })
-  }
-
 }
 </script>
-<template>
-  <div>
-    <NuxtLink :to="switchLocalePath('en')" class="lang">English</NuxtLink>
-    <NuxtLink :to="switchLocalePath('fr')" class="lang">Français</NuxtLink>
-    <h1>{{ $t('welcome') }} to Index Page</h1>
-    <p>
-      This is the index page. You can edit this page in <code>pages/index.vue</code>
-    </p>
-    <p>
-      <ul>
-        <li v-for="todo in todos" :key="todo.name">
-          {{ todo.name }}
-        </li>
-      </ul>
-    </p>
-  </div>
-</template>
-
-<style scoped lang="scss">
-$primary-color: rgb(42, 89, 98);
-$hovered-color: rgb(76, 94, 193);
-.lang {
-  color: $primary-color;
-  text-decoration: none;
-  font-size: 1.5rem;
-
-  &:hover {
-    text-decoration: underline;
-    color: $hovered-color;
-    cursor: pointer;
-  }
-}
-</style>
