@@ -9,7 +9,7 @@
       <div>
         <button class="todo-action">Complete</button>
         <button class="todo-action">Edit</button>
-        <button class="todo-action">Delete</button>
+        <button class="todo-action" @click.prevent="deleteTodo">Delete</button>
       </div>
     </div>
   </div>
@@ -24,6 +24,11 @@ export default {
   },
   data() {
     return {}
+  },
+  methods: {
+    deleteTodo() {
+      this.$store.dispatch('todos/delete', this.todo.id)
+    },
   },
 }
 </script>

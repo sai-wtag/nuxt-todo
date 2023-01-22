@@ -37,8 +37,8 @@ export const mutations = {
   setCreate(state) {
     state.isCreating = !state.isCreating
   },
-  remove(state, { todo }) {
-    state.list.splice(state.list.indexOf(todo), 1)
+  remove(state, id) {
+    state.list = state.list.filter((todo) => todo.id !== id)
   },
   toggle(state, todo) {
     todo.done = !todo.done
@@ -48,5 +48,8 @@ export const mutations = {
 export const actions = {
   add({ commit }, todo) {
     commit('add', todo)
+  },
+  delete({ commit }, todoId) {
+    commit('remove', todoId)
   },
 }

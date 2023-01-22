@@ -15,9 +15,14 @@
       />
 
       <!-- List of todos -->
-      <div v-for="todo in todos" :key="todo.id" class="card-item">
-        <TodoItem :todo="todo" />
-      </div>
+      <template v-if="todos.length">
+        <div v-for="todo in todos" :key="todo.id" class="card-item">
+          <TodoItem :todo="todo" />
+        </div>
+      </template>
+      <template v-else>
+        <div>No todos found</div>
+      </template>
     </div>
   </div>
 </template>
