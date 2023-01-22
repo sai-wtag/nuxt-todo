@@ -4,18 +4,18 @@
       <h1>Todos</h1>
       <SearchBar />
     </header>
-    <AddTodo />
+    <TodoContainer />
   </div>
 </template>
 <script>
 import SearchBar from './SearchBar.vue'
-import AddTodo from './AddTodo.vue'
+import TodoContainer from './TodoContainer.vue'
 
 export default {
   name: 'TodoIndex',
   components: {
     SearchBar,
-    AddTodo,
+    TodoContainer,
   },
   data() {
     return {}

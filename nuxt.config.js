@@ -34,6 +34,7 @@ export default {
     // https://go.nuxtjs.dev/axios
     '@nuxtjs/axios',
     '@nuxtjs/i18n',
+    '@nuxtjs/moment',
   ],
   i18n: {
     locales: ['en', 'fr', 'es'],

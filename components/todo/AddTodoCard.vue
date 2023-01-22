@@ -1,31 +1,55 @@
 <template>
-  <div>
-    <div class="add-todo-card">
+  <div class="add-todo-card">
+    <form @submit.prevent="addTodo">
       <div class="add-todo-card__body">
-        <!-- <input
+        <!-- <textarea
+            v-model="form.title"
+            class="add-todo-card__input"
+            placeholder="Add Task"
+          /> -->
+        <input
+          v-model="form.title"
           type="text"
           class="add-todo-card__input"
-          placeholder="Add todo"
-        /> -->
-        <textarea class="add-todo-card__input" placeholder="Add Task" />
+          placeholder="Add Task"
+        />
       </div>
       <div class="add-todo-card__footer">
-        <button class="add-todo-card__footer__btn">Add Task</button>
+        <button type="submit" class="add-todo-card__footer__btn">
+          Add Task
+        </button>
         <button>Delete</button>
       </div>
-    </div>
+    </form>
   </div>
 </template>
+<script>
+export default {
+  name: 'AddTodoCard',
+  data() {
+    return {
+      form: {
+        title: '',
+      },
+    }
+  },
+  methods: {
+    addTodo() {
+      this.$emit('addTodo', this.form)
+      this.form.title = ''
+    },
+  },
+}
+</script>
+
 <style scoped lang="scss">
 $card-padding: 10px;
-.add-todo-card {
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  padding: $card-padding;
-  gap: 10px;
+
+form {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  height: 100%;
+  gap: 5px;
 }
 .add-todo-card__footer {
   display: flex;
@@ -39,6 +63,6 @@ $card-padding: 10px;
   font-family: inherit;
   font-size: 1rem;
   width: calc(100% - $card-padding);
-  height: 100px;
+  height: 70px;
 }
 </style>
