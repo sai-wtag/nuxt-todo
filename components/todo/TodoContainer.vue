@@ -2,7 +2,7 @@
   <div class="todo-container">
     <h2>Add Task</h2>
     <div class="todo__header">
-      <button @click.prevent="$store.commit('todos/setCreate')">Create</button>
+      <button @click.prevent="setIsCreating">Create</button>
       <FilterOptions />
     </div>
 
@@ -42,6 +42,9 @@ export default {
   methods: {
     onAddTodo(todo) {
       this.$store.dispatch('todos/add', todo)
+    },
+    setIsCreating() {
+      this.$store.dispatch('todos/setIsCreating')
     },
   },
 }

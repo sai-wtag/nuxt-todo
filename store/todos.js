@@ -31,11 +31,9 @@ export const mutations = {
     }
 
     state.list = [newTodo, ...state.list]
-
-    state.isCreating = false
   },
-  setCreate(state) {
-    state.isCreating = !state.isCreating
+  setIsCreating(state, creatingStatus = true) {
+    state.isCreating = creatingStatus
   },
   remove(state, { todo }) {
     state.list.splice(state.list.indexOf(todo), 1)
@@ -48,8 +46,12 @@ export const mutations = {
 export const actions = {
   add({ commit }, todo) {
     commit('add', todo)
+    commit('setIsCreating', false)
   },
   deleteCurrentTask({ commit }) {
-    commit('setCreate')
+    commit('setIsCreating', false)
+  },
+  setIsCreating({ commit }, creatingStatus = true) {
+    commit('setIsCreating', creatingStatus)
   },
 }
