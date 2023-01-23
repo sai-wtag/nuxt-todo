@@ -7,7 +7,6 @@
     </div>
 
     <div class="card-container">
-      <!-- Add todo card -->
       <AddTodoCard
         v-if="isTodoCreating"
         class="card-item"

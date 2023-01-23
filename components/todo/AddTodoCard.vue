@@ -2,11 +2,6 @@
   <div class="add-todo-card">
     <form @submit.prevent="addTodo">
       <div class="add-todo-card__body">
-        <!-- <textarea
-            v-model="form.title"
-            class="add-todo-card__input"
-            placeholder="Add Task"
-          /> -->
         <input
           v-model="form.title"
           type="text"
