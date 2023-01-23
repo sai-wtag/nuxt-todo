@@ -4,7 +4,7 @@
     <div>
       <div class="created-at">
         Created at:
-        {{ $moment(todo.createdAt).format('MMMM Do YYYY') }}
+        {{ todo.createdAt }}
       </div>
       <div>
         <button class="todo-action">Complete</button>
