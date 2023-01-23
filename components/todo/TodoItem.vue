@@ -4,7 +4,7 @@
     <div>
       <div class="created-at">
         Created at:
-        {{ todo.createdAt }}
+        {{ format(todo.createdAt, 'yyyy-MMM-dd') }}
       </div>
       <div>
         <button class="todo-action">Complete</button>
@@ -15,12 +15,19 @@
   </div>
 </template>
 <script>
+import { format } from 'date-fns'
+
 export default {
   props: {
     todo: {
       type: Object,
       required: true,
     },
+  },
+  setup() {
+    return {
+      format,
+    }
   },
   data() {
     return {}
