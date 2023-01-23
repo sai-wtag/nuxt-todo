@@ -8,8 +8,8 @@
   </div>
 </template>
 <script>
-import SearchBar from './SearchBar.vue'
-import TodoContainer from './TodoContainer.vue'
+import SearchBar from '@/components/todo/SearchBar.vue'
+import TodoContainer from '@/components/todo/TodoContainer.vue'
 
 export default {
   name: 'TodoIndex',

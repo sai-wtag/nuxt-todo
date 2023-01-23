@@ -22,9 +22,9 @@
 </template>
 <script>
 import { mapGetters } from 'vuex'
-import FilterOptions from './FilterOptions.vue'
-import AddTodoCard from './AddTodoCard.vue'
-import TodoItem from './TodoItem.vue'
+import FilterOptions from '@/components/todo/FilterOptions.vue'
+import AddTodoCard from '@/components/todo/AddTodoCard.vue'
+import TodoItem from '@/components/todo/TodoItem.vue'
 
 export default {
   name: 'TodoContainer',
