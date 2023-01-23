@@ -1,20 +1,17 @@
 <template>
   <div class="container">
-    <header class="header">
-      <h1>Todos</h1>
-      <SearchBar />
-    </header>
+    <TodoHeader />
     <TodoContainer />
   </div>
 </template>
 <script>
-import SearchBar from '@/components/todo/SearchBar.vue'
+import TodoHeader from '@/components/todo/Header.vue'
 import TodoContainer from '@/components/todo/TodoContainer.vue'
 
 export default {
   name: 'TodoIndex',
   components: {
-    SearchBar,
+    TodoHeader,
     TodoContainer,
   },
   data() {

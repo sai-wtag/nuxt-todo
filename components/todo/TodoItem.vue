@@ -3,13 +3,13 @@
     <div class="todo-title">{{ todo.title }}</div>
     <div>
       <div class="created-at">
-        Created at:
+        {{ $t('created-at') }}:
         {{ format(todo.createdAt, 'yyyy-MMM-dd') }}
       </div>
       <div>
-        <button class="todo-action">Complete</button>
-        <button class="todo-action">Edit</button>
-        <button class="todo-action">Delete</button>
+        <button class="todo-action">{{ $t('complete') }}</button>
+        <button class="todo-action">{{ $t('edit') }}</button>
+        <button class="todo-action">{{ $t('delete') }}</button>
       </div>
     </div>
   </div>

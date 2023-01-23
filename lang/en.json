@@ -1,0 +1,20 @@
+{
+    "welcome": "Welcome",
+    "add-task": "Add Task",
+    "create": "Create",
+    "cancel": "Cancel",
+    "save": "Save",
+    "add": "Add",
+    "todos": "Todos",
+    "edit": "Edit",
+    "delete": "Delete",
+    "all": "All",
+    "complete": "Complete",
+    "incomplete": "Incomplete",
+    "language": "Language",
+    "select-language": "Select Language",
+    "search": "Search",
+    "min": "Min",
+    "max": "Max",
+    "created-at": "Created At"
+}

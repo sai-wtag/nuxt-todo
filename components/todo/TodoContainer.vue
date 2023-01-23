@@ -1,8 +1,8 @@
 <template>
   <div class="todo-container">
-    <h2>Add Task</h2>
+    <h2>{{ $t('add-task') }}</h2>
     <div class="todo__header">
-      <button @click.prevent="setIsCreating">Create</button>
+      <button @click.prevent="setIsCreating">{{ $t('create') }}</button>
       <FilterOptions />
     </div>
 

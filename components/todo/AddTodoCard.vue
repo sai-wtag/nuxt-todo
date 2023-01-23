@@ -6,15 +6,17 @@
           v-model="form.title"
           type="text"
           class="add-todo-card__input"
-          :placeholder="`Add Task (Min ${validationRules.title.minLength}, Max ${validationRules.title.maxLength} characters)`"
+          :placeholder="`${$t('add-task')} (${$t('min')} ${
+            validationRules.title.minLength
+          }, ${$t('max')} ${validationRules.title.maxLength} characters)`"
         />
       </div>
 
       <div class="add-todo-card__footer">
         <button type="submit" class="add-todo-card__footer__btn">
-          Add Task
+          {{ $t('add') }}
         </button>
-        <button @click.prevent="deleteCurrentTask">Delete</button>
+        <button @click.prevent="deleteCurrentTask">{{ $t('delete') }}</button>
         <span v-if="errorMessage" class="error-message">{{
           errorMessage
         }}</span>
