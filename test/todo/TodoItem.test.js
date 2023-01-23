@@ -8,7 +8,7 @@ describe('TodoItem.vue', () => {
         id: 1,
         title: 'Test Todo',
         completed: false,
-        createdAt: '2020-20-20',
+        createdAt: new Date(),
         completedAt: null,
       },
     },
