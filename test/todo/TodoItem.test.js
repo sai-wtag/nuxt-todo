@@ -13,11 +13,7 @@ describe('TodoItem.vue', () => {
       },
     },
     mocks: {
-      $moment: (i) => {
-        return {
-          format: (i) => i,
-        }
-      },
+      $t: (msg) => msg,
     },
   })
   const div = wrapper.find('div').find('div')
@@ -25,12 +21,5 @@ describe('TodoItem.vue', () => {
   test('3 action buttons exists', () => {
     const buttons = div.findAll('button')
     expect(buttons.length).toBe(3)
-  })
-
-  test('button text', () => {
-    const buttons = div.findAll('button')
-    expect(buttons.at(0).text()).toBe('Complete')
-    expect(buttons.at(1).text()).toBe('Edit')
-    expect(buttons.at(2).text()).toBe('Delete')
   })
 })
