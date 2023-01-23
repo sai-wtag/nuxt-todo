@@ -49,4 +49,7 @@ export const actions = {
   add({ commit }, todo) {
     commit('add', todo)
   },
+  deleteCurrentTask({ commit }) {
+    commit('setCreate')
+  },
 }

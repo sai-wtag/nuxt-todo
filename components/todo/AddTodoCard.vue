@@ -14,7 +14,7 @@
         <button type="submit" class="add-todo-card__footer__btn">
           Add Task
         </button>
-        <button>Delete</button>
+        <button @click.prevent="deleteCurrentTask">Delete</button>
         <span v-if="errorMessage" class="error-message">{{
           errorMessage
         }}</span>
@@ -51,6 +51,10 @@ export default {
       this.form.title = ''
     },
 
+    deleteCurrentTask() {
+      this.$store.dispatch('todos/deleteCurrentTask')
+    },
+
     checkValidation() {
       const title = this.form.title.trim()
       const minTitleLength = this.validationRules.title.minLength
@@ -85,7 +89,7 @@ form {
 .add-todo-card__footer {
   display: flex;
   align-items: center;
-  gap: 10px 10px;
+  gap: $card-padding $card-padding;
 }
 
 .add-todo-card__input {
