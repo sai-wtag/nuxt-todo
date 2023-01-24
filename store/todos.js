@@ -31,11 +31,9 @@ export const mutations = {
     }
 
     state.list = [newTodo, ...state.list]
-
-    state.isCreating = false
   },
-  setCreate(state) {
-    state.isCreating = !state.isCreating
+  setIsCreating(state, creatingStatus = true) {
+    state.isCreating = creatingStatus
   },
   remove(state, id) {
     state.list = state.list.filter((todo) => todo.id !== id)
@@ -48,6 +46,13 @@ export const mutations = {
 export const actions = {
   add({ commit }, todo) {
     commit('add', todo)
+    commit('setIsCreating', false)
+  },
+  deleteCurrentTask({ commit }) {
+    commit('setIsCreating', false)
+  },
+  setIsCreating({ commit }, creatingStatus = true) {
+    commit('setIsCreating', creatingStatus)
   },
   delete({ commit }, todoId) {
     commit('remove', todoId)

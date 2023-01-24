@@ -30,29 +30,22 @@ export default {
   ],
 
   // Modules: https://go.nuxtjs.dev/config-modules
-  modules: [
-    // https://go.nuxtjs.dev/axios
-    '@nuxtjs/axios',
-    '@nuxtjs/i18n',
-    '@nuxtjs/moment',
-  ],
+  modules: ['@nuxtjs/axios', '@nuxtjs/i18n'],
   i18n: {
-    locales: ['en', 'fr', 'es'],
-    defaultLocale: 'en',
-    vueI18n: {
-      fallbackLocale: 'en',
-      messages: {
-        en: {
-          welcome: 'Welcome',
-        },
-        fr: {
-          welcome: 'Bienvenue',
-        },
-        es: {
-          welcome: 'Bienvenido',
-        },
+    locales: [
+      {
+        code: 'en',
+        file: 'en.json',
       },
-    },
+      {
+        code: 'bn',
+        file: 'bn.json',
+      },
+    ],
+    lazy: true,
+    langDir: 'lang/',
+    defaultLocale: 'en',
+    strategy: 'no_prefix',
   },
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios

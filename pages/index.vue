@@ -2,7 +2,7 @@
   <TodoApp />
 </template>
 <script>
-import TodoApp from '../components/todo/Index.vue'
+import TodoApp from '@/components/todo/Index.vue'
 
 export default {
   name: 'Todo',

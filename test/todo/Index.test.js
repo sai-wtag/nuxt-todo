@@ -1,6 +1,6 @@
 import { shallowMount } from '@vue/test-utils'
 import TodoIndexComponent from '@/components/todo/Index.vue'
-import SearchBarComponent from '@/components/todo/SearchBar.vue'
+import TodoHeader from '@/components/todo/Header.vue'
 import TodoContainer from '@/components/todo/TodoContainer.vue'
 
 describe('TodoIndex', () => {
@@ -11,13 +11,8 @@ describe('TodoIndex', () => {
     expect(div.classes('container')).toBe(true)
   })
 
-  test('header exists', () => {
-    expect(div.contains('header')).toBe(true)
-  })
-
-  test('SearchBar component exists', () => {
-    const header = div.findAll('header').at(0)
-    const searchbar = header.findComponent(SearchBarComponent)
+  test('TodoHeader component exists', () => {
+    const searchbar = div.findComponent(TodoHeader)
     expect(searchbar.exists()).toBe(true)
   })
 

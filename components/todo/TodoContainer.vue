@@ -1,13 +1,12 @@
 <template>
   <div class="todo-container">
-    <h2>Add Task</h2>
+    <h2>{{ $t('add-task') }}</h2>
     <div class="todo__header">
-      <button @click.prevent="$store.commit('todos/setCreate')">Create</button>
+      <button @click.prevent="setIsCreating">{{ $t('create') }}</button>
       <FilterOptions />
     </div>
 
     <div class="card-container">
-      <!-- Add todo card -->
       <AddTodoCard
         v-if="isTodoCreating"
         class="card-item"
@@ -28,9 +27,9 @@
 </template>
 <script>
 import { mapGetters } from 'vuex'
-import FilterOptions from './FilterOptions.vue'
-import AddTodoCard from './AddTodoCard.vue'
-import TodoItem from './TodoItem.vue'
+import FilterOptions from '@/components/todo/FilterOptions.vue'
+import AddTodoCard from '@/components/todo/AddTodoCard.vue'
+import TodoItem from '@/components/todo/TodoItem.vue'
 
 export default {
   name: 'TodoContainer',
@@ -49,6 +48,9 @@ export default {
     onAddTodo(todo) {
       this.$store.dispatch('todos/add', todo)
     },
+    setIsCreating() {
+      this.$store.dispatch('todos/setIsCreating')
+    },
   },
 }
 </script>
@@ -66,8 +68,8 @@ export default {
 }
 .card-container {
   display: grid;
-  gap: 50px 100px;
-  grid-template-columns: auto auto auto;
+  gap: 25px;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
 }
 
 $card-padding: 10px;
