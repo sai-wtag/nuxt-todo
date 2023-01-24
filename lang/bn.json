@@ -18,6 +18,7 @@
     "max": "সর্বোচ্চ",
     "created-at": "তৈরি করা হয়েছে",
     "characters": "অক্ষর",
+    "not-found": "কোন {item} পাওয়া যায়নি",
     "validation": {
         "todo": {
             "title": {

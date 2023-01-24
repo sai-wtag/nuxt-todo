@@ -20,7 +20,7 @@
         </div>
       </template>
       <template v-else>
-        <div>No todos found</div>
+        <div>{{ $t('not-found', { item: $t('todos') }) }}</div>
       </template>
     </div>
   </div>
