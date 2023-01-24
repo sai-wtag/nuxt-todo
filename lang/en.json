@@ -17,6 +17,7 @@
     "min": "Min",
     "max": "Max",
     "created-at": "Created At",
+    "completed-in": "Completed In",
     "characters": "characters",
     "not-found": "{item} Not Found",
     "validation": {

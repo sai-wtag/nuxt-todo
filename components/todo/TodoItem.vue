@@ -1,14 +1,33 @@
 <template>
   <div class="todo-item">
-    <div class="todo-title">{{ todo.title }}</div>
+    <div
+      class="todo-title"
+      :class="todo.completedAt ? 'text-line-through' : ''"
+    >
+      {{ todo.title }}
+    </div>
     <div>
-      <div class="created-at">
-        {{ $t('created-at') }}:
-        {{ format(todo.createdAt, 'yyyy-MMM-dd') }}
+      <div class="time">
+        <span v-if="!todo.completedAt"
+          >{{ $t('created-at') }}:
+          {{ format(todo.createdAt, 'yyyy-MMM-dd') }}
+        </span>
+        <span v-else>
+          {{ $t('completed-in') }}:
+          {{ formatDistance(todo.completedAt, new Date(), getTimeDistance) }}
+        </span>
       </div>
       <div>
-        <button class="todo-action">{{ $t('complete') }}</button>
-        <button class="todo-action">{{ $t('edit') }}</button>
+        <button
+          v-if="!todo.completedAt"
+          class="todo-action"
+          @click.prevent="completeTodo"
+        >
+          {{ $t('complete') }}
+        </button>
+        <button v-if="!todo.completedAt" class="todo-action">
+          {{ $t('edit') }}
+        </button>
         <button class="todo-action" @click.prevent="deleteTodo">
           {{ $t('delete') }}
         </button>
@@ -17,7 +36,8 @@
   </div>
 </template>
 <script>
-import { format } from 'date-fns'
+import { format, formatDistance } from 'date-fns'
+import { bn } from 'date-fns/locale'
 
 export default {
   props: {
@@ -29,14 +49,34 @@ export default {
   setup() {
     return {
       format,
+      formatDistance,
+      bn,
     }
   },
   data() {
     return {}
   },
+
+  computed: {
+    getTimeDistance() {
+      const distance = {
+        addSuffix: true,
+      }
+
+      if (this.$i18n.locale === 'bn') {
+        distance.locale = bn
+      }
+
+      return distance
+    },
+  },
+
   methods: {
     deleteTodo() {
       this.$store.dispatch('todos/delete', this.todo.id)
+    },
+    completeTodo() {
+      this.$store.dispatch('todos/complete', this.todo.id)
     },
   },
 }
@@ -45,7 +85,7 @@ export default {
 .todo-title {
   font-size: 1.5rem;
 }
-.created-at {
+.time {
   font-size: 0.8rem;
 }
 
@@ -54,5 +94,9 @@ export default {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+}
+
+.text-line-through {
+  text-decoration: line-through;
 }
 </style>

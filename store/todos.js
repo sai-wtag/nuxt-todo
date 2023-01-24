@@ -23,9 +23,8 @@ export const getters = {
 export const mutations = {
   add(state, todo) {
     const newTodo = {
-      id: new Date().getTime(),
+      id: new Date().getTime().toString(),
       title: todo.title,
-      completed: false,
       createdAt: new Date(),
       completedAt: null,
     }
@@ -40,6 +39,13 @@ export const mutations = {
   },
   toggle(state, todo) {
     todo.done = !todo.done
+  },
+  complete(state, todoId) {
+    const todoIndex = state.list.findIndex((t) => t.id === todoId)
+    const todo = state.list[todoIndex]
+
+    todo.completedAt = new Date()
+    state.list.splice(todoIndex, 1, todo)
   },
 }
 
@@ -56,5 +62,8 @@ export const actions = {
   },
   delete({ commit }, todoId) {
     commit('remove', todoId)
+  },
+  complete({ commit }, todoId) {
+    commit('complete', todoId)
   },
 }
