@@ -16,5 +16,15 @@
     "search": "অনুসন্ধান করুন",
     "min": "ন্যূনতম",
     "max": "সর্বোচ্চ",
-    "created-at": "তৈরি করা হয়েছে"
+    "created-at": "তৈরি করা হয়েছে",
+    "characters": "অক্ষর",
+    "validation": {
+        "todo": {
+            "title": {
+                "required": "শিরোনাম প্রয়োজন",
+                "min-length": "শিরোনাম অন্তত {minLength} অক্ষর হতে হবে",
+                "max-length": "শিরোনাম সর্বোচ্চ {maxLength} অক্ষর হতে পারে"
+            }
+        }
+    }
 }

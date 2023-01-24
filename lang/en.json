@@ -16,5 +16,15 @@
     "search": "Search",
     "min": "Min",
     "max": "Max",
-    "created-at": "Created At"
+    "created-at": "Created At",
+    "characters": "characters",
+    "validation": {
+        "todo": {
+            "title": {
+                "required": "Title is required",
+                "min-length": "Title must be at least {minLength} characters",
+                "max-length": "Title must be at most {maxLength} characters"
+            }
+        }
+    }
 }

@@ -63,8 +63,8 @@ export default {
 }
 .card-container {
   display: grid;
-  gap: 50px 100px;
-  grid-template-columns: auto auto auto;
+  gap: 25px;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
 }
 
 $card-padding: 10px;

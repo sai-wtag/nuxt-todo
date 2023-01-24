@@ -3,12 +3,14 @@
     <form @submit.prevent="addTodo">
       <div class="add-todo-card__body">
         <input
+          ref="titleInputRef"
           v-model="form.title"
           type="text"
           class="add-todo-card__input"
           :placeholder="`${$t('add-task')} (${$t('min')} ${
             validationRules.title.minLength
           }, ${$t('max')} ${validationRules.title.maxLength} characters)`"
+          @focus="errorMessage = null"
         />
       </div>
 
@@ -17,9 +19,11 @@
           {{ $t('add') }}
         </button>
         <button @click.prevent="deleteCurrentTask">{{ $t('delete') }}</button>
-        <span v-if="errorMessage" class="error-message">{{
-          errorMessage
-        }}</span>
+        <div>
+          <span v-if="errorMessage" class="error-message">{{
+            errorMessage
+          }}</span>
+        </div>
       </div>
     </form>
   </div>
@@ -42,6 +46,7 @@ export default {
       },
     }
   },
+
   methods: {
     addTodo() {
       const errorMessage = this.checkValidation()
@@ -63,15 +68,19 @@ export default {
       const maxTitleLength = this.validationRules.title.maxLength
 
       if (!title) {
-        return 'Please enter a title'
+        return this.$t('validation.todo.title.required')
       }
 
       if (title.length < minTitleLength) {
-        return `Title should be more than ${minTitleLength} characters`
+        return this.$t('validation.todo.title.min-length', {
+          minLength: minTitleLength,
+        })
       }
 
       if (title.length > maxTitleLength) {
-        return `Title should be less than ${maxTitleLength} characters`
+        return this.$t('validation.todo.title.max-length', {
+          maxLength: maxTitleLength,
+        })
       }
       return null
     },
@@ -88,12 +97,13 @@ form {
   height: 100%;
   gap: 5px;
 }
+
 .add-todo-card__footer {
   display: flex;
   align-items: center;
+  width: 100%;
   gap: $card-padding $card-padding;
 }
-
 .add-todo-card__input {
   resize: none;
   outline: none;
