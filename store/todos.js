@@ -1,3 +1,5 @@
+import uuid4 from 'uuid4'
+
 export const state = () => ({
   list: [],
   isLoading: false,
@@ -23,7 +25,7 @@ export const getters = {
 export const mutations = {
   add(state, todo) {
     const newTodo = {
-      id: new Date().getTime().toString(),
+      id: uuid4(),
       title: todo.title,
       createdAt: new Date(),
       completedAt: null,

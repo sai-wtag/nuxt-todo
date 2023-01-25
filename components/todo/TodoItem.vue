@@ -3,7 +3,7 @@
     <div class="todo-item__header">
       <span
         class="todo-title"
-        :class="todo.completedAt ? 'text-line-through' : ''"
+        :class="isTodoCompleted ? 'text-line-through' : ''"
         >{{ todo.title }}</span
       >
       <span class="time"
@@ -52,9 +52,12 @@ export default {
   },
 
   computed: {
+    isTodoCompleted() {
+      return this.todo.completedAt
+    },
     getTimeDistance() {
       const distance = {
-        addSuffix: true,
+        // addSuffix: true,
       }
 
       if (this.$i18n.locale === 'bn') {
