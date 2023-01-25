@@ -14,9 +14,14 @@
       />
 
       <!-- List of todos -->
-      <div v-for="todo in todos" :key="todo.id" class="card-item">
-        <TodoItem :todo="todo" />
-      </div>
+      <template v-if="isTodoAvailable">
+        <div v-for="todo in todos" :key="todo.id" class="card-item">
+          <TodoItem :todo="todo" />
+        </div>
+      </template>
+      <template v-else>
+        <div>{{ $t('not-found', { item: $t('todos') }) }}</div>
+      </template>
     </div>
   </div>
 </template>
@@ -38,6 +43,9 @@ export default {
   },
   computed: {
     ...mapGetters('todos', ['isTodoCreating', 'todos']),
+    isTodoAvailable() {
+      return this.todos.length > 0
+    },
   },
   methods: {
     onAddTodo(todo) {
