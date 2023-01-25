@@ -15,8 +15,15 @@
       </div>
 
       <div class="add-todo-card__footer">
-        <button type="submit" class="add-todo-card__footer__btn">
+        <button type="submit">
           {{ isTodoEditing ? $t('save') : $t('add') }}
+        </button>
+        <button
+          v-if="isTodoEditing"
+          type="button"
+          @click.prevent="submitHandler($event, shouldComplete)"
+        >
+          {{ $t('complete') }}
         </button>
         <button @click.prevent="deleteCurrentTask">{{ $t('delete') }}</button>
         <div>
@@ -53,6 +60,7 @@ export default {
           maxLength: 50,
         },
       },
+      shouldComplete: true,
     }
   },
 
@@ -68,10 +76,15 @@ export default {
     })
   },
   methods: {
-    submitHandler() {
+    submitHandler(_, shouldCompleteTodo = false) {
       const errorMessage = this.checkValidation()
       if (errorMessage) {
         this.errorMessage = errorMessage
+        return
+      }
+
+      if (shouldCompleteTodo) {
+        this.completeAndUpdateTodo()
         return
       }
       this.isTodoEditing ? this.editTodo() : this.addTodo()
@@ -84,6 +97,13 @@ export default {
 
     editTodo() {
       this.$store.dispatch('todos/update', {
+        id: this.getEditableTodo.id,
+        title: this.form.title,
+      })
+    },
+
+    completeAndUpdateTodo() {
+      this.$store.dispatch('todos/completeAndUpdate', {
         id: this.getEditableTodo.id,
         title: this.form.title,
       })

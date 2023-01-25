@@ -76,11 +76,17 @@ export const actions = {
     commit('update', updatedTodo)
     commit('setEditableTodo', null)
   },
+  completeAndUpdate({ commit }, updatedTodo) {
+    commit('update', updatedTodo)
+    commit('complete', updatedTodo.id)
+    commit('setEditableTodo', null)
+  },
   deleteCurrentTask({ commit }) {
     commit('setIsCreating', false)
   },
   setIsCreating({ commit }, creatingStatus = true) {
     commit('setIsCreating', creatingStatus)
+    commit('setEditableTodo', null)
   },
   delete({ commit }, todoId) {
     commit('remove', todoId)

@@ -15,7 +15,7 @@
     <div class="todo-item__footer">
       <TodoActions :todo="todo" />
       <div>
-        <span v-if="todo.completedAt" class="time">
+        <span v-if="isTodoCompleted" class="time">
           {{ $t('completed-in') }}:
           {{ formatDistance(todo.completedAt, new Date(), getTimeDistance) }}
         </span>
