@@ -1,6 +1,6 @@
 <template>
   <div class="add-todo-card">
-    <form @submit.prevent="addTodo">
+    <form @submit.prevent="submitHandler">
       <div class="add-todo-card__body">
         <input
           ref="titleInputRef"
@@ -16,7 +16,7 @@
 
       <div class="add-todo-card__footer">
         <button type="submit" class="add-todo-card__footer__btn">
-          {{ $t('add') }}
+          {{ isTodoEditing ? $t('save') : $t('add') }}
         </button>
         <button @click.prevent="deleteCurrentTask">{{ $t('delete') }}</button>
         <div>
@@ -29,6 +29,7 @@
   </div>
 </template>
 <script>
+import { mapGetters } from 'vuex'
 export default {
   name: 'AddTodoCard',
 
@@ -55,15 +56,37 @@ export default {
     }
   },
 
+  computed: {
+    ...mapGetters('todos', ['getEditableTodo']),
+  },
+  mounted() {
+    if (this.isTodoEditing) {
+      this.form.title = this.getEditableTodo.title
+    }
+    this.$nextTick(() => {
+      this.$refs.titleInputRef.focus()
+    })
+  },
   methods: {
-    addTodo() {
+    submitHandler() {
       const errorMessage = this.checkValidation()
       if (errorMessage) {
         this.errorMessage = errorMessage
         return
       }
+      this.isTodoEditing ? this.editTodo() : this.addTodo()
+    },
+
+    addTodo() {
       this.$emit('addTodo', this.form)
       this.form.title = ''
+    },
+
+    editTodo() {
+      this.$store.dispatch('todos/update', {
+        id: this.getEditableTodo.id,
+        title: this.form.title,
+      })
     },
 
     deleteCurrentTask() {

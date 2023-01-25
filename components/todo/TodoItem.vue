@@ -1,6 +1,5 @@
 <template>
   <div v-if="!isTodoEditing" class="todo-item">
-    {{ isTodoEditing }}
     <div class="todo-item__header">
       <span
         class="todo-title"

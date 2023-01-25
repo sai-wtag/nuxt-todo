@@ -36,6 +36,14 @@ export const mutations = {
 
     state.list = [newTodo, ...state.list]
   },
+
+  update(state, updatedTodo) {
+    const todoIndex = state.list.findIndex((t) => t.id === updatedTodo.id)
+    const todo = state.list[todoIndex]
+    todo.title = updatedTodo.title
+    state.list.splice(todoIndex, 1, todo)
+  },
+
   setIsCreating(state, creatingStatus = true) {
     state.isCreating = creatingStatus
   },
@@ -52,8 +60,10 @@ export const mutations = {
     todo.completedAt = new Date()
     state.list.splice(todoIndex, 1, todo)
   },
-  setEditableTodo: (state, todoId) => {
-    state.editableTodo = state.list.find((todo) => todo.id === todoId)
+  setEditableTodo: (state, todoId = null) => {
+    state.editableTodo = todoId
+      ? state.list.find((todo) => todo.id === todoId)
+      : null
   },
 }
 
@@ -61,6 +71,10 @@ export const actions = {
   add({ commit }, todo) {
     commit('add', todo)
     commit('setIsCreating', false)
+  },
+  update({ commit }, updatedTodo) {
+    commit('update', updatedTodo)
+    commit('setEditableTodo', null)
   },
   deleteCurrentTask({ commit }) {
     commit('setIsCreating', false)
