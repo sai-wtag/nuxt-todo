@@ -8,7 +8,7 @@
       >
       <span class="time"
         >{{ $t('created-at') }}:
-        {{ format(todo.createdAt, 'yyyy-MMM-dd') }}
+        {{ format(todo.createdAt, 'dd-MMM-yyyy') }}
       </span>
     </div>
 
