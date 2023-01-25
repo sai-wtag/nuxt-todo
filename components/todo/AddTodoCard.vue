@@ -31,6 +31,14 @@
 <script>
 export default {
   name: 'AddTodoCard',
+
+  props: {
+    isTodoEditing: {
+      type: Boolean,
+      default: false,
+    },
+  },
+
   data() {
     return {
       form: {

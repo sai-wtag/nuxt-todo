@@ -23,6 +23,9 @@
       </div>
     </div>
   </div>
+  <div v-else>
+    <AddTodoCard :todo="todo" :is-todo-editing="true" />
+  </div>
 </template>
 <script>
 import { mapGetters } from 'vuex'
@@ -30,10 +33,12 @@ import { format, formatDistance } from 'date-fns'
 import { bn } from 'date-fns/locale'
 
 import TodoActions from '@/components/todo/utils/TodoActions.vue'
+import AddTodoCard from '@/components/todo/AddTodoCard.vue'
 
 export default {
   components: {
     TodoActions,
+    AddTodoCard,
   },
   props: {
     todo: {
@@ -56,7 +61,9 @@ export default {
   computed: {
     ...mapGetters('todos', ['getEditableTodo']),
     isTodoEditing() {
-      return this.getEditableTodo.id === this.todo.id
+      return this.getEditableTodo
+        ? this.getEditableTodo.id === this.todo.id
+        : false
     },
     isTodoCompleted() {
       return this.todo.completedAt
