@@ -17,7 +17,7 @@
     "min": "ন্যূনতম",
     "max": "সর্বোচ্চ",
     "created-at": "তৈরি করা হয়েছে",
-    "completed-in": "সম্পন্ন হয়েছে",
+    "completed-in": "সম্পন্ন হতে সময় লেগেছে",
     "characters": "অক্ষর",
     "not-found": "কোন {item} পাওয়া যায়নি",
     "validation": {
