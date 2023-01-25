@@ -33,7 +33,6 @@ export const mutations = {
       createdAt: new Date(),
       completedAt: null,
     }
-
     state.list = [newTodo, ...state.list]
   },
 
