@@ -83,6 +83,7 @@ export const actions = {
   },
   deleteCurrentTask({ commit }) {
     commit('setIsCreating', false)
+    commit('setEditableTodo', null)
   },
   setIsCreating({ commit }, creatingStatus = true) {
     commit('setIsCreating', creatingStatus)

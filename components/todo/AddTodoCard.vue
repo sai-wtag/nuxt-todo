@@ -25,7 +25,9 @@
         >
           {{ $t('complete') }}
         </button>
-        <button @click.prevent="deleteCurrentTask">{{ $t('delete') }}</button>
+        <button @click.prevent="deleteCurrentTask">
+          {{ isTodoEditing ? $t('cancel') : $t('delete') }}
+        </button>
         <div>
           <span v-if="errorMessage" class="error-message">{{
             errorMessage
@@ -141,19 +143,19 @@ export default {
 
 <style scoped lang="scss">
 $card-padding: 10px;
-
+$button-gap: 5px;
 form {
   display: flex;
   flex-direction: column;
   height: 100%;
-  gap: 5px;
+  gap: $button-gap;
 }
 
 .add-todo-card__footer {
   display: flex;
   align-items: center;
   width: 100%;
-  gap: $card-padding $card-padding;
+  gap: $button-gap;
 }
 .add-todo-card__input {
   resize: none;
