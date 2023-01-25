@@ -1,5 +1,6 @@
 <template>
-  <div class="todo-item">
+  <div v-if="!isTodoEditing" class="todo-item">
+    {{ isTodoEditing }}
     <div class="todo-item__header">
       <span
         class="todo-title"
@@ -24,6 +25,7 @@
   </div>
 </template>
 <script>
+import { mapGetters } from 'vuex'
 import { format, formatDistance } from 'date-fns'
 import { bn } from 'date-fns/locale'
 
@@ -52,6 +54,10 @@ export default {
   },
 
   computed: {
+    ...mapGetters('todos', ['getEditableTodo']),
+    isTodoEditing() {
+      return this.getEditableTodo.id === this.todo.id
+    },
     isTodoCompleted() {
       return this.todo.completedAt
     },

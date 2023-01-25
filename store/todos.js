@@ -20,6 +20,9 @@ export const getters = {
   isTodoCreating(state) {
     return state.isCreating
   },
+  getEditableTodo(state) {
+    return state.editableTodo
+  },
 }
 
 export const mutations = {
@@ -49,6 +52,9 @@ export const mutations = {
     todo.completedAt = new Date()
     state.list.splice(todoIndex, 1, todo)
   },
+  setEditableTodo: (state, todoId) => {
+    state.editableTodo = state.list.find((todo) => todo.id === todoId)
+  },
 }
 
 export const actions = {
@@ -67,5 +73,8 @@ export const actions = {
   },
   complete({ commit }, todoId) {
     commit('complete', todoId)
+  },
+  setEditableTodo({ commit }, todoId) {
+    commit('setEditableTodo', todoId)
   },
 }
