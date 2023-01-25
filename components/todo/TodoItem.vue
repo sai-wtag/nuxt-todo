@@ -1,36 +1,40 @@
 <template>
   <div class="todo-item">
-    <div
-      class="todo-title"
-      :class="todo.completedAt ? 'text-line-through' : ''"
-    >
-      {{ todo.title }}
+    <div class="todo-item__header">
+      <span
+        class="todo-title"
+        :class="todo.completedAt ? 'text-line-through' : ''"
+        >{{ todo.title }}</span
+      >
+      <span class="time"
+        >{{ $t('created-at') }}:
+        {{ format(todo.createdAt, 'yyyy-MMM-dd') }}
+      </span>
     </div>
-    <div>
-      <div class="time">
-        <span v-if="!todo.completedAt"
-          >{{ $t('created-at') }}:
-          {{ format(todo.createdAt, 'yyyy-MMM-dd') }}
-        </span>
-        <span v-else>
-          {{ $t('completed-in') }}:
-          {{ formatDistance(todo.completedAt, new Date(), getTimeDistance) }}
-        </span>
-      </div>
-      <div>
-        <button
-          v-if="!todo.completedAt"
-          class="todo-action"
-          @click.prevent="completeTodo"
-        >
-          {{ $t('complete') }}
-        </button>
-        <button v-if="!todo.completedAt" class="todo-action">
-          {{ $t('edit') }}
-        </button>
-        <button class="todo-action" @click.prevent="deleteTodo">
-          {{ $t('delete') }}
-        </button>
+
+    <div class="todo-item__footer">
+      <div class="action-buttons">
+        <div>
+          <button
+            v-if="!todo.completedAt"
+            class="todo-action"
+            @click.prevent="completeTodo"
+          >
+            {{ $t('complete') }}
+          </button>
+          <button v-if="!todo.completedAt" class="todo-action">
+            {{ $t('edit') }}
+          </button>
+          <button class="todo-action" @click.prevent="deleteTodo">
+            {{ $t('delete') }}
+          </button>
+        </div>
+        <div>
+          <span v-if="todo.completedAt" class="time">
+            {{ $t('completed-in') }}:
+            {{ formatDistance(todo.completedAt, new Date(), getTimeDistance) }}
+          </span>
+        </div>
       </div>
     </div>
   </div>
@@ -82,9 +86,6 @@ export default {
 }
 </script>
 <style scoped lang="scss">
-.todo-title {
-  font-size: 1.5rem;
-}
 .time {
   font-size: 0.8rem;
 }
@@ -96,7 +97,22 @@ export default {
   justify-content: space-between;
 }
 
+.todo-item__header {
+  display: flex;
+  flex-direction: column;
+}
+
+.todo-title {
+  font-size: 1.5rem;
+}
+
 .text-line-through {
   text-decoration: line-through;
+}
+
+.action-buttons {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 </style>
