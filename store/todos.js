@@ -61,7 +61,7 @@ export const getters = {
 }
 
 export const mutations = {
-  add(state, todo) {
+  add: (state, todo) => {
     const newTodo = {
       id: uuid4(),
       title: todo.title,
@@ -70,24 +70,19 @@ export const mutations = {
     }
     state.list = [newTodo, ...state.list]
   },
-
-  update(state, updatedTodo) {
+  update: (state, updatedTodo) => {
     const todoIndex = state.list.findIndex((t) => t.id === updatedTodo.id)
     const todo = state.list[todoIndex]
     todo.title = updatedTodo.title
     state.list.splice(todoIndex, 1, todo)
   },
-
-  setIsCreating(state, creatingStatus = true) {
+  setIsCreating: (state, creatingStatus = true) => {
     state.isCreating = creatingStatus
   },
-  remove(state, id) {
+  remove: (state, id) => {
     state.list = state.list.filter((todo) => todo.id !== id)
   },
-  toggle(state, todo) {
-    todo.done = !todo.done
-  },
-  complete(state, todoId) {
+  complete: (state, todoId) => {
     const todoIndex = state.list.findIndex((t) => t.id === todoId)
     const todo = state.list[todoIndex]
 
@@ -121,49 +116,49 @@ export const mutations = {
 }
 
 export const actions = {
-  add({ commit }, todo) {
+  add: ({ commit }, todo) => {
     commit('add', todo)
     commit('setIsCreating', false)
   },
 
-  update({ commit }, updatedTodo) {
+  update: ({ commit }, updatedTodo) => {
     commit('update', updatedTodo)
     commit('setEditableTodo', null)
   },
 
-  completeAndUpdate({ commit }, updatedTodo) {
+  completeAndUpdate: ({ commit }, updatedTodo) => {
     commit('update', updatedTodo)
     commit('complete', updatedTodo.id)
     commit('setEditableTodo', null)
   },
 
-  deleteCurrentTask({ commit }) {
+  deleteCurrentTask: ({ commit }) => {
     commit('setIsCreating', false)
     commit('setEditableTodo', null)
   },
 
-  setIsCreating({ commit }, creatingStatus = true) {
+  setIsCreating: ({ commit }, creatingStatus = true) => {
     commit('setIsCreating', creatingStatus)
     commit('setEditableTodo', null)
   },
 
-  delete({ commit }, todoId) {
+  delete: ({ commit }, todoId) => {
     commit('remove', todoId)
   },
 
-  complete({ commit }, todoId) {
+  complete: ({ commit }, todoId) => {
     commit('complete', todoId)
   },
 
-  setEditableTodo({ commit }, todoId) {
+  setEditableTodo: ({ commit }, todoId) => {
     commit('setEditableTodo', todoId)
   },
 
-  loadMoreTodos({ commit, state }) {
+  loadMoreTodos: ({ commit, state }) => {
     commit('setLimit')
   },
 
-  setCurrentTaskState({ commit }, taskState) {
+  setCurrentTaskState: ({ commit }, taskState) => {
     commit('setCurrentTaskState', taskState)
     commit('setCurrentTasks')
   },
