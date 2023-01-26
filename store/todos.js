@@ -148,6 +148,7 @@ export const actions = {
 
   delete: ({ commit }, todoId) => {
     commit('remove', todoId)
+    commit('setCurrentTasks')
   },
 
   complete: ({ commit }, todoId) => {
