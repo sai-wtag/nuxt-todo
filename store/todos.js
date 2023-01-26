@@ -66,20 +66,20 @@ export const mutations = {
   },
 
   remove: (state, id) => {
-    state.list = state.list.filter((todo) => todo.id !== id)
+    state.currentTasks = state.currentTasks.filter((todo) => todo.id !== id)
   },
 
   complete: (state, todoId) => {
-    const todoIndex = state.list.findIndex((t) => t.id === todoId)
-    const todo = state.list[todoIndex]
+    const todoIndex = state.currentTasks.findIndex((t) => t.id === todoId)
+    const todo = state.currentTasks[todoIndex]
 
     todo.completedAt = new Date()
-    state.list.splice(todoIndex, 1, todo)
+    state.currentTasks.splice(todoIndex, 1, todo)
   },
 
   setEditableTodo: (state, todoId = null) => {
     state.editableTodo = todoId
-      ? state.list.find((todo) => todo.id === todoId)
+      ? state.currentTasks.find((todo) => todo.id === todoId)
       : null
   },
 
@@ -163,7 +163,8 @@ export const actions = {
   },
 
   setCurrentTaskState: ({ commit }, taskState) => {
-    commit('setSearchKey', '')
+    // commit('setSearchKey', '')
+    commit('resetPageLimit')
     commit('setCurrentTaskState', taskState)
     commit('setCurrentTasks')
   },
@@ -171,8 +172,8 @@ export const actions = {
   searchTasksByTitle: ({ commit }, e) => {
     const searchTasks = _.debounce(() => {
       commit('resetPageLimit')
-      commit('setCurrentTasks')
       commit('setSearchKey', e.target.value)
+      commit('setCurrentTasks')
     }, 1000)
     searchTasks()
   },
