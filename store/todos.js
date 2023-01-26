@@ -9,33 +9,6 @@ const getLimit = (state) => {
   return limit
 }
 
-const getCurrentTaskList = (state) => {
-  const currentTaskState = state.currentTaskState
-  let list = state.list // default: 'all'
-  switch (currentTaskState) {
-    case 'complete':
-      list = list.filter((todo) => todo.completedAt)
-      break
-    case 'incomplete':
-      list = list.filter((todo) => !todo.completedAt)
-      break
-  }
-  return list
-}
-
-const getTasksLength = (state) => {
-  const currentTasks = getCurrentTaskList(state)
-  return currentTasks.length
-}
-
-// const searchTasksByTitle = (state, searchTitle) => {
-//   const currentTasks = getCurrentTaskList(state)
-//   const searchTasks = currentTasks.filter((todo) => {
-//     return todo.title.includes(searchTitle)
-//   })
-//   return searchTasks
-// }
-
 export const state = () => ({
   list: [],
   currentTasks: [],
@@ -45,13 +18,12 @@ export const state = () => ({
   editableTodo: null,
   limit: pageLimit,
   taskStates: ['all', 'complete', 'incomplete'],
-  currentTaskState: 'all', // 'all'
+  currentTaskState: 'all',
 })
 
 export const getters = {
   todos: (state) => {
-    const list = getCurrentTaskList(state)
-    return list.slice(0, getLimit(state))
+    return state.currentTasks.slice(0, getLimit(state))
   },
   isTodoCreating(state) {
     return state.isCreating
@@ -60,7 +32,7 @@ export const getters = {
     return state.editableTodo
   },
   hasMoreTodos(state) {
-    return getTasksLength(state) > getLimit(state)
+    return state.currentTasks.length > getLimit(state)
   },
   getTaskStates(state) {
     return state.taskStates
@@ -80,18 +52,22 @@ export const mutations = {
     }
     state.list = [newTodo, ...state.list]
   },
+
   update: (state, updatedTodo) => {
     const todoIndex = state.list.findIndex((t) => t.id === updatedTodo.id)
     const todo = state.list[todoIndex]
     todo.title = updatedTodo.title
     state.list.splice(todoIndex, 1, todo)
   },
+
   setIsCreating: (state, creatingStatus = true) => {
     state.isCreating = creatingStatus
   },
+
   remove: (state, id) => {
     state.list = state.list.filter((todo) => todo.id !== id)
   },
+
   complete: (state, todoId) => {
     const todoIndex = state.list.findIndex((t) => t.id === todoId)
     const todo = state.list[todoIndex]
@@ -99,16 +75,33 @@ export const mutations = {
     todo.completedAt = new Date()
     state.list.splice(todoIndex, 1, todo)
   },
+
   setEditableTodo: (state, todoId = null) => {
     state.editableTodo = todoId
       ? state.list.find((todo) => todo.id === todoId)
       : null
   },
+
   setLimit: (state) => {
     state.limit += pageLimit
   },
+
   setCurrentTaskState: (state, taskState) => {
     state.currentTaskState = taskState
+  },
+
+  setCurrentTasks: (state) => {
+    const currentTaskState = state.currentTaskState
+    let list = state.list
+    switch (currentTaskState) {
+      case 'complete':
+        list = list.filter((todo) => todo.completedAt)
+        break
+      case 'incomplete':
+        list = list.filter((todo) => !todo.completedAt)
+        break
+    }
+    state.currentTasks = list
   },
 }
 
@@ -116,6 +109,7 @@ export const actions = {
   add: ({ commit }, todo) => {
     commit('add', todo)
     commit('setIsCreating', false)
+    commit('setCurrentTasks')
   },
 
   update: ({ commit }, updatedTodo) => {
