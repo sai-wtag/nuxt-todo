@@ -100,19 +100,6 @@ export const mutations = {
   setCurrentTaskState: (state, taskState) => {
     state.currentTaskState = taskState
   },
-  setCurrentTasks: (state) => {
-    const currentTaskState = state.currentTaskState
-    let list = state.list
-    switch (currentTaskState) {
-      case 'complete':
-        list = list.filter((todo) => todo.completedAt)
-        break
-      case 'incomplete':
-        list = list.filter((todo) => !todo.completedAt)
-        break
-    }
-    state.currentTasks = list
-  },
 }
 
 export const actions = {
@@ -160,6 +147,7 @@ export const actions = {
 
   setCurrentTaskState: ({ commit }, taskState) => {
     commit('setCurrentTaskState', taskState)
-    commit('setCurrentTasks')
   },
+
+  searchTitle: ({ commit }, searchTitle) => {},
 }

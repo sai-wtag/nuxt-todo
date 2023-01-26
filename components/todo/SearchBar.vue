@@ -1,13 +1,25 @@
 <template>
   <div>
-    <input type="text" :placeholder="$t('search')" />
+    <input
+      v-model="searchTitleInput"
+      type="text"
+      :placeholder="$t('search')"
+      @keyup.prevent="searchTitle"
+    />
   </div>
 </template>
 <script>
 export default {
   name: 'SearchBar',
   data() {
-    return {}
+    return {
+      searchTitleInput: '',
+    }
+  },
+  methods: {
+    searchTitle() {
+      this.$store.dispatch('todos/searchTitle', this.searchTitleInput)
+    },
   },
 }
 </script>
