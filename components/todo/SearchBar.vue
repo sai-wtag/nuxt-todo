@@ -1,7 +1,6 @@
 <template>
   <div>
     <input
-      v-model="searchTitleInput"
       type="text"
       :placeholder="$t('search')"
       @keyup.prevent="searchTasksByTitle"
@@ -9,17 +8,11 @@
   </div>
 </template>
 <script>
+import { mapActions } from 'vuex'
 export default {
   name: 'SearchBar',
-  data() {
-    return {
-      searchTitleInput: '',
-    }
-  },
   methods: {
-    searchTasksByTitle() {
-      this.$store.dispatch('todos/searchTasksByTitle', this.searchTitleInput)
-    },
+    ...mapActions('todos', ['searchTasksByTitle']),
   },
 }
 </script>

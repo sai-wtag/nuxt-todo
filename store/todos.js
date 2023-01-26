@@ -1,5 +1,5 @@
 import uuid4 from 'uuid4'
-// import _ from 'lodash'
+import _ from 'lodash'
 
 const pageLimit = 3
 
@@ -15,6 +15,7 @@ export const state = () => ({
   isLoading: false,
   isCreating: false,
   isSearching: false,
+  searchKey: '',
   editableTodo: null,
   limit: pageLimit,
   taskStates: ['all', 'complete', 'incomplete'],
@@ -82,7 +83,7 @@ export const mutations = {
       : null
   },
 
-  setLimit: (state) => {
+  incrementLimit: (state) => {
     state.limit += pageLimit
   },
 
@@ -92,7 +93,13 @@ export const mutations = {
 
   setCurrentTasks: (state) => {
     const currentTaskState = state.currentTaskState
-    let list = state.list
+    const searchKey = state.searchKey
+
+    let list =
+      searchKey !== ''
+        ? state.list.filter((todo) => todo.title.includes(searchKey))
+        : state.list
+
     switch (currentTaskState) {
       case 'complete':
         list = list.filter((todo) => todo.completedAt)
@@ -101,7 +108,13 @@ export const mutations = {
         list = list.filter((todo) => !todo.completedAt)
         break
     }
-    state.currentTasks = list
+    state.currentTasks = [...list]
+  },
+  setSearchKey: (state, searchKey) => {
+    state.searchKey = searchKey
+  },
+  resetPageLimit: (state) => {
+    state.limit = pageLimit
   },
 }
 
@@ -146,12 +159,21 @@ export const actions = {
   },
 
   loadMoreTodos: ({ commit }) => {
-    commit('setLimit')
+    commit('incrementLimit')
   },
 
   setCurrentTaskState: ({ commit }, taskState) => {
+    commit('setSearchKey', '')
     commit('setCurrentTaskState', taskState)
+    commit('setCurrentTasks')
   },
 
-  searchTasksByTitle: ({ commit }, searchTitle) => {},
+  searchTasksByTitle: ({ commit }, e) => {
+    const searchTasks = _.debounce(() => {
+      commit('resetPageLimit')
+      commit('setCurrentTasks')
+      commit('setSearchKey', e.target.value)
+    }, 1000)
+    searchTasks()
+  },
 }
