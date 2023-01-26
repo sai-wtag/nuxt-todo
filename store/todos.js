@@ -1,6 +1,6 @@
 import uuid4 from 'uuid4'
 
-const pageLimit = 3
+const pageLimit = 9
 
 export const state = () => ({
   list: [],
