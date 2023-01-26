@@ -2,6 +2,12 @@ import uuid4 from 'uuid4'
 
 const pageLimit = 9
 
+const getLimit = (state) => {
+  let limit = state.limit
+  if (state.isCreating) limit--
+  return limit
+}
+
 export const state = () => ({
   list: [],
   isLoading: false,
@@ -9,12 +15,6 @@ export const state = () => ({
   editableTodo: null,
   limit: pageLimit,
 })
-
-const getLimit = (state) => {
-  let limit = state.limit
-  if (state.isCreating) limit--
-  return limit
-}
 
 export const getters = {
   todos: (state) => {
