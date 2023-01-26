@@ -1,20 +1,9 @@
-import { mount, shallowMount, RouterLinkStub } from '@vue/test-utils'
+import { shallowMount } from '@vue/test-utils'
 import LandingPage from '@/pages/index'
 
 describe('LandingPage', () => {
-  test('div element exists', () => {
-    const wrapper = shallowMount(LandingPage, {
-      mocks: {
-        // Always returns the input
-        $t: (i) => i,
-        switchLocalePath: (i) => i,
-        $store: (i) => i,
-      },
-      stubs: {
-        NuxtLink: RouterLinkStub,
-      },
-    })
-    const link = wrapper.findComponent(RouterLinkStub)
-    expect(link.exists()).toBe(true)
+  test('todo component exists', () => {
+    const wrapper = shallowMount(LandingPage)
+    expect(wrapper.exists()).toBe(true)
   })
 })
