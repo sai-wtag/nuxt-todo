@@ -20,6 +20,8 @@
     "completed-in": "Completed In",
     "characters": "characters",
     "not-found": "{item} Not Found",
+    "load-more": "Load More",
+    "loading": "Loading",
     "validation": {
         "todo": {
             "title": {

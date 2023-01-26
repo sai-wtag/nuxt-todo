@@ -19,9 +19,18 @@
           <TodoItem :todo="todo" />
         </div>
       </template>
-      <template v-else>
-        <div>{{ $t('not-found', { item: $t('todos') }) }}</div>
-      </template>
+    </div>
+
+    <!-- No todos found -->
+    <div v-if="!isTodoAvailable && !isTodoCreating" class="todo__not-found">
+      {{ $t('not-found', { item: $t('todos') }) }}
+    </div>
+
+    <!-- Load more todos -->
+    <div v-if="hasMoreTodos" class="todo-footer">
+      <button class="todo-btn__load-more" @click.prevent="loadMoreTodos">
+        {{ $t('load-more') }}
+      </button>
     </div>
   </div>
 </template>
@@ -42,7 +51,7 @@ export default {
     return {}
   },
   computed: {
-    ...mapGetters('todos', ['isTodoCreating', 'todos']),
+    ...mapGetters('todos', ['isTodoCreating', 'todos', 'hasMoreTodos']),
     isTodoAvailable() {
       return this.todos.length > 0
     },
@@ -53,6 +62,9 @@ export default {
     },
     setIsCreating() {
       this.$store.dispatch('todos/setIsCreating')
+    },
+    loadMoreTodos() {
+      this.$store.dispatch('todos/loadMoreTodos')
     },
   },
 }
@@ -81,5 +93,17 @@ $card-padding: 10px;
   border-radius: 5px;
   padding: $card-padding;
   height: 100px;
+}
+
+.todo-footer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
+.todo__not-found {
+  text-align: center;
+  font-size: 20px;
 }
 </style>
