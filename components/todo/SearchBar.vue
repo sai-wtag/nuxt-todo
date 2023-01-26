@@ -4,7 +4,7 @@
       v-model="searchTitleInput"
       type="text"
       :placeholder="$t('search')"
-      @keyup.prevent="searchTitle"
+      @keyup.prevent="searchTasksByTitle"
     />
   </div>
 </template>
@@ -17,8 +17,8 @@ export default {
     }
   },
   methods: {
-    searchTitle() {
-      this.$store.dispatch('todos/searchTitle', this.searchTitleInput)
+    searchTasksByTitle() {
+      this.$store.dispatch('todos/searchTasksByTitle', this.searchTitleInput)
     },
   },
 }

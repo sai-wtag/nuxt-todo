@@ -1,4 +1,5 @@
 import uuid4 from 'uuid4'
+// import _ from 'lodash'
 
 const pageLimit = 3
 
@@ -27,11 +28,20 @@ const getTasksLength = (state) => {
   return currentTasks.length
 }
 
+// const searchTasksByTitle = (state, searchTitle) => {
+//   const currentTasks = getCurrentTaskList(state)
+//   const searchTasks = currentTasks.filter((todo) => {
+//     return todo.title.includes(searchTitle)
+//   })
+//   return searchTasks
+// }
+
 export const state = () => ({
   list: [],
   currentTasks: [],
   isLoading: false,
   isCreating: false,
+  isSearching: false,
   editableTodo: null,
   limit: pageLimit,
   taskStates: ['all', 'complete', 'incomplete'],
@@ -149,5 +159,5 @@ export const actions = {
     commit('setCurrentTaskState', taskState)
   },
 
-  searchTitle: ({ commit }, searchTitle) => {},
+  searchTasksByTitle: ({ commit }, searchTitle) => {},
 }
