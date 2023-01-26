@@ -3,6 +3,9 @@
     <button
       v-for="task in getTaskStates"
       :key="task"
+      :class="{
+        active: task === getCurrentTaskState,
+      }"
       @click.prevent="setCurrentTaskState(task)"
     >
       {{ $t(task) }}
@@ -14,7 +17,7 @@ import { mapGetters } from 'vuex'
 export default {
   name: 'FilterOptions',
   computed: {
-    ...mapGetters('todos', ['getTaskStates', 'getCurrentTask']),
+    ...mapGetters('todos', ['getTaskStates', 'getCurrentTaskState']),
   },
   methods: {
     setCurrentTaskState(task) {
@@ -28,5 +31,10 @@ export default {
   display: flex;
   justify-content: center;
   gap: 5px;
+}
+
+.active {
+  background-color: #298b6b;
+  color: #fff;
 }
 </style>
