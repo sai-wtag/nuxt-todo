@@ -18,6 +18,7 @@
     "max": "Max",
     "created-at": "Created At",
     "characters": "characters",
+    "not-found": "{item} Not Found",
     "validation": {
         "todo": {
             "title": {

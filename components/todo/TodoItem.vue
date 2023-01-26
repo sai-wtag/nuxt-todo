@@ -9,7 +9,9 @@
       <div>
         <button class="todo-action">{{ $t('complete') }}</button>
         <button class="todo-action">{{ $t('edit') }}</button>
-        <button class="todo-action">{{ $t('delete') }}</button>
+        <button class="todo-action" @click.prevent="deleteTodo">
+          {{ $t('delete') }}
+        </button>
       </div>
     </div>
   </div>
@@ -31,6 +33,11 @@ export default {
   },
   data() {
     return {}
+  },
+  methods: {
+    deleteTodo() {
+      this.$store.dispatch('todos/delete', this.todo.id)
+    },
   },
 }
 </script>
