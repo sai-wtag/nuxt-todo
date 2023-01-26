@@ -10,7 +10,7 @@ const getLimit = (state) => {
 
 const getCurrentTaskList = (state) => {
   const currentTaskState = state.currentTaskState
-  let list = state.list
+  let list = state.list // default: 'all'
   switch (currentTaskState) {
     case 'complete':
       list = list.filter((todo) => todo.completedAt)
@@ -154,7 +154,7 @@ export const actions = {
     commit('setEditableTodo', todoId)
   },
 
-  loadMoreTodos: ({ commit, state }) => {
+  loadMoreTodos: ({ commit }) => {
     commit('setLimit')
   },
 
