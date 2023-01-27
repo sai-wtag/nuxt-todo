@@ -164,6 +164,8 @@ export const actions = {
   },
 
   setCurrentTaskState: ({ commit }, taskState) => {
+    commit('SET_IS_CREATING', false)
+    commit('SET_EDITABLE_TODO', null)
     commit('RESET_PAGINATION_LIMIT')
     commit('SET_CURRENT_TASK_STATE', taskState)
     commit('SET_CURRENT_TASKS')
