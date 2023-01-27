@@ -134,6 +134,7 @@ export const actions = {
     commit('UPDATE_TODO', updatedTodo)
     commit('COMPLETE_TODO', updatedTodo.id)
     commit('SET_EDITABLE_TODO', null)
+    commit('SET_CURRENT_TASKS')
   },
 
   deleteCurrentTask: ({ commit }) => {
@@ -153,6 +154,7 @@ export const actions = {
 
   complete: ({ commit }, todoId) => {
     commit('COMPLETE_TODO', todoId)
+    commit('SET_CURRENT_TASKS')
   },
 
   setEditableTodo: ({ commit }, todoId) => {
