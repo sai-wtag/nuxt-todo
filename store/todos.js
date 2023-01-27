@@ -44,7 +44,7 @@ export const getters = {
 }
 
 export const mutations = {
-  add: (state, todo) => {
+  ADD_TODO: (state, todo) => {
     const newTodo = {
       id: uuid4(),
       title: todo.title,
@@ -54,22 +54,22 @@ export const mutations = {
     state.list = [newTodo, ...state.list]
   },
 
-  update: (state, updatedTodo) => {
+  UPDATE_TODO: (state, updatedTodo) => {
     const todoIndex = state.list.findIndex((t) => t.id === updatedTodo.id)
     const todo = state.list[todoIndex]
     todo.title = updatedTodo.title
     state.list.splice(todoIndex, 1, todo)
   },
 
-  setIsCreating: (state, creatingStatus = true) => {
+  SET_IS_CREATING: (state, creatingStatus = true) => {
     state.isCreating = creatingStatus
   },
 
-  remove: (state, id) => {
+  REMOVE_TODO: (state, id) => {
     state.list = state.list.filter((todo) => todo.id !== id)
   },
 
-  complete: (state, todoId) => {
+  COMPLETE_TODO: (state, todoId) => {
     const todoIndex = state.list.findIndex((t) => t.id === todoId)
     const todo = state.list[todoIndex]
 
@@ -77,21 +77,21 @@ export const mutations = {
     state.list.splice(todoIndex, 1, todo)
   },
 
-  setEditableTodo: (state, todoId = null) => {
+  SET_EDITABLE_TODO: (state, todoId = null) => {
     state.editableTodo = todoId
       ? state.list.find((todo) => todo.id === todoId)
       : null
   },
 
-  incrementLimit: (state) => {
+  INCREMENT_PAGINATION_LIMIT: (state) => {
     state.limit += pageLimit
   },
 
-  setCurrentTaskState: (state, taskState) => {
+  SET_CURRENT_TASK_STATE: (state, taskState) => {
     state.currentTaskState = taskState
   },
 
-  setCurrentTasks: (state) => {
+  SET_CURRENT_TASKS: (state) => {
     const currentTaskState = state.currentTaskState
     const searchKey = state.searchKey
 
@@ -110,70 +110,70 @@ export const mutations = {
     }
     state.currentTasks = [...list]
   },
-  setSearchKey: (state, searchKey) => {
+  SET_SEARCH_KEY: (state, searchKey) => {
     state.searchKey = searchKey
   },
-  resetPageLimit: (state) => {
+  RESET_PAGINATION_LIMIT: (state) => {
     state.limit = pageLimit
   },
 }
 
 export const actions = {
   add: ({ commit }, todo) => {
-    commit('add', todo)
-    commit('setIsCreating', false)
-    commit('setCurrentTasks')
+    commit('ADD_TODO', todo)
+    commit('SET_IS_CREATING', false)
+    commit('SET_CURRENT_TASKS')
   },
 
   update: ({ commit }, updatedTodo) => {
-    commit('update', updatedTodo)
-    commit('setEditableTodo', null)
+    commit('UPDATE_TODO', updatedTodo)
+    commit('SET_EDITABLE_TODO', null)
   },
 
   completeAndUpdate: ({ commit }, updatedTodo) => {
-    commit('update', updatedTodo)
-    commit('complete', updatedTodo.id)
-    commit('setEditableTodo', null)
+    commit('UPDATE_TODO', updatedTodo)
+    commit('COMPLETE_TODO', updatedTodo.id)
+    commit('SET_EDITABLE_TODO', null)
   },
 
   deleteCurrentTask: ({ commit }) => {
-    commit('setIsCreating', false)
-    commit('setEditableTodo', null)
+    commit('SET_IS_CREATING', false)
+    commit('SET_EDITABLE_TODO', null)
   },
 
   setIsCreating: ({ commit }, creatingStatus = true) => {
-    commit('setIsCreating', creatingStatus)
-    commit('setEditableTodo', null)
+    commit('SET_IS_CREATING', creatingStatus)
+    commit('SET_EDITABLE_TODO', null)
   },
 
   delete: ({ commit }, todoId) => {
-    commit('remove', todoId)
-    commit('setCurrentTasks')
+    commit('REMOVE_TODO', todoId)
+    commit('SET_CURRENT_TASKS')
   },
 
   complete: ({ commit }, todoId) => {
-    commit('complete', todoId)
+    commit('COMPLETE_TODO', todoId)
   },
 
   setEditableTodo: ({ commit }, todoId) => {
-    commit('setEditableTodo', todoId)
+    commit('SET_EDITABLE_TODO', todoId)
   },
 
   loadMoreTodos: ({ commit }) => {
-    commit('incrementLimit')
+    commit('INCREMENT_PAGINATION_LIMIT')
   },
 
   setCurrentTaskState: ({ commit }, taskState) => {
-    commit('resetPageLimit')
-    commit('setCurrentTaskState', taskState)
-    commit('setCurrentTasks')
+    commit('RESET_PAGINATION_LIMIT')
+    commit('SET_CURRENT_TASK_STATE', taskState)
+    commit('SET_CURRENT_TASKS')
   },
 
   searchTasksByTitle: ({ commit }, e) => {
     const searchTasks = _.debounce(() => {
-      commit('resetPageLimit')
-      commit('setSearchKey', e.target.value)
-      commit('setCurrentTasks')
+      commit('RESET_PAGINATION_LIMIT')
+      commit('SET_SEARCH_KEY', e.target.value)
+      commit('SET_CURRENT_TASKS')
     }, 500)
     searchTasks()
   },
