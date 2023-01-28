@@ -175,6 +175,7 @@ export const actions = {
 
   searchTasksByTitle: ({ commit }, e) => {
     const searchTasks = _.debounce(() => {
+      commit('SET_IS_CREATING', false)
       commit('RESET_PAGINATION_LIMIT')
       commit('SET_SEARCH_KEY', e.target.value)
       commit('SET_CURRENT_TASKS')
