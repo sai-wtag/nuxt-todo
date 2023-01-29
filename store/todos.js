@@ -38,10 +38,12 @@ export const mutations = {
   },
 
   update(state, updatedTodo) {
-    const todoIndex = state.list.findIndex((t) => t.id === updatedTodo.id)
-    const todo = state.list[todoIndex]
-    todo.title = updatedTodo.title
-    state.list.splice(todoIndex, 1, todo)
+    state.list = state.list.map((todo) => {
+      if (todo.id === updatedTodo.id) {
+        todo.title = updatedTodo.title
+      }
+      return todo
+    })
   },
 
   setIsCreating(state, creatingStatus = true) {
