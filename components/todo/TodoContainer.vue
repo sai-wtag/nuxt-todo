@@ -27,22 +27,7 @@
     </div>
 
     <!-- Load more/less todos -->
-    <div class="todo-footer">
-      <button
-        v-if="hasMoreTodos"
-        class="todo-btn__load-more"
-        @click.prevent="loadMoreTodos"
-      >
-        {{ $t('load-more') }}
-      </button>
-      <button
-        v-if="isLoadedMore && !hasMoreTodos"
-        class="todo-btn__show-less"
-        @click.prevent="showLessTodos"
-      >
-        {{ $t('show-less') }}
-      </button>
-    </div>
+    <TodoFooter />
   </div>
 </template>
 <script>
@@ -50,6 +35,7 @@ import { mapGetters } from 'vuex'
 import FilterOptions from '@/components/todo/FilterOptions.vue'
 import AddTodoCard from '@/components/todo/AddTodoCard.vue'
 import TodoItem from '@/components/todo/TodoItem.vue'
+import TodoFooter from '@/components/todo/utils/TodoFooter.vue'
 
 export default {
   name: 'TodoContainer',
@@ -57,17 +43,13 @@ export default {
     FilterOptions,
     AddTodoCard,
     TodoItem,
+    TodoFooter,
   },
   data() {
     return {}
   },
   computed: {
-    ...mapGetters('todos', [
-      'isTodoCreating',
-      'todos',
-      'hasMoreTodos',
-      'isLoadedMore',
-    ]),
+    ...mapGetters('todos', ['isTodoCreating', 'todos']),
     isTodoAvailable() {
       return this.todos.length > 0
     },
@@ -78,12 +60,6 @@ export default {
     },
     setIsCreating() {
       this.$store.dispatch('todos/setIsCreating')
-    },
-    loadMoreTodos() {
-      this.$store.dispatch('todos/loadMoreTodos')
-    },
-    showLessTodos() {
-      this.$store.dispatch('todos/showLessTodos')
     },
   },
 }
