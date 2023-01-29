@@ -126,7 +126,6 @@ export const actions = {
   delete({ commit }, todoId) {
     commit('remove', todoId)
     commit('checkLoadMore')
-    commit('checkLimit')
   },
   complete({ commit }, todoId) {
     commit('complete', todoId)
