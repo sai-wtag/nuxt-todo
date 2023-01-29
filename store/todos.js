@@ -154,7 +154,6 @@ export const actions = {
     commit('remove', todoId)
     commit('setCurrentTasks')
     commit('checkLoadMore')
-    commit('checkLimit')
   },
 
   complete: ({ commit }, todoId) => {
