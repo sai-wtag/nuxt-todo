@@ -92,10 +92,12 @@ export const mutations = {
     state.isLoadedMore = status
   },
   checkLoadMore: (state) => {
-    console.log('checkLoadMore', state.list.length, pageLimit)
     if (state.list.length <= pageLimit) {
       state.isLoadedMore = false
     }
+  },
+  checkLimit: (state) => {
+    state.limit = Math.ceil(state.list.length / pageLimit) * pageLimit
   },
 }
 
@@ -124,6 +126,7 @@ export const actions = {
   delete({ commit }, todoId) {
     commit('remove', todoId)
     commit('checkLoadMore')
+    commit('checkLimit')
   },
   complete({ commit }, todoId) {
     commit('complete', todoId)
