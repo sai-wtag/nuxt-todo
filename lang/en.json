@@ -21,6 +21,7 @@
     "characters": "characters",
     "not-found": "{item} Not Found",
     "load-more": "Load More",
+    "show-less": "Show Less",
     "loading": "Loading",
     "validation": {
         "todo": {

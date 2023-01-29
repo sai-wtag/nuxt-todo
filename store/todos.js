@@ -17,6 +17,7 @@ export const state = () => ({
   limit: pageLimit,
   taskStates: ['all', 'complete', 'incomplete'],
   currentTaskState: 'all',
+  isLoadedMore: false,
 })
 
 export const getters = {
@@ -37,6 +38,9 @@ export const getters = {
   },
   getCurrentTaskState(state) {
     return state.currentTaskState
+  },
+  isLoadedMore(state) {
+    return state.isLoadedMore
   },
 }
 
@@ -84,9 +88,11 @@ export const mutations = {
       ? state.list.find((todo) => todo.id === todoId)
       : null
   },
-
-  setLimit: (state) => {
-    state.limit += pageLimit
+  setLimit: (state, limit) => {
+    state.limit = limit
+  },
+  setLoadMore: (state, status) => {
+    state.isLoadedMore = status
   },
 
   setCurrentTaskState: (state, taskState) => {
@@ -148,9 +154,13 @@ export const actions = {
   setEditableTodo: ({ commit }, todoId) => {
     commit('setEditableTodo', todoId)
   },
-
-  loadMoreTodos: ({ commit }) => {
-    commit('setLimit')
+  loadMoreTodos({ commit, state }) {
+    commit('setLoadMore', true)
+    commit('setLimit', state.limit + pageLimit)
+  },
+  showLessTodos({ commit, state }) {
+    commit('setLoadMore', false)
+    commit('setLimit', pageLimit)
   },
 
   setCurrentTaskState: ({ commit }, taskState) => {
