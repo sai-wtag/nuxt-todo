@@ -26,10 +26,21 @@
       {{ $t('not-found', { item: $t('todos') }) }}
     </div>
 
-    <!-- Load more todos -->
-    <div v-if="hasMoreTodos" class="todo-footer">
-      <button class="todo-btn__load-more" @click.prevent="loadMoreTodos">
+    <!-- Load more/less todos -->
+    <div class="todo-footer">
+      <button
+        v-if="hasMoreTodos"
+        class="todo-btn__load-more"
+        @click.prevent="loadMoreTodos"
+      >
         {{ $t('load-more') }}
+      </button>
+      <button
+        v-if="isLoadedMore && !hasMoreTodos"
+        class="todo-btn__show-less"
+        @click.prevent="showLessTodos"
+      >
+        {{ $t('show-less') }}
       </button>
     </div>
   </div>
@@ -51,7 +62,12 @@ export default {
     return {}
   },
   computed: {
-    ...mapGetters('todos', ['isTodoCreating', 'todos', 'hasMoreTodos']),
+    ...mapGetters('todos', [
+      'isTodoCreating',
+      'todos',
+      'hasMoreTodos',
+      'isLoadedMore',
+    ]),
     isTodoAvailable() {
       return this.todos.length > 0
     },
@@ -65,6 +81,9 @@ export default {
     },
     loadMoreTodos() {
       this.$store.dispatch('todos/loadMoreTodos')
+    },
+    showLessTodos() {
+      this.$store.dispatch('todos/showLessTodos')
     },
   },
 }

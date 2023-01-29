@@ -1,6 +1,6 @@
 import uuid4 from 'uuid4'
 
-const pageLimit = 9
+const pageLimit = 3
 
 const getLimit = (state) => {
   let limit = state.limit
@@ -14,6 +14,7 @@ export const state = () => ({
   isCreating: false,
   editableTodo: null,
   limit: pageLimit,
+  isLoadedMore: false,
 })
 
 export const getters = {
@@ -34,6 +35,9 @@ export const getters = {
   },
   hasMoreTodos(state) {
     return state.list.length > getLimit(state)
+  },
+  isLoadedMore(state) {
+    return state.isLoadedMore
   },
 }
 
@@ -81,8 +85,11 @@ export const mutations = {
       ? state.list.find((todo) => todo.id === todoId)
       : null
   },
-  setLimit: (state) => {
-    state.limit += pageLimit
+  setLimit: (state, limit) => {
+    state.limit = limit
+  },
+  setLoadMore: (state, status) => {
+    state.isLoadedMore = status
   },
 }
 
@@ -118,6 +125,11 @@ export const actions = {
     commit('setEditableTodo', todoId)
   },
   loadMoreTodos({ commit, state }) {
-    commit('setLimit')
+    commit('setLoadMore', true)
+    commit('setLimit', state.limit + pageLimit)
+  },
+  showLessTodos({ commit, state }) {
+    commit('setLoadMore', false)
+    commit('setLimit', pageLimit)
   },
 }
