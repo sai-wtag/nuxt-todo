@@ -43,11 +43,12 @@ export const mutations = {
     todo.done = !todo.done
   },
   complete(state, todoId) {
-    const todoIndex = state.list.findIndex((t) => t.id === todoId)
-    const todo = state.list[todoIndex]
-
-    todo.completedAt = new Date()
-    state.list.splice(todoIndex, 1, todo)
+    state.list = state.list.map((todo) => {
+      if (todo.id === todoId) {
+        todo.completedAt = new Date()
+      }
+      return todo
+    })
   },
 }
 
