@@ -1,6 +1,6 @@
 <template>
   <div class="add-todo-card">
-    <form @submit.prevent="addTodo">
+    <form @submit.prevent="submitHandler">
       <div class="add-todo-card__body">
         <input
           ref="titleInputRef"
@@ -15,10 +15,19 @@
       </div>
 
       <div class="add-todo-card__footer">
-        <button type="submit" class="add-todo-card__footer__btn">
-          {{ $t('add') }}
+        <button type="submit">
+          {{ isTodoEditing ? $t('save') : $t('add') }}
         </button>
-        <button @click.prevent="deleteCurrentTask">{{ $t('delete') }}</button>
+        <button
+          v-if="isTodoEditing"
+          type="button"
+          @click.prevent="submitHandler($event, shouldComplete)"
+        >
+          {{ $t('complete') }}
+        </button>
+        <button @click.prevent="deleteCurrentTask">
+          {{ isTodoEditing ? $t('cancel') : $t('delete') }}
+        </button>
         <div>
           <span v-if="errorMessage" class="error-message">{{
             errorMessage
@@ -29,8 +38,17 @@
   </div>
 </template>
 <script>
+import { mapGetters } from 'vuex'
 export default {
   name: 'AddTodoCard',
+
+  props: {
+    isTodoEditing: {
+      type: Boolean,
+      default: false,
+    },
+  },
+
   data() {
     return {
       form: {
@@ -44,18 +62,53 @@ export default {
           maxLength: 50,
         },
       },
+      shouldComplete: true,
     }
   },
 
+  computed: {
+    ...mapGetters('todos', ['getEditableTodo']),
+  },
+  mounted() {
+    if (this.isTodoEditing) {
+      this.form.title = this.getEditableTodo.title
+    }
+    this.$nextTick(() => {
+      this.$refs.titleInputRef.focus()
+    })
+  },
   methods: {
-    addTodo() {
+    submitHandler(_, shouldCompleteTodo = false) {
       const errorMessage = this.checkValidation()
       if (errorMessage) {
         this.errorMessage = errorMessage
         return
       }
+
+      if (shouldCompleteTodo) {
+        this.completeAndUpdateTodo()
+        return
+      }
+      this.isTodoEditing ? this.editTodo() : this.addTodo()
+    },
+
+    addTodo() {
       this.$emit('addTodo', this.form)
       this.form.title = ''
+    },
+
+    editTodo() {
+      this.$store.dispatch('todos/update', {
+        id: this.getEditableTodo.id,
+        title: this.form.title,
+      })
+    },
+
+    completeAndUpdateTodo() {
+      this.$store.dispatch('todos/completeAndUpdate', {
+        id: this.getEditableTodo.id,
+        title: this.form.title,
+      })
     },
 
     deleteCurrentTask() {
@@ -90,19 +143,19 @@ export default {
 
 <style scoped lang="scss">
 $card-padding: 10px;
-
+$button-gap: 5px;
 form {
   display: flex;
   flex-direction: column;
   height: 100%;
-  gap: 5px;
+  gap: $button-gap;
 }
 
 .add-todo-card__footer {
   display: flex;
   align-items: center;
   width: 100%;
-  gap: $card-padding $card-padding;
+  gap: $button-gap;
 }
 .add-todo-card__input {
   resize: none;

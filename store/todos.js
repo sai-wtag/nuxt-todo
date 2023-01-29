@@ -20,6 +20,9 @@ export const getters = {
   isTodoCreating(state) {
     return state.isCreating
   },
+  getEditableTodo(state) {
+    return state.editableTodo
+  },
 }
 
 export const mutations = {
@@ -31,9 +34,18 @@ export const mutations = {
       completedAt: null,
       isTodoCompleted: false,
     }
-
     state.list = [newTodo, ...state.list]
   },
+
+  update(state, updatedTodo) {
+    state.list = state.list.map((todo) => {
+      if (todo.id === updatedTodo.id) {
+        todo.title = updatedTodo.title
+      }
+      return todo
+    })
+  },
+
   setIsCreating(state, creatingStatus = true) {
     state.isCreating = creatingStatus
   },
@@ -52,6 +64,11 @@ export const mutations = {
       return todo
     })
   },
+  setEditableTodo: (state, todoId = null) => {
+    state.editableTodo = todoId
+      ? state.list.find((todo) => todo.id === todoId)
+      : null
+  },
 }
 
 export const actions = {
@@ -59,16 +76,30 @@ export const actions = {
     commit('add', todo)
     commit('setIsCreating', false)
   },
+  update({ commit }, updatedTodo) {
+    commit('update', updatedTodo)
+    commit('setEditableTodo', null)
+  },
+  completeAndUpdate({ commit }, updatedTodo) {
+    commit('update', updatedTodo)
+    commit('complete', updatedTodo.id)
+    commit('setEditableTodo', null)
+  },
   deleteCurrentTask({ commit }) {
     commit('setIsCreating', false)
+    commit('setEditableTodo', null)
   },
   setIsCreating({ commit }, creatingStatus = true) {
     commit('setIsCreating', creatingStatus)
+    commit('setEditableTodo', null)
   },
   delete({ commit }, todoId) {
     commit('remove', todoId)
   },
   complete({ commit }, todoId) {
     commit('complete', todoId)
+  },
+  setEditableTodo({ commit }, todoId) {
+    commit('setEditableTodo', todoId)
   },
 }
