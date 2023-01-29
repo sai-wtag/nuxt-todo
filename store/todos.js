@@ -29,6 +29,7 @@ export const mutations = {
       title: todo.title,
       createdAt: new Date(),
       completedAt: null,
+      isTodoCompleted: false,
     }
 
     state.list = [newTodo, ...state.list]
@@ -46,6 +47,7 @@ export const mutations = {
     state.list = state.list.map((todo) => {
       if (todo.id === todoId) {
         todo.completedAt = new Date()
+        todo.isTodoCompleted = true
       }
       return todo
     })

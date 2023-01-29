@@ -3,7 +3,7 @@
     <div class="todo-item__header">
       <span
         class="todo-title"
-        :class="isTodoCompleted ? 'text-line-through' : ''"
+        :class="todo.isTodoCompleted ? 'text-line-through' : ''"
         >{{ todo.title }}</span
       >
       <span class="time"
@@ -16,13 +16,13 @@
       <div class="action-buttons">
         <div>
           <button
-            v-if="!isTodoCompleted"
+            v-if="!todo.isTodoCompleted"
             class="todo-action"
             @click.prevent="completeTodo"
           >
             {{ $t('complete') }}
           </button>
-          <button v-if="!isTodoCompleted" class="todo-action">
+          <button v-if="!todo.isTodoCompleted" class="todo-action">
             {{ $t('edit') }}
           </button>
           <button class="todo-action" @click.prevent="deleteTodo">
@@ -30,7 +30,7 @@
           </button>
         </div>
         <div>
-          <span v-if="isTodoCompleted" class="time">
+          <span v-if="todo.isTodoCompleted" class="time">
             {{ $t('completed-in') }}:
             {{ formatDistance(todo.completedAt, todo.createdAt, getLocale) }}
           </span>
@@ -62,9 +62,6 @@ export default {
   },
 
   computed: {
-    isTodoCompleted() {
-      return this.todo.completedAt
-    },
     getLocale() {
       let locale = {}
       if (this.$i18n.locale === 'bn') {
