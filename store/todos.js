@@ -91,6 +91,12 @@ export const mutations = {
   setLoadMore: (state, status) => {
     state.isLoadedMore = status
   },
+  checkLoadMore: (state) => {
+    console.log('checkLoadMore', state.list.length, pageLimit)
+    if (state.list.length <= pageLimit) {
+      state.isLoadedMore = false
+    }
+  },
 }
 
 export const actions = {
@@ -117,6 +123,7 @@ export const actions = {
   },
   delete({ commit }, todoId) {
     commit('remove', todoId)
+    commit('checkLoadMore')
   },
   complete({ commit }, todoId) {
     commit('complete', todoId)
@@ -125,11 +132,11 @@ export const actions = {
     commit('setEditableTodo', todoId)
   },
   loadMoreTodos({ commit, state }) {
-    commit('setLoadMore', true)
     commit('setLimit', state.limit + pageLimit)
+    commit('setLoadMore', true)
   },
   showLessTodos({ commit, state }) {
-    commit('setLoadMore', false)
     commit('setLimit', pageLimit)
+    commit('setLoadMore', false)
   },
 }
