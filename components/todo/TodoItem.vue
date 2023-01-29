@@ -32,9 +32,7 @@
         <div>
           <span v-if="isTodoCompleted" class="time">
             {{ $t('completed-in') }}:
-            {{
-              formatDistance(todo.completedAt, todo.createdAt, getTimeDistance)
-            }}
+            {{ formatDistance(todo.completedAt, todo.createdAt, getLocale) }}
           </span>
         </div>
       </div>
@@ -67,16 +65,12 @@ export default {
     isTodoCompleted() {
       return this.todo.completedAt
     },
-    getTimeDistance() {
-      const distance = {
-        // addSuffix: true,
-      }
-
+    getLocale() {
+      let locale = {}
       if (this.$i18n.locale === 'bn') {
-        distance.locale = bn
+        locale = { locale: bn }
       }
-
-      return distance
+      return locale
     },
   },
 
