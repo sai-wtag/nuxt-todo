@@ -172,5 +172,7 @@ export const actions = {
   setCurrentTaskState: ({ commit }, taskState) => {
     commit('setCurrentTaskState', taskState)
     commit('setCurrentTasks')
+    commit('setLimit', pageLimit)
+    commit('setLoadMore', false)
   },
 }
