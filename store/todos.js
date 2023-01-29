@@ -32,6 +32,7 @@ export const mutations = {
       title: todo.title,
       createdAt: new Date(),
       completedAt: null,
+      isTodoCompleted: false,
     }
     state.list = [newTodo, ...state.list]
   },
@@ -53,11 +54,13 @@ export const mutations = {
     todo.done = !todo.done
   },
   complete(state, todoId) {
-    const todoIndex = state.list.findIndex((t) => t.id === todoId)
-    const todo = state.list[todoIndex]
-
-    todo.completedAt = new Date()
-    state.list.splice(todoIndex, 1, todo)
+    state.list = state.list.map((todo) => {
+      if (todo.id === todoId) {
+        todo.completedAt = new Date()
+        todo.isTodoCompleted = true
+      }
+      return todo
+    })
   },
   setEditableTodo: (state, todoId = null) => {
     state.editableTodo = todoId

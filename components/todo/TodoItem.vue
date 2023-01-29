@@ -3,7 +3,7 @@
     <div class="todo-item__header">
       <span
         class="todo-title"
-        :class="isTodoCompleted ? 'text-line-through' : ''"
+        :class="todo.isTodoCompleted ? 'text-line-through' : ''"
         >{{ todo.title }}</span
       >
       <span class="time"
@@ -15,11 +15,9 @@
     <div class="todo-item__footer">
       <TodoActions :todo="todo" />
       <div>
-        <span v-if="isTodoCompleted" class="time">
+        <span v-if="todo.isTodoCompleted" class="time">
           {{ $t('completed-in') }}:
-          {{
-            formatDistance(todo.createdAt, todo.completedAt, getTimeDistance)
-          }}
+          {{ formatDistance(todo.createdAt, todo.completedAt, getLocale) }}
         </span>
       </div>
     </div>
@@ -66,17 +64,12 @@ export default {
         ? this.getEditableTodo.id === this.todo.id
         : false
     },
-    isTodoCompleted() {
-      return this.todo.completedAt
-    },
-    getTimeDistance() {
+    getLocale() {
+      let locale = {}
       if (this.$i18n.locale === 'bn') {
-        return {
-          locale: bn,
-        }
+        locale = { locale: bn }
       }
-
-      return {}
+      return locale
     },
   },
 }

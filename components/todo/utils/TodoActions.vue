@@ -1,14 +1,14 @@
 <template>
   <div class="action-buttons">
     <button
-      v-if="!isTodoCompleted"
+      v-if="!todo.isTodoCompleted"
       class="todo-action"
       @click.prevent="completeTodo"
     >
       {{ $t('complete') }}
     </button>
     <button
-      v-if="!isTodoCompleted"
+      v-if="!todo.isTodoCompleted"
       class="todo-action"
       @click.prevent="editTodo"
     >
@@ -26,11 +26,6 @@ export default {
     todo: {
       type: Object,
       required: true,
-    },
-  },
-  computed: {
-    isTodoCompleted() {
-      return this.todo.completedAt
     },
   },
   methods: {
