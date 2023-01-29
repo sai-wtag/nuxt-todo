@@ -113,7 +113,7 @@ export const mutations = {
     state.currentTasks = list
   },
   checkLoadMore: (state) => {
-    if (state.list.length <= pageLimit) {
+    if (state.currentTasks.length <= pageLimit) {
       state.isLoadedMore = false
     }
   },
