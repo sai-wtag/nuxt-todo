@@ -1,20 +1,15 @@
 <template>
   <div class="action-buttons">
-    <button
-      v-if="!todo.isTodoCompleted"
-      class="todo-action"
-      @click.prevent="completeTodo"
-    >
-      {{ $t('complete') }}
-    </button>
-    <button
-      v-if="!todo.isTodoCompleted"
-      class="todo-action"
-      @click.prevent="editTodo"
-    >
-      {{ $t('edit') }}
-    </button>
-    <button class="todo-action" @click.prevent="deleteTodo">
+    <div v-if="!todo.isTodoCompleted">
+      <button @click.prevent="completeTodo">
+        {{ $t('complete') }}
+      </button>
+      <button @click.prevent="editTodo">
+        {{ $t('edit') }}
+      </button>
+    </div>
+
+    <button @click.prevent="deleteTodo">
       {{ $t('delete') }}
     </button>
   </div>
