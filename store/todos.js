@@ -112,6 +112,14 @@ export const mutations = {
     }
     state.currentTasks = list
   },
+  checkLoadMore: (state) => {
+    if (state.list.length <= pageLimit) {
+      state.isLoadedMore = false
+    }
+  },
+  checkLimit: (state) => {
+    state.limit = Math.ceil(state.list.length / pageLimit) * pageLimit
+  },
 }
 
 export const actions = {
@@ -145,6 +153,8 @@ export const actions = {
   delete: ({ commit }, todoId) => {
     commit('remove', todoId)
     commit('setCurrentTasks')
+    commit('checkLoadMore')
+    commit('checkLimit')
   },
 
   complete: ({ commit }, todoId) => {
@@ -155,12 +165,12 @@ export const actions = {
     commit('setEditableTodo', todoId)
   },
   loadMoreTodos({ commit, state }) {
-    commit('setLoadMore', true)
     commit('setLimit', state.limit + pageLimit)
+    commit('setLoadMore', true)
   },
   showLessTodos({ commit, state }) {
-    commit('setLoadMore', false)
     commit('setLimit', pageLimit)
+    commit('setLoadMore', false)
   },
 
   setCurrentTaskState: ({ commit }, taskState) => {
