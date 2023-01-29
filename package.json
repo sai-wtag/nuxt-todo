@@ -1,7 +1,13 @@
 {
   "name": "nuxt-todo",
   "version": "1.0.0",
+  "description": "A simple todo app with Nuxt.js",
   "private": true,
+  "engines": {
+    "node": "16.x",
+    "npm": "8.19.x",
+    "yarn": "1.22.x"
+  },
   "scripts": {
     "dev": "nuxt",
     "build": "nuxt build",
@@ -19,6 +25,7 @@
     "core-js": "^3.25.3",
     "date-fns": "^2.29.3",
     "nuxt": "^2.15.8",
+    "uuid4": "^2.0.3",
     "vue": "^2.7.10",
     "vue-server-renderer": "^2.7.10",
     "vue-template-compiler": "^2.7.10"
@@ -40,5 +47,11 @@
     "sass": "^1.57.1",
     "sass-loader": "10",
     "vue-jest": "^3.0.7"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/sai-wtag/nuxt-todo"
+  },
+  "author": "Md Asiful Islam Sakib <asiful.sakib@welldev.io>",
+  "license": "MIT"
 }

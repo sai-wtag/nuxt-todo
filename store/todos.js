@@ -1,3 +1,5 @@
+import uuid4 from 'uuid4'
+
 export const state = () => ({
   list: [],
   isLoading: false,
@@ -23,11 +25,11 @@ export const getters = {
 export const mutations = {
   add(state, todo) {
     const newTodo = {
-      id: new Date().getTime(),
+      id: uuid4(),
       title: todo.title,
-      completed: false,
       createdAt: new Date(),
       completedAt: null,
+      isTodoCompleted: false,
     }
 
     state.list = [newTodo, ...state.list]
@@ -40,6 +42,15 @@ export const mutations = {
   },
   toggle(state, todo) {
     todo.done = !todo.done
+  },
+  complete(state, todoId) {
+    state.list = state.list.map((todo) => {
+      if (todo.id === todoId) {
+        todo.completedAt = new Date()
+        todo.isTodoCompleted = true
+      }
+      return todo
+    })
   },
 }
 
@@ -56,5 +67,8 @@ export const actions = {
   },
   delete({ commit }, todoId) {
     commit('remove', todoId)
+  },
+  complete({ commit }, todoId) {
+    commit('complete', todoId)
   },
 }
