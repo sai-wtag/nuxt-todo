@@ -117,9 +117,6 @@ export const mutations = {
       state.isLoadedMore = false
     }
   },
-  checkLimit: (state) => {
-    state.limit = Math.ceil(state.list.length / pageLimit) * pageLimit
-  },
 }
 
 export const actions = {
