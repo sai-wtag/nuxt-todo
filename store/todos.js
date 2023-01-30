@@ -1,5 +1,5 @@
 import uuid4 from 'uuid4'
-import _ from 'lodash'
+import debounce from '@/helpers/debounce'
 
 const pageLimit = 3
 
@@ -194,7 +194,7 @@ export const actions = {
   },
 
   searchTasksByTitle: ({ commit }, e) => {
-    const searchTasks = _.debounce(() => {
+    const searchTasks = debounce(() => {
       commit('SET_IS_CREATING', false)
       commit('RESET_PAGINATION_LIMIT')
       commit('SET_SEARCH_KEY', e.target.value)
