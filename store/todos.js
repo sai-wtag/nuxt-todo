@@ -45,6 +45,9 @@ export const getters = {
   isLoadedMore: (state) => {
     return state.isLoadedMore
   },
+  isTodoSearching: (state) => {
+    return state.isSearching
+  },
 }
 
 export const mutations = {
@@ -197,12 +200,13 @@ export const actions = {
   },
 
   searchTasksByTitle: ({ commit }, e) => {
+    commit('SET_IS_SEARCHING', true)
     const searchTasks = debounce(() => {
-      commit('SET_IS_SEARCHING', true)
       commit('SET_IS_CREATING', false)
       commit('RESET_PAGINATION_LIMIT')
       commit('SET_SEARCH_KEY', e.target.value)
       commit('SET_CURRENT_TASKS')
+      commit('SET_IS_SEARCHING', false)
     }, 3000)
     searchTasks()
   },
