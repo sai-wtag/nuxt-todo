@@ -31,7 +31,7 @@ export const getters = {
     return state.editableTodo
   },
   hasMoreTodos: (state) => {
-    return state.list.length > getLimit(state)
+    return state.currentTasks.length > getLimit(state)
   },
   getTaskStates: (state) => {
     return state.taskStates
@@ -143,13 +143,17 @@ export const actions = {
     commit('SET_IS_CREATING', creatingStatus)
     commit('SET_EDITABLE_TODO', null)
   },
+
   delete: ({ commit }, todoId) => {
     commit('REMOVE_TODO', todoId)
+    commit('SET_CURRENT_TASKS')
     commit('CHECK_LOAD_MORE')
   },
+
   complete: ({ commit }, todoId) => {
     commit('COMPLETE_TODO', todoId)
   },
+
   setEditableTodo: ({ commit }, todoId) => {
     commit('SET_EDITABLE_TODO', todoId)
   },
