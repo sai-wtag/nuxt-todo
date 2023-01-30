@@ -16,13 +16,13 @@ export const getters = {
 }
 
 export const mutations = {
-  setLocale(state, locale) {
+  setLocale: (state, locale) => {
     state.currentLocale = locale
   },
 }
 
 export const actions = {
-  setLocale({ commit }, locale) {
+  setLocale: ({ commit }, locale) => {
     commit('setLocale', locale)
   },
 }
