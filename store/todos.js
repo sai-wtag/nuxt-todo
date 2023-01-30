@@ -58,7 +58,6 @@ export const mutations = {
     }
     state.list = [newTodo, ...state.list]
   },
-
   UPDATE_TODO: (state, updatedTodo) => {
     state.list = state.list.map((todo) => {
       if (todo.id === updatedTodo.id) {
@@ -67,7 +66,6 @@ export const mutations = {
       return todo
     })
   },
-
   SET_IS_CREATING: (state, creatingStatus = true) => {
     state.isCreating = creatingStatus
   },
@@ -88,23 +86,18 @@ export const mutations = {
       ? state.list.find((todo) => todo.id === todoId)
       : null
   },
-
   INCREMENT_PAGINATION_LIMIT: (state) => {
     state.limit += pageLimit
   },
-
   SET_LIMIT: (state, limit) => {
     state.limit = limit
   },
-
   SET_LOAD_MORE: (state, status) => {
     state.isLoadedMore = status
   },
-
   SET_CURRENT_TASK_STATE: (state, taskState) => {
     state.currentTaskState = taskState
   },
-
   SET_CURRENT_TASKS: (state) => {
     const currentTaskState = state.currentTaskState
     const searchKey = state.searchKey
@@ -197,6 +190,7 @@ export const actions = {
     commit('SET_CURRENT_TASK_STATE', taskState)
     commit('SET_CURRENT_TASKS')
     commit('RESET_PAGINATION_LIMIT')
+    commit('SET_LOAD_MORE', false)
   },
 
   searchTasksByTitle: ({ commit }, e) => {
