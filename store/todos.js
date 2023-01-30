@@ -143,15 +143,15 @@ export const actions = {
     commit('SET_IS_CREATING', creatingStatus)
     commit('SET_EDITABLE_TODO', null)
   },
-  delete({ commit }, todoId) {
-    commit('remove', todoId)
-    commit('checkLoadMore')
+  delete: ({ commit }, todoId) => {
+    commit('REMOVE_TODO', todoId)
+    commit('CHECK_LOAD_MORE')
   },
-  complete({ commit }, todoId) {
-    commit('complete', todoId)
+  complete: ({ commit }, todoId) => {
+    commit('COMPLETE_TODO', todoId)
   },
-  setEditableTodo({ commit }, todoId) {
-    commit('setEditableTodo', todoId)
+  setEditableTodo: ({ commit }, todoId) => {
+    commit('SET_EDITABLE_TODO', todoId)
   },
 
   loadMoreTodos: ({ commit, state }) => {
@@ -165,9 +165,9 @@ export const actions = {
   },
 
   setCurrentTaskState: ({ commit }, taskState) => {
-    commit('setCurrentTaskState', taskState)
-    commit('setCurrentTasks')
-    commit('setLimit', pageLimit)
-    commit('setLoadMore', false)
+    commit('SET_CURRENT_TASK_STATE', taskState)
+    commit('SET_CURRENT_TASKS')
+    commit('SET_LIMIT', pageLimit)
+    commit('SET_LOAD_MORE', false)
   },
 }
