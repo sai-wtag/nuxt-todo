@@ -128,6 +128,9 @@ export const mutations = {
       state.isLoadedMore = false
     }
   },
+  SET_IS_SEARCHING: (state, status) => {
+    state.isSearching = status
+  },
 }
 
 export const actions = {
@@ -195,11 +198,12 @@ export const actions = {
 
   searchTasksByTitle: ({ commit }, e) => {
     const searchTasks = debounce(() => {
+      commit('SET_IS_SEARCHING', true)
       commit('SET_IS_CREATING', false)
       commit('RESET_PAGINATION_LIMIT')
       commit('SET_SEARCH_KEY', e.target.value)
       commit('SET_CURRENT_TASKS')
-    }, 500)
+    }, 3000)
     searchTasks()
   },
 }
