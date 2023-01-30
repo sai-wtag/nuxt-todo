@@ -4,9 +4,9 @@
   "description": "A simple todo app with Nuxt.js",
   "private": true,
   "engines": {
-    "node": "16.19.0",
-    "npm": "8.19.3",
-    "yarn": "1.22.19"
+    "node": "16.x",
+    "npm": "8.19.x",
+    "yarn": "1.22.x"
   },
   "scripts": {
     "dev": "nuxt",
