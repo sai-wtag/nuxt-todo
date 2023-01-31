@@ -103,11 +103,13 @@ export const mutations = {
   },
   SET_CURRENT_TASKS: (state) => {
     const currentTaskState = state.currentTaskState
-    const searchKey = state.searchKey
+    const searchKey = state.searchKey.toLowerCase()
 
     let list =
       searchKey !== ''
-        ? state.list.filter((todo) => todo.title.includes(searchKey))
+        ? state.list.filter((todo) =>
+            todo.title.toLowerCase().includes(searchKey)
+          )
         : state.list
 
     switch (currentTaskState) {
