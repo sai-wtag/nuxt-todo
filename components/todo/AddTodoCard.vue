@@ -65,7 +65,7 @@ export default {
   },
 
   computed: {
-    ...mapGetters('todos', ['getEditableTodo']),
+    ...mapGetters('todos', ['getEditableTodo', 'isTodoSearching']),
     titlePlaceholder() {
       const addTask = this.$t('add-task')
       const minWord = this.$t('min')
@@ -88,6 +88,8 @@ export default {
   },
   methods: {
     submitHandler(_, shouldCompleteTodo = false) {
+      if (this.isTodoSearching) return
+
       const errorMessage = this.checkValidation()
       if (errorMessage) {
         this.errorMessage = errorMessage
@@ -121,6 +123,7 @@ export default {
     },
 
     deleteCurrentTask() {
+      if (this.isTodoSearching) return
       this.$store.dispatch('todos/deleteCurrentTask')
     },
 

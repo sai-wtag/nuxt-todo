@@ -182,12 +182,14 @@ export const actions = {
     commit('SET_EDITABLE_TODO', todoId)
   },
 
-  loadMoreTodos: ({ commit }) => {
+  loadMoreTodos: ({ commit, state }) => {
+    if (state.isSearching) return
     commit('INCREMENT_PAGINATION_LIMIT')
     commit('SET_LOAD_MORE', true)
   },
 
   showLessTodos: ({ commit, state }) => {
+    if (state.isSearching) return
     commit('RESET_PAGINATION_LIMIT')
     commit('SET_LOAD_MORE', false)
   },
@@ -203,13 +205,17 @@ export const actions = {
 
   searchTasksByTitle: ({ commit }, e) => {
     commit('SET_IS_SEARCHING', true)
+    commit('SET_SEARCH_KEY', e.target.value)
+    commit('SET_IS_CREATING', false)
+    commit('SET_EDITABLE_TODO', null)
+
     const searchTasks = debounce(() => {
-      commit('SET_IS_CREATING', false)
-      commit('RESET_PAGINATION_LIMIT')
-      commit('SET_SEARCH_KEY', e.target.value)
       commit('SET_CURRENT_TASKS')
+      commit('RESET_PAGINATION_LIMIT')
       commit('SET_IS_SEARCHING', false)
+      commit('SET_LOAD_MORE', false)
     }, 3000)
+
     searchTasks()
   },
 }
