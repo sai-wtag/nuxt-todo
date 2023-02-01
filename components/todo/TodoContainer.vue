@@ -19,10 +19,15 @@
           <TodoItem :todo="todo" />
         </div>
       </template>
-      <template v-else>
-        <div>{{ $t('not-found', { item: $t('todos') }) }}</div>
-      </template>
     </div>
+
+    <!-- No todos found -->
+    <div v-if="!isTodoFound" class="todo__not-found">
+      {{ $t('not-found', { item: $t('todos') }) }}
+    </div>
+
+    <!-- Load more/less todos -->
+    <TodoFooter />
   </div>
 </template>
 <script>
@@ -30,6 +35,7 @@ import { mapGetters } from 'vuex'
 import FilterOptions from '@/components/todo/FilterOptions.vue'
 import AddTodoCard from '@/components/todo/AddTodoCard.vue'
 import TodoItem from '@/components/todo/TodoItem.vue'
+import TodoFooter from '@/components/todo/utils/TodoFooter.vue'
 
 export default {
   name: 'TodoContainer',
@@ -37,6 +43,7 @@ export default {
     FilterOptions,
     AddTodoCard,
     TodoItem,
+    TodoFooter,
   },
   data() {
     return {}
@@ -45,6 +52,9 @@ export default {
     ...mapGetters('todos', ['isTodoCreating', 'todos']),
     isTodoAvailable() {
       return this.todos.length > 0
+    },
+    isTodoFound() {
+      return this.isTodoAvailable || this.isTodoCreating
     },
   },
   methods: {
@@ -81,5 +91,17 @@ $card-padding: 10px;
   border-radius: 5px;
   padding: $card-padding;
   height: 100px;
+}
+
+.todo-footer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
+.todo__not-found {
+  text-align: center;
+  font-size: 20px;
 }
 </style>

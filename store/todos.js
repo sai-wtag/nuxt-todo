@@ -1,15 +1,25 @@
 import uuid4 from 'uuid4'
 
+const pageLimit = 3
+
+const getLimit = (state) => {
+  let limit = state.limit
+  if (state.isCreating) limit--
+  return limit
+}
+
 export const state = () => ({
   list: [],
   isLoading: false,
   isCreating: false,
   editableTodo: null,
+  limit: pageLimit,
+  isLoadedMore: false,
 })
 
 export const getters = {
   todos: (state) => {
-    return state.list
+    return state.list.slice(0, getLimit(state))
   },
   completedTodos: (state) => {
     return state.list.filter((todo) => todo.completed)
@@ -17,16 +27,22 @@ export const getters = {
   incompleteTodos: (state) => {
     return state.list.filter((todo) => !todo.completed)
   },
-  isTodoCreating(state) {
+  isTodoCreating: (state) => {
     return state.isCreating
   },
-  getEditableTodo(state) {
+  getEditableTodo: (state) => {
     return state.editableTodo
+  },
+  hasMoreTodos: (state) => {
+    return state.list.length > getLimit(state)
+  },
+  isLoadedMore: (state) => {
+    return state.isLoadedMore
   },
 }
 
 export const mutations = {
-  add(state, todo) {
+  ADD_TODO: (state, todo) => {
     const newTodo = {
       id: uuid4(),
       title: todo.title,
@@ -37,7 +53,7 @@ export const mutations = {
     state.list = [newTodo, ...state.list]
   },
 
-  update(state, updatedTodo) {
+  UPDATE_TODO: (state, updatedTodo) => {
     state.list = state.list.map((todo) => {
       if (todo.id === updatedTodo.id) {
         todo.title = updatedTodo.title
@@ -46,16 +62,13 @@ export const mutations = {
     })
   },
 
-  setIsCreating(state, creatingStatus = true) {
+  SET_IS_CREATING: (state, creatingStatus = true) => {
     state.isCreating = creatingStatus
   },
-  remove(state, id) {
+  REMOVE_TODO: (state, id) => {
     state.list = state.list.filter((todo) => todo.id !== id)
   },
-  toggle(state, todo) {
-    todo.done = !todo.done
-  },
-  complete(state, todoId) {
+  COMPLETE_TODO: (state, todoId) => {
     state.list = state.list.map((todo) => {
       if (todo.id === todoId) {
         todo.completedAt = new Date()
@@ -64,42 +77,71 @@ export const mutations = {
       return todo
     })
   },
-  setEditableTodo: (state, todoId = null) => {
+  SET_EDITABLE_TODO: (state, todoId = null) => {
     state.editableTodo = todoId
       ? state.list.find((todo) => todo.id === todoId)
       : null
   },
+  SET_LIMIT: (state, limit) => {
+    state.limit = limit
+  },
+  SET_LOAD_MORE: (state, status) => {
+    state.isLoadedMore = status
+  },
+  CHECK_LOAD_MORE: (state) => {
+    if (state.list.length <= pageLimit) {
+      state.isLoadedMore = false
+    }
+  },
 }
 
 export const actions = {
-  add({ commit }, todo) {
-    commit('add', todo)
-    commit('setIsCreating', false)
+  add: ({ commit }, todo) => {
+    commit('ADD_TODO', todo)
+    commit('SET_IS_CREATING', false)
   },
-  update({ commit }, updatedTodo) {
-    commit('update', updatedTodo)
-    commit('setEditableTodo', null)
+
+  update: ({ commit }, updatedTodo) => {
+    commit('UPDATE_TODO', updatedTodo)
+    commit('SET_EDITABLE_TODO', null)
   },
-  completeAndUpdate({ commit }, updatedTodo) {
-    commit('update', updatedTodo)
-    commit('complete', updatedTodo.id)
-    commit('setEditableTodo', null)
+
+  completeAndUpdate: ({ commit }, updatedTodo) => {
+    commit('UPDATE_TODO', updatedTodo)
+    commit('COMPLETE_TODO', updatedTodo.id)
+    commit('SET_EDITABLE_TODO', null)
   },
-  deleteCurrentTask({ commit }) {
-    commit('setIsCreating', false)
-    commit('setEditableTodo', null)
+
+  deleteCurrentTask: ({ commit }) => {
+    commit('SET_IS_CREATING', false)
+    commit('SET_EDITABLE_TODO', null)
   },
-  setIsCreating({ commit }, creatingStatus = true) {
-    commit('setIsCreating', creatingStatus)
-    commit('setEditableTodo', null)
+
+  setIsCreating: ({ commit }, creatingStatus = true) => {
+    commit('SET_IS_CREATING', creatingStatus)
+    commit('SET_EDITABLE_TODO', null)
   },
-  delete({ commit }, todoId) {
-    commit('remove', todoId)
+
+  delete: ({ commit }, todoId) => {
+    commit('REMOVE_TODO', todoId)
+    commit('CHECK_LOAD_MORE')
   },
-  complete({ commit }, todoId) {
-    commit('complete', todoId)
+
+  complete: ({ commit }, todoId) => {
+    commit('COMPLETE_TODO', todoId)
   },
-  setEditableTodo({ commit }, todoId) {
-    commit('setEditableTodo', todoId)
+
+  setEditableTodo: ({ commit }, todoId) => {
+    commit('SET_EDITABLE_TODO', todoId)
+  },
+
+  loadMoreTodos: ({ commit, state }) => {
+    commit('SET_LIMIT', state.limit + pageLimit)
+    commit('SET_LOAD_MORE', true)
+  },
+
+  showLessTodos: ({ commit, state }) => {
+    commit('SET_LIMIT', pageLimit)
+    commit('SET_LOAD_MORE', false)
   },
 }
