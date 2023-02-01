@@ -93,9 +93,6 @@ export const mutations = {
   INCREMENT_PAGINATION_LIMIT: (state) => {
     state.limit += pageLimit
   },
-  SET_LIMIT: (state, limit) => {
-    state.limit = limit
-  },
   SET_LOAD_MORE: (state, status) => {
     state.isLoadedMore = status
   },
