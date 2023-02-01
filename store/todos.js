@@ -1,4 +1,5 @@
 import uuid4 from 'uuid4'
+import { ALL, COMPLETE, INCOMPLETE } from '@/utils/constants.js'
 
 const pageLimit = 3
 
@@ -15,8 +16,8 @@ export const state = () => ({
   isCreating: false,
   editableTodo: null,
   limit: pageLimit,
-  taskStates: ['all', 'complete', 'incomplete'],
-  currentTaskState: 'all',
+  taskStates: [ALL, COMPLETE, INCOMPLETE],
+  currentTaskState: ALL,
   isLoadedMore: false,
 })
 
@@ -97,17 +98,17 @@ export const mutations = {
   },
 
   SET_CURRENT_TASKS: (state) => {
-    const currentTaskState = state.currentTaskState
-    let list = state.list
-    switch (currentTaskState) {
+    switch (state.currentTaskState) {
       case 'complete':
-        list = list.filter((todo) => todo.completedAt)
+        state.currentTasks = state.list.filter((todo) => todo.completedAt)
         break
       case 'incomplete':
-        list = list.filter((todo) => !todo.completedAt)
+        state.currentTasks = state.list.filter((todo) => !todo.completedAt)
+        break
+      default:
+        state.currentTasks = state.list
         break
     }
-    state.currentTasks = list
   },
   CHECK_LOAD_MORE: (state) => {
     if (state.currentTasks.length <= pageLimit) {
