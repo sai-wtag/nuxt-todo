@@ -3,9 +3,7 @@
     <h2>{{ $t('add-task') }}</h2>
     <div class="todo__header">
       <button @click.prevent="setIsCreating">{{ $t('create') }}</button>
-      <div>
-        <span v-if="isTodoSearching">{{ $t('searching') }}</span>
-      </div>
+      <span v-if="isTodoSearching">{{ $t('searching') }}</span>
       <FilterOptions />
     </div>
 
