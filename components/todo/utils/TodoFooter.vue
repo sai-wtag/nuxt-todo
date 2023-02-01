@@ -8,7 +8,7 @@
       {{ $t('load-more') }}
     </button>
     <button
-      v-if="isLoadedMore && !hasMoreTodos"
+      v-if="hasLoadedTodos"
       class="todo-btn__show-less"
       @click.prevent="showLessTodos"
     >
@@ -22,6 +22,9 @@ export default {
   name: 'TodoFooter',
   computed: {
     ...mapGetters('todos', ['hasMoreTodos', 'isLoadedMore']),
+    hasLoadedTodos() {
+      return this.isLoadedMore && !this.hasMoreTodos
+    },
   },
   methods: {
     ...mapActions('todos', ['loadMoreTodos', 'showLessTodos']),
