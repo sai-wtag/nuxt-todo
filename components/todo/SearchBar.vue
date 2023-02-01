@@ -1,13 +1,18 @@
 <template>
   <div>
-    <input type="text" :placeholder="$t('search')" />
+    <input
+      type="text"
+      :placeholder="$t('search')"
+      @keyup.prevent="searchTasksByTitle"
+    />
   </div>
 </template>
 <script>
+import { mapActions } from 'vuex'
 export default {
   name: 'SearchBar',
-  data() {
-    return {}
+  methods: {
+    ...mapActions('todos', ['searchTasksByTitle']),
   },
 }
 </script>

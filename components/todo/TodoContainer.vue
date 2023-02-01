@@ -3,6 +3,7 @@
     <h2>{{ $t('add-task') }}</h2>
     <div class="todo__header">
       <button @click.prevent="setIsCreating">{{ $t('create') }}</button>
+      <span v-if="isTodoSearching">{{ $t('searching') }}</span>
       <FilterOptions />
     </div>
 
@@ -49,7 +50,7 @@ export default {
     return {}
   },
   computed: {
-    ...mapGetters('todos', ['isTodoCreating', 'todos']),
+    ...mapGetters('todos', ['isTodoCreating', 'todos', 'isTodoSearching']),
     isTodoAvailable() {
       return this.todos.length > 0
     },
@@ -62,6 +63,7 @@ export default {
       this.$store.dispatch('todos/add', todo)
     },
     setIsCreating() {
+      if (this.isTodoSearching) return
       this.$store.dispatch('todos/setIsCreating')
     },
   },

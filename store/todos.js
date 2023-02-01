@@ -1,4 +1,5 @@
 import uuid4 from 'uuid4'
+import debounce from '@/helpers/debounce'
 import { ALL, COMPLETE, INCOMPLETE } from '@/utils/constants.js'
 
 const pageLimit = 3
@@ -14,6 +15,8 @@ export const state = () => ({
   currentTasks: [],
   isLoading: false,
   isCreating: false,
+  isSearching: false,
+  searchKey: '',
   editableTodo: null,
   limit: pageLimit,
   taskStates: [ALL, COMPLETE, INCOMPLETE],
@@ -43,6 +46,9 @@ export const getters = {
   isLoadedMore: (state) => {
     return state.isLoadedMore
   },
+  isTodoSearching: (state) => {
+    return state.isSearching
+  },
 }
 
 export const mutations = {
@@ -56,7 +62,6 @@ export const mutations = {
     }
     state.list = [newTodo, ...state.list]
   },
-
   UPDATE_TODO: (state, updatedTodo) => {
     state.list = state.list.map((todo) => {
       if (todo.id === updatedTodo.id) {
@@ -65,7 +70,6 @@ export const mutations = {
       return todo
     })
   },
-
   SET_IS_CREATING: (state, creatingStatus = true) => {
     state.isCreating = creatingStatus
   },
@@ -86,34 +90,49 @@ export const mutations = {
       ? state.list.find((todo) => todo.id === todoId)
       : null
   },
-  SET_LIMIT: (state, limit) => {
-    state.limit = limit
+  INCREMENT_PAGINATION_LIMIT: (state) => {
+    state.limit += pageLimit
   },
   SET_LOAD_MORE: (state, status) => {
     state.isLoadedMore = status
   },
-
   SET_CURRENT_TASK_STATE: (state, taskState) => {
     state.currentTaskState = taskState
   },
-
   SET_CURRENT_TASKS: (state) => {
+    const searchKey = state.searchKey.toLowerCase()
+    const list =
+      searchKey !== ''
+        ? state.list.filter((todo) =>
+            todo.title.toLowerCase().includes(searchKey)
+          )
+        : state.list
+
     switch (state.currentTaskState) {
       case 'complete':
-        state.currentTasks = state.list.filter((todo) => todo.completedAt)
+        state.currentTasks = list.filter((todo) => todo.completedAt)
         break
       case 'incomplete':
-        state.currentTasks = state.list.filter((todo) => !todo.completedAt)
+        state.currentTasks = list.filter((todo) => !todo.completedAt)
         break
       default:
-        state.currentTasks = state.list
+        state.currentTasks = list
         break
     }
+  },
+  SET_SEARCH_KEY: (state, searchKey) => {
+    state.searchKey = searchKey
+  },
+  RESET_PAGINATION_LIMIT: (state) => {
+    state.limit = pageLimit
   },
   CHECK_LOAD_MORE: (state) => {
     if (state.currentTasks.length <= pageLimit) {
       state.isLoadedMore = false
     }
+  },
+  SET_IS_SEARCHING: (state, status) => {
+    state.isSearching = status
   },
 }
 
@@ -133,6 +152,8 @@ export const actions = {
     commit('UPDATE_TODO', updatedTodo)
     commit('COMPLETE_TODO', updatedTodo.id)
     commit('SET_EDITABLE_TODO', null)
+    commit('SET_CURRENT_TASKS')
+    commit('CHECK_LOAD_MORE')
   },
 
   deleteCurrentTask: ({ commit }) => {
@@ -153,6 +174,8 @@ export const actions = {
 
   complete: ({ commit }, todoId) => {
     commit('COMPLETE_TODO', todoId)
+    commit('SET_CURRENT_TASKS')
+    commit('CHECK_LOAD_MORE')
   },
 
   setEditableTodo: ({ commit }, todoId) => {
@@ -160,19 +183,39 @@ export const actions = {
   },
 
   loadMoreTodos: ({ commit, state }) => {
-    commit('SET_LIMIT', state.limit + pageLimit)
+    if (state.isSearching) return
+    commit('INCREMENT_PAGINATION_LIMIT')
     commit('SET_LOAD_MORE', true)
   },
 
   showLessTodos: ({ commit, state }) => {
-    commit('SET_LIMIT', pageLimit)
+    if (state.isSearching) return
+    commit('RESET_PAGINATION_LIMIT')
     commit('SET_LOAD_MORE', false)
   },
 
   setCurrentTaskState: ({ commit }, taskState) => {
+    commit('SET_IS_CREATING', false)
+    commit('SET_EDITABLE_TODO', null)
     commit('SET_CURRENT_TASK_STATE', taskState)
     commit('SET_CURRENT_TASKS')
-    commit('SET_LIMIT', pageLimit)
+    commit('RESET_PAGINATION_LIMIT')
     commit('SET_LOAD_MORE', false)
+  },
+
+  searchTasksByTitle: ({ commit }, e) => {
+    commit('SET_IS_SEARCHING', true)
+    commit('SET_SEARCH_KEY', e.target.value)
+    commit('SET_IS_CREATING', false)
+    commit('SET_EDITABLE_TODO', null)
+
+    const searchTasks = debounce(() => {
+      commit('SET_CURRENT_TASKS')
+      commit('RESET_PAGINATION_LIMIT')
+      commit('SET_IS_SEARCHING', false)
+      commit('SET_LOAD_MORE', false)
+    }, 3000)
+
+    searchTasks()
   },
 }

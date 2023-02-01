@@ -7,9 +7,7 @@
           v-model="form.title"
           type="text"
           class="add-todo-card__input"
-          :placeholder="`${$t('add-task')} (${$t('min')} ${
-            validationRules.title.minLength
-          }, ${$t('max')} ${validationRules.title.maxLength} characters)`"
+          :placeholder="titlePlaceholder"
           @focus="errorMessage = null"
         />
       </div>
@@ -67,7 +65,18 @@ export default {
   },
 
   computed: {
-    ...mapGetters('todos', ['getEditableTodo']),
+    ...mapGetters('todos', ['getEditableTodo', 'isTodoSearching']),
+    titlePlaceholder() {
+      const addTask = this.$t('add-task')
+      const minWord = this.$t('min')
+      const minValidation = this.validationRules.title.minLength
+
+      const maxWord = this.$t('max')
+      const maxValidation = this.validationRules.title.maxLength
+      const characters = this.$t('characters')
+
+      return `${addTask} (${minWord} ${minValidation} ${characters}, ${maxWord} ${maxValidation} ${characters})`
+    },
   },
   mounted() {
     if (this.isTodoEditing) {
@@ -79,6 +88,8 @@ export default {
   },
   methods: {
     submitHandler(_, shouldCompleteTodo = false) {
+      if (this.isTodoSearching) return
+
       const errorMessage = this.checkValidation()
       if (errorMessage) {
         this.errorMessage = errorMessage
@@ -112,6 +123,7 @@ export default {
     },
 
     deleteCurrentTask() {
+      if (this.isTodoSearching) return
       this.$store.dispatch('todos/deleteCurrentTask')
     },
 

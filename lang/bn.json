@@ -23,6 +23,7 @@
     "load-more": "আরও লোড করুন",
     "show-less": "কম দেখান",
     "loading": "লোড হচ্ছে",
+    "searching": "অনুসন্ধান করা হচ্ছে ...",
     "validation": {
         "todo": {
             "title": {

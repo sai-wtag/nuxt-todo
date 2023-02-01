@@ -15,6 +15,7 @@
   </div>
 </template>
 <script>
+import { mapGetters } from 'vuex'
 export default {
   name: 'TodoActions',
   props: {
@@ -23,14 +24,21 @@ export default {
       required: true,
     },
   },
+  computed: {
+    ...mapGetters('todos', ['isTodoSearching']),
+  },
+
   methods: {
     deleteTodo() {
+      if (this.isTodoSearching) return
       this.$store.dispatch('todos/delete', this.todo.id)
     },
     completeTodo() {
+      if (this.isTodoSearching) return
       this.$store.dispatch('todos/complete', this.todo.id)
     },
     editTodo() {
+      if (this.isTodoSearching) return
       this.$store.dispatch('todos/setEditableTodo', this.todo.id)
     },
   },

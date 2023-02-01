@@ -17,10 +17,15 @@ import { mapGetters } from 'vuex'
 export default {
   name: 'FilterOptions',
   computed: {
-    ...mapGetters('todos', ['getTaskStates', 'getCurrentTaskState']),
+    ...mapGetters('todos', [
+      'getTaskStates',
+      'getCurrentTaskState',
+      'isTodoSearching',
+    ]),
   },
   methods: {
     setCurrentTaskState(task) {
+      if (this.isTodoSearching) return
       this.$store.dispatch('todos/setCurrentTaskState', task)
     },
   },

@@ -23,6 +23,7 @@
     "load-more": "Load More",
     "show-less": "Show Less",
     "loading": "Loading",
+    "searching": "Searching ...",
     "validation": {
         "todo": {
             "title": {
