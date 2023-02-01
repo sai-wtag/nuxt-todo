@@ -22,7 +22,7 @@
     </div>
 
     <!-- No todos found -->
-    <div v-if="!isTodoAvailable && !isTodoCreating" class="todo__not-found">
+    <div v-if="!isTodoFound" class="todo__not-found">
       {{ $t('not-found', { item: $t('todos') }) }}
     </div>
 
@@ -52,6 +52,9 @@ export default {
     ...mapGetters('todos', ['isTodoCreating', 'todos']),
     isTodoAvailable() {
       return this.todos.length > 0
+    },
+    isTodoFound() {
+      return this.isTodoAvailable || this.isTodoCreating
     },
   },
   methods: {
