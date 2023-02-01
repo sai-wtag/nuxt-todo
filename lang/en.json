@@ -5,6 +5,7 @@
     "cancel": "Cancel",
     "save": "Save",
     "add": "Add",
+    "todo": "Todo",
     "todos": "Todos",
     "edit": "Edit",
     "delete": "Delete",
@@ -32,5 +33,10 @@
                 "max-length": "Title must be at most {maxLength} characters"
             }
         }
-    }
+    },
+    "added": "{item} successfully added",
+    "updated": "{item} successfully updated",
+    "completed": "{item} successfully completed",
+    "deleted": "{item} successfully deleted",
+    "something-went-wrong": "Something went wrong !"
 }

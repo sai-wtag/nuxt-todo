@@ -37,6 +37,8 @@
 </template>
 <script>
 import { mapGetters } from 'vuex'
+import toast from '@/utils/toast'
+
 export default {
   name: 'AddTodoCard',
 
@@ -93,6 +95,7 @@ export default {
       const errorMessage = this.checkValidation()
       if (errorMessage) {
         this.errorMessage = errorMessage
+        toast('error', this.$t('something-went-wrong'))
         return
       }
 

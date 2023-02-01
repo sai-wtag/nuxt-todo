@@ -38,6 +38,8 @@ import AddTodoCard from '@/components/todo/AddTodoCard.vue'
 import TodoItem from '@/components/todo/TodoItem.vue'
 import TodoFooter from '@/components/todo/utils/TodoFooter.vue'
 
+import toast from '@/utils/toast'
+
 export default {
   name: 'TodoContainer',
   components: {
@@ -61,6 +63,7 @@ export default {
   methods: {
     onAddTodo(todo) {
       this.$store.dispatch('todos/add', todo)
+      toast('success', this.$t('added', { item: this.$t('todo') }))
     },
     setIsCreating() {
       if (this.isTodoSearching) return
