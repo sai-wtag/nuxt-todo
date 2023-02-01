@@ -1,5 +1,6 @@
 import uuid4 from 'uuid4'
 import debounce from '@/helpers/debounce'
+import { ALL, COMPLETE, INCOMPLETE } from '@/utils/constants.js'
 
 const pageLimit = 3
 
@@ -18,8 +19,8 @@ export const state = () => ({
   searchKey: '',
   editableTodo: null,
   limit: pageLimit,
-  taskStates: ['all', 'complete', 'incomplete'],
-  currentTaskState: 'all',
+  taskStates: [ALL, COMPLETE, INCOMPLETE],
+  currentTaskState: ALL,
   isLoadedMore: false,
 })
 
@@ -102,25 +103,25 @@ export const mutations = {
     state.currentTaskState = taskState
   },
   SET_CURRENT_TASKS: (state) => {
-    const currentTaskState = state.currentTaskState
     const searchKey = state.searchKey.toLowerCase()
-
-    let list =
+    const list =
       searchKey !== ''
         ? state.list.filter((todo) =>
             todo.title.toLowerCase().includes(searchKey)
           )
         : state.list
 
-    switch (currentTaskState) {
+    switch (state.currentTaskState) {
       case 'complete':
-        list = list.filter((todo) => todo.completedAt)
+        state.currentTasks = list.filter((todo) => todo.completedAt)
         break
       case 'incomplete':
-        list = list.filter((todo) => !todo.completedAt)
+        state.currentTasks = list.filter((todo) => !todo.completedAt)
+        break
+      default:
+        state.currentTasks = list
         break
     }
-    state.currentTasks = [...list]
   },
   SET_SEARCH_KEY: (state, searchKey) => {
     state.searchKey = searchKey
