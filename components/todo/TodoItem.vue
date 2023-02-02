@@ -22,7 +22,7 @@
       </div>
     </div>
   </div>
-  <div v-else>
+  <div v-else class="card__add">
     <AddTodoCard :todo="todo" :is-todo-editing="true" />
   </div>
 </template>
@@ -128,5 +128,9 @@ export default {
   font-size: 12px;
   font-weight: 700;
   line-height: 14.06px;
+}
+
+.card__add {
+  height: 100%;
 }
 </style>

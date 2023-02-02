@@ -9,22 +9,22 @@
           class="add-todo-card__input"
           :placeholder="titlePlaceholder"
           @focus="errorMessage = null"
-        ></textarea>
+        />
       </div>
 
       <div class="add-todo-card__footer">
         <button class="btn__save" type="submit">
           {{ isTodoEditing ? $t('save') : $t('add') }}
         </button>
-        <span
+        <div
           v-if="isTodoEditing"
           @click.prevent="submitHandler($event, shouldComplete)"
         >
           <CompleteIcon />
-        </span>
-        <span @click.prevent="deleteCurrentTask">
+        </div>
+        <div @click.prevent="deleteCurrentTask">
           <DeleteIcon />
-        </span>
+        </div>
         <div>
           <span v-if="errorMessage" class="error-message">{{
             errorMessage
@@ -166,11 +166,13 @@ export default {
 @import '@/assets/css/mixins';
 
 $card-padding: 10px;
-$button-gap: 10px;
-
-form {
-  @include flex(column);
+$button-gap: 15px;
+.add-todo-card {
   height: 100%;
+}
+form {
+  height: 100%;
+  @include flex(column, nowrap, space-between, stretch, 0);
 }
 
 .add-todo-card__footer {
@@ -198,6 +200,7 @@ form {
   font-size: 16px;
   font-weight: 500;
   color: #32394b;
+  height: 36px;
 }
 
 .error-message {

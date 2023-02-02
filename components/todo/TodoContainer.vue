@@ -92,13 +92,13 @@ $grid-breakpoints: (
   @include grid(3, 25px, $grid-breakpoints);
 }
 
-$card-padding: 10px;
+$card-padding: 15px;
 .card-item {
   border: $border-1;
   border-radius: 5px;
   background-color: $bg-white;
   padding: $card-padding;
-  height: 163px;
+  height: 160px;
 }
 
 .todo-footer {
