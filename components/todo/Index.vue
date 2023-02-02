@@ -28,4 +28,8 @@ body {
   font-family: $font-family;
   min-height: 100vh;
 }
+
+svg {
+  cursor: pointer;
+}
 </style>
