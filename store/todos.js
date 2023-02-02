@@ -99,10 +99,10 @@ export const mutations = {
 
   SET_CURRENT_TASKS: (state) => {
     switch (state.currentTaskState) {
-      case 'complete':
+      case COMPLETE:
         state.currentTasks = state.list.filter((todo) => todo.completedAt)
         break
-      case 'incomplete':
+      case INCOMPLETE:
         state.currentTasks = state.list.filter((todo) => !todo.completedAt)
         break
       default:
