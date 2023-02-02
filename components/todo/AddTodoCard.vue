@@ -2,14 +2,14 @@
   <div class="add-todo-card">
     <form @submit.prevent="submitHandler">
       <div class="add-todo-card__body">
-        <input
+        <textarea
           ref="titleInputRef"
           v-model="form.title"
           type="text"
           class="add-todo-card__input"
           :placeholder="titlePlaceholder"
           @focus="errorMessage = null"
-        />
+        ></textarea>
       </div>
 
       <div class="add-todo-card__footer">
@@ -178,12 +178,13 @@ form {
   width: 100%;
 }
 .add-todo-card__input {
+  border: 3px solid #d1d8ff;
   resize: none;
   outline: none;
   font-family: inherit;
   font-size: 1rem;
   width: calc(100% - $card-padding);
-  height: 70px;
+  height: 80px;
 }
 
 .btn__save {
