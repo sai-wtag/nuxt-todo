@@ -182,7 +182,9 @@ form {
   resize: none;
   outline: none;
   font-family: inherit;
-  font-size: 1rem;
+  font-size: 16px;
+  font-weight: 500;
+  color: #32394b;
   width: calc(100% - $card-padding);
   height: 80px;
 }
