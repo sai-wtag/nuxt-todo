@@ -1,5 +1,4 @@
 import uuid4 from 'uuid4'
-import debounce from '@/helpers/debounce'
 import { ALL, COMPLETE, INCOMPLETE } from '@/utils/constants.js'
 
 const pageLimit = 3
@@ -203,19 +202,17 @@ export const actions = {
     commit('SET_LOAD_MORE', false)
   },
 
-  searchTasksByTitle: ({ commit }, e) => {
+  setSearchStatus: ({ commit }, e) => {
     commit('SET_IS_SEARCHING', true)
-    commit('SET_SEARCH_KEY', e.target.value)
     commit('SET_IS_CREATING', false)
     commit('SET_EDITABLE_TODO', null)
+  },
 
-    const searchTasks = debounce(() => {
-      commit('SET_CURRENT_TASKS')
-      commit('RESET_PAGINATION_LIMIT')
-      commit('SET_IS_SEARCHING', false)
-      commit('SET_LOAD_MORE', false)
-    }, 3000)
-
-    searchTasks()
+  searchTasksByTitle: ({ commit }, searchKey) => {
+    commit('SET_SEARCH_KEY', searchKey)
+    commit('SET_CURRENT_TASKS')
+    commit('RESET_PAGINATION_LIMIT')
+    commit('SET_IS_SEARCHING', false)
+    commit('SET_LOAD_MORE', false)
   },
 }
