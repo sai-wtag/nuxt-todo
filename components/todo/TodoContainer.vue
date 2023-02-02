@@ -98,14 +98,11 @@ $card-padding: 10px;
   border-radius: 5px;
   background-color: $bg-white;
   padding: $card-padding;
-  height: 100px;
+  height: 163px;
 }
 
 .todo-footer {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 10px;
+  @include flex(row, nowrap, center, center, 10px);
 }
 
 .todo__not-found {
