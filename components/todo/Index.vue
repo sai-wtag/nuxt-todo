@@ -19,15 +19,17 @@ export default {
   },
 }
 </script>
-<style scoped lang="scss">
+<style lang="scss">
+@import '@/assets/css/variables';
+@import '@/assets/css/mixins';
+
 .header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+  @include flex(row, nowrap, space-between, center);
 }
 
 .container {
   margin: 0 auto;
   padding: 0 100px;
+  font-family: $font-family;
 }
 </style>
