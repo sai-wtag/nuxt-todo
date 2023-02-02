@@ -94,7 +94,7 @@ $grid-breakpoints: (
 
 $card-padding: 10px;
 .card-item {
-  border: 1px solid #dde2ff;
+  border: $border-1;
   border-radius: 5px;
   background-color: $bg-white;
   padding: $card-padding;
