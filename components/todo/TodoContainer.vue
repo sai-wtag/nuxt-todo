@@ -73,6 +73,7 @@ export default {
 }
 </script>
 <style scoped lang="scss">
+@import '@/assets/css/variables';
 @import '@/assets/css/mixins';
 
 $grid-breakpoints: (
@@ -93,8 +94,9 @@ $grid-breakpoints: (
 
 $card-padding: 10px;
 .card-item {
-  border: 1px solid #ccc;
+  border: 1px solid #dde2ff;
   border-radius: 5px;
+  background-color: $bg-white;
   padding: $card-padding;
   height: 100px;
 }

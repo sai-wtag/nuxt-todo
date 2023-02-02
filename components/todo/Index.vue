@@ -21,15 +21,11 @@ export default {
 </script>
 <style lang="scss">
 @import '@/assets/css/variables';
-@import '@/assets/css/mixins';
-
-.header {
-  @include flex(row, nowrap, space-between, center);
-}
-
-.container {
-  margin: 0 auto;
+body {
+  margin: 0;
   padding: 0 100px;
+  background-color: $bg-primary;
   font-family: $font-family;
+  min-height: 100vh;
 }
 </style>
