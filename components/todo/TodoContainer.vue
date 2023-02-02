@@ -73,21 +73,22 @@ export default {
 }
 </script>
 <style scoped lang="scss">
+@import '@/assets/css/mixins';
+
+$grid-breakpoints: (
+  576px: 1,
+  768px: 2,
+  992px: 3,
+);
 .todo-container {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
+  @include flex(column, nowrap, space-between);
   gap: 10px;
 }
 .todo__header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+  @include flex(row, nowrap, space-between);
 }
 .card-container {
-  display: grid;
-  gap: 25px;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  @include grid(3, 25px, $grid-breakpoints);
 }
 
 $card-padding: 10px;
