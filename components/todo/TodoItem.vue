@@ -83,7 +83,10 @@ export default {
 </script>
 <style scoped lang="scss">
 .time {
-  font-size: 0.8rem;
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 16.41px;
+  color: #bbbdd0;
 }
 
 .todo-item {
@@ -105,10 +108,14 @@ export default {
 }
 
 .todo-title {
-  font-size: 1.5rem;
+  color: #32394b;
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 28.13px;
 }
 
 .text-line-through {
+  color: #0bc375;
   text-decoration: line-through;
 }
 </style>
