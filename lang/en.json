@@ -20,7 +20,7 @@
   "created-at": "Created At",
   "completed-in": "Completed In",
   "characters": "characters",
-  "not-found": "{item} Not Found",
+  "not-found": "You didn’t add any task. Please, add one",
   "load-more": "Load More",
   "show-less": "Show Less",
   "loading": "Loading",

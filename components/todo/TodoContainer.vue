@@ -25,10 +25,7 @@
       </template>
     </div>
 
-    <!-- No todos found -->
-    <div v-if="!isTodoFound" class="todo__not-found">
-      {{ $t('not-found', { item: $t('todos') }) }}
-    </div>
+    <TodoNotFound v-if="!isTodoFound" />
 
     <!-- Load more/less todos -->
     <TodoFooter />
@@ -39,6 +36,7 @@ import { mapGetters } from 'vuex'
 import FilterOptions from '@/components/todo/FilterOptions.vue'
 import AddTodoCard from '@/components/todo/AddTodoCard.vue'
 import TodoItem from '@/components/todo/TodoItem.vue'
+import TodoNotFound from '@/components/todo/utils/TodoNotFound.vue'
 import TodoFooter from '@/components/todo/utils/TodoFooter.vue'
 
 import PlusIcon from '@/icons/PlusIcon.vue'
@@ -51,6 +49,7 @@ export default {
     FilterOptions,
     AddTodoCard,
     TodoItem,
+    TodoNotFound,
     TodoFooter,
     PlusIcon,
   },
@@ -111,11 +110,6 @@ $card-padding: 15px;
 
 .todo-footer {
   @include flex(row, nowrap, center, center, 10px);
-}
-
-.todo__not-found {
-  text-align: center;
-  font-size: 20px;
 }
 
 .btn__create-task {
