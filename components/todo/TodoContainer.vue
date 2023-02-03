@@ -2,7 +2,10 @@
   <div class="todo-container">
     <h2>{{ $t('add-task') }}</h2>
     <div class="todo__header">
-      <button @click.prevent="setIsCreating">{{ $t('create') }}</button>
+      <button class="btn__create-task" @click.prevent="setIsCreating">
+        <PlusIcon />
+        <span>{{ $t('create') }}</span>
+      </button>
       <span v-if="isTodoSearching">{{ $t('searching') }}</span>
       <FilterOptions />
     </div>
@@ -38,6 +41,8 @@ import AddTodoCard from '@/components/todo/AddTodoCard.vue'
 import TodoItem from '@/components/todo/TodoItem.vue'
 import TodoFooter from '@/components/todo/utils/TodoFooter.vue'
 
+import PlusIcon from '@/icons/PlusIcon.vue'
+
 import toast from '@/utils/toast'
 
 export default {
@@ -47,6 +52,7 @@ export default {
     AddTodoCard,
     TodoItem,
     TodoFooter,
+    PlusIcon,
   },
   data() {
     return {}
@@ -108,5 +114,19 @@ $card-padding: 15px;
 .todo__not-found {
   text-align: center;
   font-size: 20px;
+}
+
+.btn__create-task {
+  @include flex(row, nowrap, center, center, 5px);
+  border: none;
+  outline: none;
+  background-color: #7a8dfd;
+  color: $bg-white;
+  width: 120px;
+  padding: 5px 10px;
+  border-radius: 5px;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
 }
 </style>
