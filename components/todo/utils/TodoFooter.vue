@@ -31,3 +31,21 @@ export default {
   },
 }
 </script>
+<style scoped lang="scss">
+@import '@/assets/css/variables';
+.todo-footer {
+  button {
+    margin: 5px;
+    height: 36px;
+    padding: 5px 10px;
+    border: $border-1;
+    border-radius: 5px;
+    color: $bg-white;
+    background-color: #32394b;
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 18.75px;
+    cursor: pointer;
+  }
+}
+</style>
