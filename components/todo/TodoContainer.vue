@@ -6,7 +6,6 @@
         <PlusIcon />
         <span>{{ $t('create') }}</span>
       </button>
-      <span v-if="isTodoSearching">{{ $t('searching') }}</span>
       <FilterOptions />
     </div>
 
@@ -57,7 +56,7 @@ export default {
     return {}
   },
   computed: {
-    ...mapGetters('todos', ['isTodoCreating', 'todos', 'isTodoSearching']),
+    ...mapGetters('todos', ['isTodoCreating', 'todos']),
     isTodoAvailable() {
       return this.todos.length > 0
     },
@@ -88,6 +87,7 @@ $grid-breakpoints: (
 );
 
 .todo-container {
+  @include padding(20px, $padding-breakpoints);
   @include flex(column, nowrap, space-between);
   gap: 10px;
 }

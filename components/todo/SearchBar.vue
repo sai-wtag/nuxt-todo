@@ -1,18 +1,33 @@
 <template>
-  <div>
+  <div class="todo__search">
     <input
+      v-if="isInputVisible"
+      ref="searchInputRef"
+      class="search-input"
       type="text"
       :placeholder="$t('search')"
       @keyup.prevent="searchTasks"
     />
+    <div @click="toggleSearchInput"><SearchIcon /></div>
   </div>
 </template>
 <script>
 import { mapActions } from 'vuex'
 import debounce from '@/helpers/debounce'
 
+import SearchIcon from '@/icons/SearchIcon'
+
 export default {
   name: 'SearchBar',
+  components: {
+    SearchIcon,
+  },
+  data() {
+    return {
+      isInputVisible: false,
+      searchInputRef: null,
+    }
+  },
   methods: {
     ...mapActions('todos', ['setSearchStatus', 'searchTasksByTitle']),
 
@@ -24,6 +39,35 @@ export default {
       this.setSearchStatus()
       this.debounceSearchTasks(event.target.value)
     },
+
+    toggleSearchInput() {
+      this.isInputVisible = !this.isInputVisible
+      if (this.isInputVisible) {
+        this.$nextTick(() => {
+          this.$refs.searchInputRef.focus()
+        })
+      }
+    },
   },
 }
 </script>
+<style scoped lang="scss">
+@import '@/assets/css/variables';
+@import '@/assets/css/mixins';
+
+.todo__search {
+  @include flex(row, nowrap, center, center);
+}
+.search-input {
+  border: $border-1;
+  border-radius: 5px;
+  padding: 0 10px;
+  resize: none;
+  outline: none;
+  color: #32394b;
+  height: 36px;
+  width: 100%;
+  font-size: 16px;
+  font-weight: 500;
+}
+</style>
