@@ -1,42 +1,42 @@
 {
-    "welcome": "Welcome",
-    "add-task": "Add Task",
-    "create": "Create",
-    "cancel": "Cancel",
-    "save": "Save",
-    "add": "Add",
-    "todo": "Todo",
-    "todos": "Todos",
-    "edit": "Edit",
-    "delete": "Delete",
-    "all": "All",
-    "complete": "Complete",
-    "incomplete": "Incomplete",
-    "language": "Language",
-    "select-language": "Select Language",
-    "search": "Search",
-    "min": "Min",
-    "max": "Max",
-    "created-at": "Created At",
-    "completed-in": "Completed In",
-    "characters": "characters",
-    "not-found": "{item} Not Found",
-    "load-more": "Load More",
-    "show-less": "Show Less",
-    "loading": "Loading",
-    "searching": "Searching ...",
-    "validation": {
-        "todo": {
-            "title": {
-                "required": "Title is required",
-                "min-length": "Title must be at least {minLength} characters",
-                "max-length": "Title must be at most {maxLength} characters"
-            }
-        }
-    },
-    "added": "{item} successfully added",
-    "updated": "{item} successfully updated",
-    "completed": "{item} successfully completed",
-    "deleted": "{item} successfully deleted",
-    "something-went-wrong": "Something went wrong !"
+  "welcome": "Welcome",
+  "add-task": "Add Task",
+  "create": "Create",
+  "cancel": "Cancel",
+  "save": "Save",
+  "add": "Add Task",
+  "todo": "Todo",
+  "todos": "Todos",
+  "edit": "Edit",
+  "delete": "Delete",
+  "all": "All",
+  "complete": "Complete",
+  "incomplete": "Incomplete",
+  "language": "Language",
+  "select-language": "Select Language",
+  "search": "Search",
+  "min": "Min",
+  "max": "Max",
+  "created-at": "Created At",
+  "completed-in": "Completed In",
+  "characters": "characters",
+  "not-found": "{item} Not Found",
+  "load-more": "Load More",
+  "show-less": "Show Less",
+  "loading": "Loading",
+  "searching": "Searching ...",
+  "validation": {
+    "todo": {
+      "title": {
+        "required": "Title is required",
+        "min-length": "Title must be at least {minLength} characters",
+        "max-length": "Title must be at most {maxLength} characters"
+      }
+    }
+  },
+  "added": "{item} successfully added !",
+  "updated": "{item} successfully updated !",
+  "completed": "{item} successfully completed !",
+  "deleted": "{item} successfully deleted !",
+  "something-went-wrong": "Something went wrong !"
 }

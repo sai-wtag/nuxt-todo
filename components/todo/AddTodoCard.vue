@@ -18,11 +18,12 @@
         </button>
         <div
           v-if="isTodoEditing"
+          :title="$t('complete')"
           @click.prevent="submitHandler($event, shouldComplete)"
         >
           <CompleteIcon />
         </div>
-        <div @click.prevent="deleteCurrentTask">
+        <div :title="$t('delete')" @click.prevent="deleteCurrentTask">
           <DeleteIcon />
         </div>
         <div>
@@ -180,7 +181,7 @@ form {
   width: 100%;
 }
 .add-todo-card__input {
-  border: 3px solid #d1d8ff;
+  border: 3px solid #d4d9f7;
   resize: none;
   outline: none;
   font-family: inherit;
@@ -189,6 +190,9 @@ form {
   color: #32394b;
   width: calc(100% - $card-padding);
   height: 80px;
+  &:focus {
+    border: 3px solid #d1d8ff;
+  }
 }
 
 .btn__save {

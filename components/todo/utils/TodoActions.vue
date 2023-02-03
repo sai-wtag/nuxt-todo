@@ -1,14 +1,14 @@
 <template>
   <div class="action-buttons">
     <div v-if="!todo.isTodoCompleted" class="btn__not-completed">
-      <span @click.prevent="completeTodo">
+      <span :title="$t('complete')" @click.prevent="completeTodo">
         <CompleteIcon />
       </span>
-      <span @click.prevent="editTodo">
+      <span :title="$t('edit')" @click.prevent="editTodo">
         <EditIcon />
       </span>
     </div>
-    <span @click.prevent="deleteTodo">
+    <span :title="$t('delete')" @click.prevent="deleteTodo">
       <DeleteIcon />
     </span>
   </div>
