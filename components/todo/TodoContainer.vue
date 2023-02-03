@@ -79,7 +79,7 @@ export default {
 $grid-breakpoints: (
   576px: 1,
   768px: 2,
-  992px: 3,
+  1200px: 3,
 );
 .todo-container {
   @include flex(column, nowrap, space-between);
@@ -89,7 +89,7 @@ $grid-breakpoints: (
   @include flex(row, nowrap, space-between);
 }
 .card-container {
-  @include grid(1, 25px, $grid-breakpoints);
+  @include grid(1, 5px, $grid-breakpoints);
 }
 
 $card-padding: 15px;
