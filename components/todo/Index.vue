@@ -22,9 +22,12 @@ export default {
 <style lang="scss">
 @import '@/assets/css/variables';
 
+html {
+  scroll-behavior: smooth;
+}
+
 body {
   margin: 0;
-
   background-color: $bg-primary;
   font-family: $font-family;
   min-height: 100vh;

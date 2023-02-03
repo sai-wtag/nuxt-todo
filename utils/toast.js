@@ -24,7 +24,7 @@ const getStyle = (type) => {
   }
 }
 
-export default function toast(type, message) {
+const toast = (type, message) => {
   Toastify({
     text: message,
     duration: 3000,
@@ -35,3 +35,5 @@ export default function toast(type, message) {
     style: getStyle(type),
   }).showToast()
 }
+
+export default toast
