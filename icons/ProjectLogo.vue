@@ -17,12 +17,12 @@ export default {
   name: 'ProjectLogo',
   props: {
     w: {
-      type: Number,
-      default: 24,
+      type: String,
+      default: '24',
     },
     h: {
-      type: Number,
-      default: 24,
+      type: String,
+      default: '24',
     },
   },
 }
