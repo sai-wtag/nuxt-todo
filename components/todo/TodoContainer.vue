@@ -89,7 +89,7 @@ $grid-breakpoints: (
   @include flex(row, nowrap, space-between);
 }
 .card-container {
-  @include grid(3, 25px, $grid-breakpoints);
+  @include grid(1, 25px, $grid-breakpoints);
 }
 
 $card-padding: 15px;
