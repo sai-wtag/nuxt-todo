@@ -123,6 +123,7 @@ $card-padding: 15px;
   background-color: #7a8dfd;
   color: $bg-white;
   width: 120px;
+  height: $button-height;
   padding: 5px 10px;
   border-radius: 5px;
   font-size: 16px;
