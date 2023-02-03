@@ -87,12 +87,14 @@ $grid-breakpoints: (
   768px: 2,
   1200px: 3,
 );
+
 .todo-container {
   @include flex(column, nowrap, space-between);
   gap: 10px;
 }
 .todo__header {
-  @include flex(row, nowrap, space-between);
+  @include flex;
+  width: 100%;
 }
 .card-container {
   @include grid(1, 5px, $grid-breakpoints);

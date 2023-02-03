@@ -40,6 +40,7 @@ export default {
   button {
     cursor: pointer;
     border: $border-1;
+    border-radius: 5px;
     background-color: $bg-white;
     height: $button-height;
     color: #32394b;
@@ -47,11 +48,11 @@ export default {
     font-weight: 500;
     line-height: 18.75px;
     padding: 0 10px;
-  }
-}
 
-.active {
-  background-color: #298b6b;
-  color: #fff;
+    &.active {
+      background-color: #0bc375;
+      color: #fff;
+    }
+  }
 }
 </style>
