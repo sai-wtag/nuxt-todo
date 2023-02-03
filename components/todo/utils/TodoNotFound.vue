@@ -1,6 +1,8 @@
 <template>
   <div class="todo__not-found">
-    <NotFoundIcon @click.prevent="setIsCreating" />
+    <div @click="setIsCreating">
+      <NotFoundIcon />
+    </div>
     <span class="text__not-found">
       {{ $t('not-found', { item: $t('todos') }) }}
     </span>

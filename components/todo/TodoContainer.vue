@@ -105,7 +105,7 @@ $card-padding: 15px;
   border-radius: 5px;
   background-color: $bg-white;
   padding: $card-padding;
-  height: 160px;
+  height: 150px;
 }
 
 .todo-footer {
