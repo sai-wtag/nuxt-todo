@@ -1,6 +1,6 @@
 <template>
   <div class="todo-container">
-    <h2>{{ $t('add-task') }}</h2>
+    <span class="todo__add-text">{{ $t('add-task') }}</span>
     <div class="todo__header">
       <button class="btn__create-task" @click.prevent="setIsCreating">
         <PlusIcon />
@@ -125,5 +125,13 @@ $card-padding: 15px;
   font-size: 16px;
   font-weight: 500;
   cursor: pointer;
+}
+
+.todo__add-text {
+  margin: 25px 0;
+  font-size: 30px;
+  font-weight: 700;
+  line-height: 35.16px;
+  color: #32394b;
 }
 </style>
