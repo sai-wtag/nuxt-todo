@@ -47,7 +47,7 @@ export default {
     top: 50%;
     left: 50%;
     translate: -50% -50%;
-    animation: spin 4s linear infinite;
+    animation: spin 3s linear infinite;
   }
 }
 

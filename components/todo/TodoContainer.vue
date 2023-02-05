@@ -1,5 +1,7 @@
 <template>
   <div class="todo-container">
+    <TodoCardLoader v-if="isTodoSearching" class="loader" />
+
     <span class="todo__add-text">{{ $t('add-task') }}</span>
     <div class="todo__header">
       <button class="btn__create-task" @click.prevent="setIsCreating">
@@ -24,7 +26,6 @@
 
     <!-- Load more/less todos -->
     <TodoFooter />
-    <TodoCardLoader v-if="isTodoSearching" />
   </div>
 </template>
 <script>
@@ -80,8 +81,10 @@ $grid-breakpoints: (
 );
 
 .todo-container {
+  position: relative;
+  height: calc(100% - #{$header-height});
   @include padding(20px, $padding-breakpoints);
-  @include flex(column, nowrap, space-between);
+  @include flex(column, nowrap, flex-start);
   gap: 10px;
 }
 .todo__header {

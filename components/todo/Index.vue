@@ -36,4 +36,8 @@ body {
 svg {
   cursor: pointer;
 }
+
+.container {
+  height: 100vh;
+}
 </style>
