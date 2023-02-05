@@ -10,11 +10,7 @@
     </div>
 
     <div class="card-container">
-      <AddTodoCard
-        v-if="isTodoCreating"
-        class="card-item"
-        @addTodo="onAddTodo"
-      />
+      <AddTodoCard v-if="isTodoCreating" class="card-item" />
 
       <!-- List of todos -->
       <template v-if="isTodoAvailable">
@@ -41,8 +37,6 @@ import TodoFooter from '@/components/todo/utils/TodoFooter.vue'
 import TodoCardLoader from '@/components/todo/utils/TodoCardLoader.vue'
 import PlusIcon from '@/icons/PlusIcon.vue'
 
-import toast from '@/utils/toast'
-
 export default {
   name: 'TodoContainer',
   components: {
@@ -67,10 +61,7 @@ export default {
     },
   },
   methods: {
-    onAddTodo(todo) {
-      this.$store.dispatch('todos/add', todo)
-      toast('success', this.$t('added', { item: this.$t('todo') }))
-    },
+    onAddTodo(todo) {},
     setIsCreating() {
       if (this.isTodoSearching) return
       this.$store.dispatch('todos/setIsCreating')

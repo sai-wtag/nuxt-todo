@@ -8,7 +8,7 @@
       >
       <span class="time"
         >{{ $t('created-at') }}:
-        {{ format(todo.createdAt, 'dd-MMM-yyyy') }}
+        {{ format(parseISO(todo.createdAt), 'dd-MMM-yyyy') }}
       </span>
     </div>
 
@@ -28,7 +28,7 @@
 </template>
 <script>
 import { mapGetters } from 'vuex'
-import { format, formatDistance } from 'date-fns'
+import { format, formatDistance, parseISO } from 'date-fns'
 import { bn } from 'date-fns/locale'
 
 import TodoActions from '@/components/todo/utils/TodoActions.vue'
@@ -50,6 +50,7 @@ export default {
     return {
       format,
       formatDistance,
+      parseISO,
       bn,
     }
   },
@@ -73,8 +74,8 @@ export default {
     },
     getCompletedInTime() {
       return formatDistance(
-        this.todo.createdAt,
-        this.todo.completedAt,
+        parseISO(this.todo.createdAt),
+        parseISO(this.todo.completedAt),
         this.getLocale
       )
     },

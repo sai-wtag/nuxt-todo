@@ -112,10 +112,14 @@ export default {
       this.isTodoEditing ? this.editTodo() : this.addTodo()
     },
 
-    addTodo() {
-      this.$emit('addTodo', this.form)
-
+    async addTodo() {
+      const { success, message } = await this.$store.dispatch(
+        'todos/add',
+        this.form
+      )
+      const status = success ? 'success' : 'error'
       this.form.title = ''
+      return toast(status, message)
     },
 
     editTodo() {

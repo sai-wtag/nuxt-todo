@@ -135,21 +135,38 @@ export const mutations = {
 }
 
 export const actions = {
-  add: async ({ commit }, todo) => {
-    const { data: newTodo, error } = await supabase
-      .from('todos')
-      .insert({
-        title: todo.title,
-      })
-      .select()
+  add: async ({ commit }, form) => {
+    try {
+      const { data: createdTodo, error } = await supabase
+        .from('todos')
+        .insert({
+          title: form.title,
+        })
+        .select()
 
-    if (error) {
-      console.log('error', error)
+      if (error) {
+        throw new Error(error.message)
+      }
+
+      const todo = createdTodo[0]
+      commit('ADD_TODO', todo)
+      commit('SET_IS_CREATING', false)
+      commit('SET_CURRENT_TASKS')
+
+      return {
+        success: true,
+        message: 'Todo added successfully',
+        data: {
+          todo,
+        },
+      }
+    } catch (err) {
+      return {
+        success: false,
+        message: err.message,
+        data: null,
+      }
     }
-
-    commit('ADD_TODO', newTodo[0])
-    commit('SET_IS_CREATING', false)
-    commit('SET_CURRENT_TASKS')
   },
 
   update: ({ commit }, updatedTodo) => {
