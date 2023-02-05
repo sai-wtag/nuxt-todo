@@ -1,5 +1,10 @@
-import uuid4 from 'uuid4'
+import { createClient } from '@supabase/supabase-js'
 import { ALL, COMPLETE, INCOMPLETE } from '@/utils/constants.js'
+
+const supabase = createClient(
+  'https://zhsepptcavyowohakieh.supabase.co',
+  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inpoc2VwcHRjYXZ5b3dvaGFraWVoIiwicm9sZSI6ImFub24iLCJpYXQiOjE2NzU0OTE3NzEsImV4cCI6MTk5MTA2Nzc3MX0.SxdLsTGvb6mtyTtqf7zpBkt7IxAVuHvl3r7b3DGVLH8'
+)
 
 const pageLimit = 3
 
@@ -51,16 +56,10 @@ export const getters = {
 }
 
 export const mutations = {
-  ADD_TODO: (state, todo) => {
-    const newTodo = {
-      id: uuid4(),
-      title: todo.title,
-      createdAt: new Date(),
-      completedAt: null,
-      isTodoCompleted: false,
-    }
+  ADD_TODO: (state, newTodo) => {
     state.list = [newTodo, ...state.list]
   },
+
   UPDATE_TODO: (state, updatedTodo) => {
     state.list = state.list.map((todo) => {
       if (todo.id === updatedTodo.id) {
@@ -136,8 +135,19 @@ export const mutations = {
 }
 
 export const actions = {
-  add: ({ commit }, todo) => {
-    commit('ADD_TODO', todo)
+  add: async ({ commit }, todo) => {
+    const { data: newTodo, error } = await supabase
+      .from('todos')
+      .insert({
+        title: todo.title,
+      })
+      .select()
+
+    if (error) {
+      console.log('error', error)
+    }
+
+    commit('ADD_TODO', newTodo[0])
     commit('SET_IS_CREATING', false)
     commit('SET_CURRENT_TASKS')
   },

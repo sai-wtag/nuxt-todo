@@ -36,18 +36,7 @@ export default {
   ],
 
   // Modules: https://go.nuxtjs.dev/config-modules
-  modules: [
-    '@nuxtjs/axios',
-    '@nuxtjs/i18n',
-    [
-      'nuxt-supabase',
-      {
-        supabaseUrl: 'https://zhsepptcavyowohakieh.supabase.co',
-        supabaseKey:
-          'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inpoc2VwcHRjYXZ5b3dvaGFraWVoIiwicm9sZSI6ImFub24iLCJpYXQiOjE2NzU0OTE3NzEsImV4cCI6MTk5MTA2Nzc3MX0.SxdLsTGvb6mtyTtqf7zpBkt7IxAVuHvl3r7b3DGVLH8',
-      },
-    ],
-  ],
+  modules: ['@nuxtjs/axios', '@nuxtjs/i18n'],
   i18n: {
     locales: [
       {
