@@ -1,5 +1,11 @@
 <template>
   <div class="add-todo-card">
+    <TodoCardLoader
+      v-if="isTodoLoading"
+      :is-main-loader="true"
+      icon-width="64"
+      icon-height="64"
+    />
     <form @submit.prevent="submitHandler">
       <div class="add-todo-card__body">
         <textarea
@@ -41,12 +47,14 @@ import toast from '@/utils/toast'
 
 import CompleteIcon from '@/icons/CompleteIcon'
 import DeleteIcon from '@/icons/DeleteIcon'
+import TodoCardLoader from '@/components/todo/utils/TodoCardLoader.vue'
 
 export default {
   name: 'AddTodoCard',
   components: {
     CompleteIcon,
     DeleteIcon,
+    TodoCardLoader,
   },
   props: {
     isTodoEditing: {
@@ -73,7 +81,11 @@ export default {
   },
 
   computed: {
-    ...mapGetters('todos', ['getEditableTodo', 'isTodoSearching']),
+    ...mapGetters('todos', [
+      'getEditableTodo',
+      'isTodoSearching',
+      'isTodoLoading',
+    ]),
     titlePlaceholder() {
       const addTask = this.$t('add-task')
       const minWord = this.$t('min')
@@ -83,7 +95,7 @@ export default {
       const maxValidation = this.validationRules.title.maxLength
       const characters = this.$t('characters')
 
-      return `${addTask} (${minWord} ${minValidation} ${characters}, ${maxWord} ${maxValidation} ${characters})`
+      return `${addTask} (${minWord} ${minValidation}, ${maxWord} ${maxValidation} ${characters})`
     },
   },
   mounted() {
@@ -176,9 +188,12 @@ export default {
 $card-padding: 10px;
 $button-gap: 15px;
 .add-todo-card {
+  position: relative;
+  width: 100%;
   height: 100%;
 }
 form {
+  width: 100%;
   height: 100%;
   @include flex(column, nowrap, space-between, stretch, 0);
 }

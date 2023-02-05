@@ -17,7 +17,8 @@ const getLimit = (state) => {
 export const state = () => ({
   list: [],
   currentTasks: [],
-  isLoading: false,
+  isTodoListLoading: false,
+  isTodoLoading: false,
   isCreating: false,
   isSearching: false,
   searchKey: '',
@@ -52,6 +53,12 @@ export const getters = {
   },
   isTodoSearching: (state) => {
     return state.isSearching
+  },
+  isTodoLoading: (state) => {
+    return state.isTodoLoading
+  },
+  isTodoListLoading: (state) => {
+    return state.isTodoListLoading
   },
 }
 
@@ -132,11 +139,18 @@ export const mutations = {
   SET_IS_SEARCHING: (state, status) => {
     state.isSearching = status
   },
+  SET_IS_TODO_LOADING: (state, status) => {
+    state.isTodoLoading = status
+  },
+  SET_IS_TODO_LIST_LOADING: (state, status) => {
+    state.isTodoListLoading = status
+  },
 }
 
 export const actions = {
   add: async ({ commit }, form) => {
     try {
+      commit('SET_IS_TODO_LOADING', true)
       const { data: createdTodo, error } = await supabase
         .from('todos')
         .insert({
@@ -166,6 +180,8 @@ export const actions = {
         message: err.message,
         data: null,
       }
+    } finally {
+      commit('SET_IS_TODO_LOADING', false)
     }
   },
 
