@@ -51,7 +51,7 @@ header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  height: 72px;
+  height: $header-height;
   background-color: #fff;
 }
 

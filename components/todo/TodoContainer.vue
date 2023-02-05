@@ -28,6 +28,7 @@
 
     <!-- Load more/less todos -->
     <TodoFooter />
+    <TodoCardLoader v-if="isTodoSearching" />
   </div>
 </template>
 <script>
@@ -37,7 +38,7 @@ import AddTodoCard from '@/components/todo/AddTodoCard.vue'
 import TodoItem from '@/components/todo/TodoItem.vue'
 import TodoNotFound from '@/components/todo/utils/TodoNotFound.vue'
 import TodoFooter from '@/components/todo/utils/TodoFooter.vue'
-
+import TodoCardLoader from '@/components/todo/utils/TodoCardLoader.vue'
 import PlusIcon from '@/icons/PlusIcon.vue'
 
 import toast from '@/utils/toast'
@@ -50,13 +51,14 @@ export default {
     TodoItem,
     TodoNotFound,
     TodoFooter,
+    TodoCardLoader,
     PlusIcon,
   },
   data() {
     return {}
   },
   computed: {
-    ...mapGetters('todos', ['isTodoCreating', 'todos']),
+    ...mapGetters('todos', ['isTodoCreating', 'todos', 'isTodoSearching']),
     isTodoAvailable() {
       return this.todos.length > 0
     },
