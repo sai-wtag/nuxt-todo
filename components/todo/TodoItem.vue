@@ -9,7 +9,7 @@
       <div class="todo-item__header">
         <span
           class="todo-title"
-          :class="todo.isTodoCompleted ? 'text-line-through' : ''"
+          :class="isTodoCompleted ? 'text-line-through' : ''"
           >{{ todo.title }}</span
         >
         <span class="time"
@@ -21,7 +21,7 @@
       <div class="todo-item__footer">
         <TodoActions :todo="todo" />
         <div>
-          <button v-if="todo.isTodoCompleted" class="btn__completed-in">
+          <button v-if="isTodoCompleted" class="btn__completed-in">
             {{ $t('completed-in') }}:
             {{ getCompletedInTime }}
           </button>
@@ -69,6 +69,9 @@ export default {
 
   computed: {
     ...mapGetters('todos', ['getEditableTodo', 'loadingId']),
+    isTodoCompleted() {
+      return !!this.todo.completedAt
+    },
     isTodoCompletingOrDeleting() {
       return this.todo.id === this.loadingId
     },

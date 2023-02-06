@@ -1,6 +1,6 @@
 <template>
   <div class="action-buttons">
-    <div v-if="!todo.isTodoCompleted" class="btn__not-completed">
+    <div v-if="!isTodoCompleted" class="btn__not-completed">
       <span :title="$t('complete')" @click.prevent="completeTodo">
         <CompleteIcon />
       </span>
@@ -37,6 +37,9 @@ export default {
 
   computed: {
     ...mapGetters('todos', ['isButtonDisabled']),
+    isTodoCompleted() {
+      return !!this.todo.completedAt
+    },
   },
 
   methods: {

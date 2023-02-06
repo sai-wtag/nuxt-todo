@@ -92,7 +92,6 @@ export const mutations = {
     state.list = state.list.map((todo) => {
       if (todo.id === updatedTodo.id) {
         todo.completedAt = updatedTodo.completedAt
-        todo.isTodoCompleted = true
       }
       return todo
     })
@@ -154,6 +153,9 @@ export const mutations = {
   },
   SET_LOADING_ID: (state, id) => {
     state.loadingId = id
+  },
+  SET_ALL_TODOS: (state, todos) => {
+    state.list = todos
   },
 }
 
@@ -314,5 +316,25 @@ export const actions = {
     commit('RESET_PAGINATION_LIMIT')
     commit('SET_IS_SEARCHING', false)
     commit('SET_LOAD_MORE', false)
+  },
+
+  fetchAllTodos: async ({ commit }) => {
+    try {
+      commit('SET_IS_TODO_LIST_LOADING', true)
+      const { data, error } = await supabase
+        .from('todos')
+        .select()
+        .order('createdAt', { ascending: false })
+
+      if (error) {
+        throw new Error(error.message)
+      }
+
+      commit('SET_ALL_TODOS', data)
+      commit('SET_CURRENT_TASKS')
+      commit('SET_IS_TODO_LIST_LOADING', false)
+    } catch (err) {
+      commit('SET_IS_TODO_LIST_LOADING', false)
+    }
   },
 }
