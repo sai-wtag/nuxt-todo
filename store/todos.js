@@ -195,9 +195,35 @@ export const actions = {
     }
   },
 
-  update: ({ commit }, updatedTodo) => {
-    commit('UPDATE_TODO', updatedTodo)
-    commit('SET_EDITABLE_TODO', null)
+  update: async ({ commit }, updatedTodo) => {
+    try {
+      commit('SET_IS_TODO_LOADING', true)
+      const { data, error } = await supabase
+        .from('todos')
+        .update({ title: updatedTodo.title })
+        .eq('id', updatedTodo.id)
+        .select()
+        .single()
+
+      if (error) {
+        throw new Error(error.message)
+      }
+
+      commit('UPDATE_TODO', data)
+      commit('SET_EDITABLE_TODO', null)
+
+      return {
+        success: true,
+        data,
+      }
+    } catch (err) {
+      return {
+        success: false,
+        data: null,
+      }
+    } finally {
+      commit('SET_IS_TODO_LOADING', false)
+    }
   },
 
   completeAndUpdate: ({ commit }, updatedTodo) => {

@@ -133,12 +133,15 @@ export default {
       return toast('error', this.$t('something-went-wrong'))
     },
 
-    editTodo() {
-      this.$store.dispatch('todos/update', {
+    async editTodo() {
+      const { success } = await this.$store.dispatch('todos/update', {
         id: this.getEditableTodo.id,
         title: this.form.title,
       })
-      toast('success', this.$t('updated', { item: this.$t('todo') }))
+      if (success) {
+        return toast('success', this.$t('updated', { item: this.$t('todo') }))
+      }
+      return toast('error', this.$t('something-went-wrong'))
     },
 
     completeAndUpdateTodo() {
