@@ -124,13 +124,13 @@ export default {
     },
 
     async addTodo() {
-      const { success, message } = await this.$store.dispatch(
-        'todos/add',
-        this.form
-      )
-      const status = success ? 'success' : 'error'
+      const { success } = await this.$store.dispatch('todos/add', this.form)
       this.form.title = ''
-      return toast(status, message)
+      const item = this.$t('todo')
+      if (success) {
+        return toast('success', this.$t('added', { item }))
+      }
+      return toast('error', this.$t('something-went-wrong'))
     },
 
     editTodo() {
@@ -188,7 +188,6 @@ $card-padding: 10px;
 $button-gap: 15px;
 .add-todo-card {
   position: relative;
-  width: 100%;
   height: 100%;
 }
 form {

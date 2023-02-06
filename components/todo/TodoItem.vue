@@ -1,29 +1,36 @@
 <template>
-  <div v-if="!isTodoEditing" class="todo-item">
-    <div class="todo-item__header">
-      <span
-        class="todo-title"
-        :class="todo.isTodoCompleted ? 'text-line-through' : ''"
-        >{{ todo.title }}</span
-      >
-      <span class="time"
-        >{{ $t('created-at') }}:
-        {{ format(parseISO(todo.createdAt), 'dd-MMM-yyyy') }}
-      </span>
-    </div>
+  <div class="todo-item-container">
+    <TodoCardLoader
+      v-if="isTodoCompletingOrDeleting"
+      icon-width="64"
+      icon-height="64"
+    />
+    <div v-if="!isTodoEditing" class="todo-item">
+      <div class="todo-item__header">
+        <span
+          class="todo-title"
+          :class="todo.isTodoCompleted ? 'text-line-through' : ''"
+          >{{ todo.title }}</span
+        >
+        <span class="time"
+          >{{ $t('created-at') }}:
+          {{ format(parseISO(todo.createdAt), 'dd-MMM-yyyy') }}
+        </span>
+      </div>
 
-    <div class="todo-item__footer">
-      <TodoActions :todo="todo" />
-      <div>
-        <button v-if="todo.isTodoCompleted" class="btn__completed-in">
-          {{ $t('completed-in') }}:
-          {{ getCompletedInTime }}
-        </button>
+      <div class="todo-item__footer">
+        <TodoActions :todo="todo" />
+        <div>
+          <button v-if="todo.isTodoCompleted" class="btn__completed-in">
+            {{ $t('completed-in') }}:
+            {{ getCompletedInTime }}
+          </button>
+        </div>
       </div>
     </div>
-  </div>
-  <div v-else class="card__add">
-    <AddTodoCard :todo="todo" :is-todo-editing="true" />
+    <div v-else class="card__add">
+      <AddTodoCard :todo="todo" :is-todo-editing="true" />
+    </div>
   </div>
 </template>
 <script>
@@ -33,11 +40,13 @@ import { bn } from 'date-fns/locale'
 
 import TodoActions from '@/components/todo/utils/TodoActions.vue'
 import AddTodoCard from '@/components/todo/AddTodoCard.vue'
+import TodoCardLoader from '@/components/todo/utils/TodoCardLoader.vue'
 
 export default {
   components: {
     TodoActions,
     AddTodoCard,
+    TodoCardLoader,
   },
   props: {
     todo: {
@@ -59,7 +68,10 @@ export default {
   },
 
   computed: {
-    ...mapGetters('todos', ['getEditableTodo']),
+    ...mapGetters('todos', ['getEditableTodo', 'loadingId']),
+    isTodoCompletingOrDeleting() {
+      return this.todo.id === this.loadingId
+    },
     isTodoEditing() {
       return this.getEditableTodo
         ? this.getEditableTodo.id === this.todo.id
@@ -88,6 +100,12 @@ export default {
   font-weight: 700;
   line-height: 16.41px;
   color: #bbbdd0;
+}
+
+.todo-item-container {
+  position: relative;
+  height: 100%;
+  width: 100%;
 }
 
 .todo-item {

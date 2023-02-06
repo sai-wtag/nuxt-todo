@@ -21,6 +21,7 @@ export const state = () => ({
   isTodoLoading: false,
   isCreating: false,
   isSearching: false,
+  loadingId: null,
   searchKey: '',
   editableTodo: null,
   limit: pageLimit,
@@ -63,6 +64,9 @@ export const getters = {
   isButtonDisabled: (state) => {
     return state.isSearching || state.isTodoLoading || state.isTodoListLoading
   },
+  loadingId: (state) => {
+    return state.loadingId
+  },
 }
 
 export const mutations = {
@@ -84,10 +88,10 @@ export const mutations = {
   REMOVE_TODO: (state, id) => {
     state.list = state.list.filter((todo) => todo.id !== id)
   },
-  COMPLETE_TODO: (state, todoId) => {
+  COMPLETE_TODO: (state, updatedTodo) => {
     state.list = state.list.map((todo) => {
-      if (todo.id === todoId) {
-        todo.completedAt = new Date()
+      if (todo.id === updatedTodo.id) {
+        todo.completedAt = updatedTodo.completedAt
         todo.isTodoCompleted = true
       }
       return todo
@@ -148,13 +152,16 @@ export const mutations = {
   SET_IS_TODO_LIST_LOADING: (state, status) => {
     state.isTodoListLoading = status
   },
+  SET_LOADING_ID: (state, id) => {
+    state.loadingId = id
+  },
 }
 
 export const actions = {
   add: async ({ commit }, form) => {
     try {
       commit('SET_IS_TODO_LOADING', true)
-      const { data: createdTodo, error } = await supabase
+      const { data, error } = await supabase
         .from('todos')
         .insert({
           title: form.title,
@@ -165,16 +172,16 @@ export const actions = {
         throw new Error(error.message)
       }
 
-      const todo = createdTodo[0]
-      commit('ADD_TODO', todo)
+      const createdTodo = data[0]
+      commit('ADD_TODO', createdTodo)
       commit('SET_IS_CREATING', false)
       commit('SET_CURRENT_TASKS')
 
       return {
         success: true,
-        message: 'Todo added successfully',
+        message: 'Todo added successfully !',
         data: {
-          todo,
+          createdTodo,
         },
       }
     } catch (err) {
@@ -217,10 +224,41 @@ export const actions = {
     commit('CHECK_LOAD_MORE')
   },
 
-  complete: ({ commit }, todoId) => {
-    commit('COMPLETE_TODO', todoId)
-    commit('SET_CURRENT_TASKS')
-    commit('CHECK_LOAD_MORE')
+  complete: async ({ commit }, todoId) => {
+    try {
+      commit('SET_IS_TODO_LOADING', true)
+      commit('SET_LOADING_ID', todoId)
+      const { data, error } = await supabase
+        .from('todos')
+        .update({ completedAt: new Date() })
+        .eq('id', todoId)
+        .select()
+
+      if (error) {
+        throw new Error(error.message)
+      }
+      const updatedTodo = data[0]
+      commit('COMPLETE_TODO', updatedTodo)
+      commit('SET_CURRENT_TASKS')
+      commit('CHECK_LOAD_MORE')
+
+      return {
+        success: true,
+        message: 'Todo updated successfully !',
+        data: {
+          updatedTodo,
+        },
+      }
+    } catch (err) {
+      return {
+        success: false,
+        message: err.message,
+        data: null,
+      }
+    } finally {
+      commit('SET_IS_TODO_LOADING', false)
+      commit('SET_LOADING_ID', null)
+    }
   },
 
   setEditableTodo: ({ commit }, todoId) => {
