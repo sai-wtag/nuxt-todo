@@ -1,4 +1,5 @@
 import uuid4 from 'uuid4'
+import { ALL, COMPLETE, INCOMPLETE } from '@/utils/constants.js'
 
 const pageLimit = 3
 
@@ -10,22 +11,19 @@ const getLimit = (state) => {
 
 export const state = () => ({
   list: [],
+  currentTasks: [],
   isLoading: false,
   isCreating: false,
   editableTodo: null,
   limit: pageLimit,
+  taskStates: [ALL, COMPLETE, INCOMPLETE],
+  currentTaskState: ALL,
   isLoadedMore: false,
 })
 
 export const getters = {
   todos: (state) => {
-    return state.list.slice(0, getLimit(state))
-  },
-  completedTodos: (state) => {
-    return state.list.filter((todo) => todo.completed)
-  },
-  incompleteTodos: (state) => {
-    return state.list.filter((todo) => !todo.completed)
+    return state.currentTasks.slice(0, getLimit(state))
   },
   isTodoCreating: (state) => {
     return state.isCreating
@@ -34,7 +32,13 @@ export const getters = {
     return state.editableTodo
   },
   hasMoreTodos: (state) => {
-    return state.list.length > getLimit(state)
+    return state.currentTasks.length > getLimit(state)
+  },
+  getTaskStates: (state) => {
+    return state.taskStates
+  },
+  getCurrentTaskState: (state) => {
+    return state.currentTaskState
   },
   isLoadedMore: (state) => {
     return state.isLoadedMore
@@ -88,8 +92,26 @@ export const mutations = {
   SET_LOAD_MORE: (state, status) => {
     state.isLoadedMore = status
   },
+
+  SET_CURRENT_TASK_STATE: (state, taskState) => {
+    state.currentTaskState = taskState
+  },
+
+  SET_CURRENT_TASKS: (state) => {
+    switch (state.currentTaskState) {
+      case COMPLETE:
+        state.currentTasks = state.list.filter((todo) => todo.completedAt)
+        break
+      case INCOMPLETE:
+        state.currentTasks = state.list.filter((todo) => !todo.completedAt)
+        break
+      default:
+        state.currentTasks = state.list
+        break
+    }
+  },
   CHECK_LOAD_MORE: (state) => {
-    if (state.list.length <= pageLimit) {
+    if (state.currentTasks.length <= pageLimit) {
       state.isLoadedMore = false
     }
   },
@@ -99,6 +121,7 @@ export const actions = {
   add: ({ commit }, todo) => {
     commit('ADD_TODO', todo)
     commit('SET_IS_CREATING', false)
+    commit('SET_CURRENT_TASKS')
   },
 
   update: ({ commit }, updatedTodo) => {
@@ -124,6 +147,7 @@ export const actions = {
 
   delete: ({ commit }, todoId) => {
     commit('REMOVE_TODO', todoId)
+    commit('SET_CURRENT_TASKS')
     commit('CHECK_LOAD_MORE')
   },
 
@@ -141,6 +165,13 @@ export const actions = {
   },
 
   showLessTodos: ({ commit, state }) => {
+    commit('SET_LIMIT', pageLimit)
+    commit('SET_LOAD_MORE', false)
+  },
+
+  setCurrentTaskState: ({ commit }, taskState) => {
+    commit('SET_CURRENT_TASK_STATE', taskState)
+    commit('SET_CURRENT_TASKS')
     commit('SET_LIMIT', pageLimit)
     commit('SET_LOAD_MORE', false)
   },

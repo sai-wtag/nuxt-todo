@@ -1,15 +1,40 @@
 <template>
-  <div>
-    <button class="filter-btn">{{ $t('all') }}</button>
-    <button class="filter-btn">{{ $t('incomplete') }}</button>
-    <button class="filter-btn">{{ $t('complete') }}</button>
+  <div class="filter-btn">
+    <button
+      v-for="task in getTaskStates"
+      :key="task"
+      :class="{
+        active: task === getCurrentTaskState,
+      }"
+      @click.prevent="setCurrentTaskState(task)"
+    >
+      {{ $t(task) }}
+    </button>
   </div>
 </template>
 <script>
+import { mapGetters } from 'vuex'
 export default {
   name: 'FilterOptions',
-  data() {
-    return {}
+  computed: {
+    ...mapGetters('todos', ['getTaskStates', 'getCurrentTaskState']),
+  },
+  methods: {
+    setCurrentTaskState(task) {
+      this.$store.dispatch('todos/setCurrentTaskState', task)
+    },
   },
 }
 </script>
+<style scoped>
+.filter-btn {
+  display: flex;
+  justify-content: center;
+  gap: 5px;
+}
+
+.active {
+  background-color: #298b6b;
+  color: #fff;
+}
+</style>
