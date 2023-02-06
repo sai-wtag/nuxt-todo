@@ -179,7 +179,6 @@ export const actions = {
 
       return {
         success: true,
-        message: 'Todo added successfully !',
         data: {
           createdTodo,
         },
@@ -187,7 +186,6 @@ export const actions = {
     } catch (err) {
       return {
         success: false,
-        message: err.message,
         data: null,
       }
     } finally {
@@ -218,10 +216,30 @@ export const actions = {
     commit('SET_EDITABLE_TODO', null)
   },
 
-  delete: ({ commit }, todoId) => {
-    commit('REMOVE_TODO', todoId)
-    commit('SET_CURRENT_TASKS')
-    commit('CHECK_LOAD_MORE')
+  delete: async ({ commit }, todoId) => {
+    try {
+      commit('SET_IS_TODO_LOADING', true)
+      commit('SET_LOADING_ID', todoId)
+      const { error } = await supabase.from('todos').delete().eq('id', todoId)
+
+      if (error) {
+        throw new Error(error.message)
+      }
+      commit('REMOVE_TODO', todoId)
+      commit('SET_CURRENT_TASKS')
+      commit('CHECK_LOAD_MORE')
+
+      return {
+        success: true,
+      }
+    } catch (err) {
+      return {
+        success: false,
+      }
+    } finally {
+      commit('SET_IS_TODO_LOADING', false)
+      commit('SET_LOADING_ID', null)
+    }
   },
 
   complete: async ({ commit }, todoId) => {
@@ -244,7 +262,6 @@ export const actions = {
 
       return {
         success: true,
-        message: 'Todo updated successfully !',
         data: {
           updatedTodo,
         },
@@ -252,7 +269,6 @@ export const actions = {
     } catch (err) {
       return {
         success: false,
-        message: err.message,
         data: null,
       }
     } finally {

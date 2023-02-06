@@ -40,11 +40,18 @@ export default {
   },
 
   methods: {
-    deleteTodo() {
+    async deleteTodo() {
       if (this.isButtonDisabled) return
-      this.$store.dispatch('todos/delete', this.todo.id)
-      toast('success', this.$t('deleted', { item: this.$t('todo') }))
+      const { success } = await this.$store.dispatch(
+        'todos/delete',
+        this.todo.id
+      )
+      if (success) {
+        return toast('success', this.$t('deleted', { item: this.$t('todo') }))
+      }
+      return toast('error', this.$t('something-went-wrong'))
     },
+
     async completeTodo() {
       if (this.isButtonDisabled) return
       const { success } = await this.$store.dispatch(
@@ -56,6 +63,7 @@ export default {
       }
       return toast('error', this.$t('something-went-wrong'))
     },
+
     editTodo() {
       if (this.isButtonDisabled) return
       this.$store.dispatch('todos/setEditableTodo', this.todo.id)
