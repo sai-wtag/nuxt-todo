@@ -73,7 +73,12 @@ export const mutations = {
   ADD_TODO: (state, newTodo) => {
     state.list = [newTodo, ...state.list]
   },
-
+  SET_IS_CREATING: (state, creatingStatus = true) => {
+    state.isCreating = creatingStatus
+  },
+  REMOVE_TODO: (state, id) => {
+    state.list = state.list.filter((todo) => todo.id !== id)
+  },
   UPDATE_TODO: (state, updatedTodo) => {
     state.list = state.list.map((todo) => {
       if (todo.id === updatedTodo.id) {
@@ -82,15 +87,18 @@ export const mutations = {
       return todo
     })
   },
-  SET_IS_CREATING: (state, creatingStatus = true) => {
-    state.isCreating = creatingStatus
-  },
-  REMOVE_TODO: (state, id) => {
-    state.list = state.list.filter((todo) => todo.id !== id)
-  },
   COMPLETE_TODO: (state, updatedTodo) => {
     state.list = state.list.map((todo) => {
       if (todo.id === updatedTodo.id) {
+        todo.completedAt = updatedTodo.completedAt
+      }
+      return todo
+    })
+  },
+  UPDATE_COMPLETE_TODO: (state, updatedTodo) => {
+    state.list = state.list.map((todo) => {
+      if (todo.id === updatedTodo.id) {
+        todo.title = updatedTodo.title
         todo.completedAt = updatedTodo.completedAt
       }
       return todo
@@ -226,12 +234,37 @@ export const actions = {
     }
   },
 
-  completeAndUpdate: ({ commit }, updatedTodo) => {
-    commit('UPDATE_TODO', updatedTodo)
-    commit('COMPLETE_TODO', updatedTodo.id)
-    commit('SET_EDITABLE_TODO', null)
-    commit('SET_CURRENT_TASKS')
-    commit('CHECK_LOAD_MORE')
+  completeAndUpdate: async ({ commit }, updatedTodo) => {
+    try {
+      commit('SET_IS_TODO_LOADING', true)
+      const { data, error } = await supabase
+        .from('todos')
+        .update({ title: updatedTodo.title, completedAt: new Date() })
+        .eq('id', updatedTodo.id)
+        .select()
+        .single()
+
+      if (error) {
+        throw new Error(error.message)
+      }
+
+      commit('UPDATE_COMPLETE_TODO', data)
+      commit('SET_EDITABLE_TODO', null)
+      commit('SET_CURRENT_TASKS')
+      commit('CHECK_LOAD_MORE')
+
+      return {
+        success: true,
+        data,
+      }
+    } catch (err) {
+      return {
+        success: false,
+        data: null,
+      }
+    } finally {
+      commit('SET_IS_TODO_LOADING', false)
+    }
   },
 
   deleteCurrentTask: ({ commit }) => {

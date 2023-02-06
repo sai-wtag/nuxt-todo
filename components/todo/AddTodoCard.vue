@@ -144,12 +144,18 @@ export default {
       return toast('error', this.$t('something-went-wrong'))
     },
 
-    completeAndUpdateTodo() {
-      this.$store.dispatch('todos/completeAndUpdate', {
-        id: this.getEditableTodo.id,
-        title: this.form.title,
-      })
-      toast('success', this.$t('completed', { item: this.$t('todo') }))
+    async completeAndUpdateTodo() {
+      const { success } = await this.$store.dispatch(
+        'todos/completeAndUpdate',
+        {
+          id: this.getEditableTodo.id,
+          title: this.form.title,
+        }
+      )
+      if (success) {
+        return toast('success', this.$t('completed', { item: this.$t('todo') }))
+      }
+      return toast('error', this.$t('something-went-wrong'))
     },
 
     deleteCurrentTask() {
