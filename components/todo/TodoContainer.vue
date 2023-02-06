@@ -62,7 +62,7 @@ export default {
       'isTodoListLoading',
     ]),
     isTodoLoading() {
-      return this.isTodoListLoading || this.isTodoSearchingthis
+      return this.isTodoListLoading || this.isTodoSearching
     },
     isTodoAvailable() {
       return this.todos.length > 0

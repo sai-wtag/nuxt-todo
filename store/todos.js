@@ -363,7 +363,7 @@ export const actions = {
     commit('SET_LOAD_MORE', false)
   },
 
-  setSearchStatus: ({ commit }, e) => {
+  setSearchStatus: ({ commit }) => {
     commit('SET_IS_SEARCHING', true)
     commit('SET_IS_CREATING', false)
     commit('SET_EDITABLE_TODO', null)
