@@ -36,22 +36,22 @@ export default {
   },
 
   computed: {
-    ...mapGetters('todos', ['isTodoSearching']),
+    ...mapGetters('todos', ['isButtonDisabled']),
   },
 
   methods: {
     deleteTodo() {
-      if (this.isTodoSearching) return
+      if (this.isButtonDisabled) return
       this.$store.dispatch('todos/delete', this.todo.id)
       toast('success', this.$t('deleted', { item: this.$t('todo') }))
     },
     completeTodo() {
-      if (this.isTodoSearching) return
+      if (this.isButtonDisabled) return
       this.$store.dispatch('todos/complete', this.todo.id)
       toast('success', this.$t('completed', { item: this.$t('todo') }))
     },
     editTodo() {
-      if (this.isTodoSearching) return
+      if (this.isButtonDisabled) return
       this.$store.dispatch('todos/setEditableTodo', this.todo.id)
     },
   },

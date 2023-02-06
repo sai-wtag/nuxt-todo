@@ -21,12 +21,12 @@ export default {
     ...mapGetters('todos', [
       'getTaskStates',
       'getCurrentTaskState',
-      'isTodoSearching',
+      'isButtonDisabled',
     ]),
   },
   methods: {
     setCurrentTaskState(task) {
-      if (this.isTodoSearching) return
+      if (this.isButtonDisabled) return
       this.$store.dispatch('todos/setCurrentTaskState', task)
     },
   },

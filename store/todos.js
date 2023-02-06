@@ -60,6 +60,9 @@ export const getters = {
   isTodoListLoading: (state) => {
     return state.isTodoListLoading
   },
+  isButtonDisabled: (state) => {
+    return state.isSearching || state.isTodoLoading || state.isTodoListLoading
+  },
 }
 
 export const mutations = {

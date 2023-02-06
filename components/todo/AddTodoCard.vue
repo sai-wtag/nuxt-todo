@@ -83,7 +83,7 @@ export default {
   computed: {
     ...mapGetters('todos', [
       'getEditableTodo',
-      'isTodoSearching',
+      'isButtonDisabled',
       'isTodoLoading',
     ]),
     titlePlaceholder() {
@@ -108,8 +108,7 @@ export default {
   },
   methods: {
     submitHandler(_, shouldCompleteTodo = false) {
-      if (this.isTodoSearching) return
-
+      if (this.isButtonDisabled) return
       const errorMessage = this.checkValidation()
       if (errorMessage) {
         this.errorMessage = errorMessage
@@ -151,7 +150,7 @@ export default {
     },
 
     deleteCurrentTask() {
-      if (this.isTodoSearching) return
+      if (this.isButtonDisabled) return
       this.$store.dispatch('todos/deleteCurrentTask')
     },
 

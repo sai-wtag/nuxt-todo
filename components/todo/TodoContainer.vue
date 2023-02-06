@@ -53,7 +53,12 @@ export default {
     return {}
   },
   computed: {
-    ...mapGetters('todos', ['isTodoCreating', 'todos', 'isTodoSearching']),
+    ...mapGetters('todos', [
+      'isTodoCreating',
+      'todos',
+      'isTodoSearching',
+      'isButtonDisabled',
+    ]),
     isTodoAvailable() {
       return this.todos.length > 0
     },
@@ -64,7 +69,7 @@ export default {
   methods: {
     onAddTodo(todo) {},
     setIsCreating() {
-      if (this.isTodoSearching) return
+      if (this.isButtonDisabled) return
       this.$store.dispatch('todos/setIsCreating')
     },
   },

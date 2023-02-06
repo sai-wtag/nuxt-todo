@@ -12,7 +12,7 @@
   </div>
 </template>
 <script>
-import { mapActions } from 'vuex'
+import { mapGetters, mapActions } from 'vuex'
 import debounce from '@/helpers/debounce'
 
 import SearchIcon from '@/icons/SearchIcon'
@@ -28,6 +28,9 @@ export default {
       searchInputRef: null,
     }
   },
+  computed: {
+    ...mapGetters('todos', ['isButtonDisabled']),
+  },
   methods: {
     ...mapActions('todos', ['setSearchStatus', 'searchTasksByTitle']),
 
@@ -36,6 +39,7 @@ export default {
     }, 500),
 
     searchTasks(event) {
+      if (this.isButtonDisabled) return
       this.setSearchStatus()
       this.debounceSearchTasks(event.target.value)
     },
