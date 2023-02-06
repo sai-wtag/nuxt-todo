@@ -27,7 +27,7 @@ const getStyle = (type) => {
 const toast = (type, message) => {
   Toastify({
     text: message,
-    duration: 3000,
+    duration: 1500,
     close: true,
     gravity: 'top', // `top` or `bottom`
     position: 'center', // `left`, `center` or `right`

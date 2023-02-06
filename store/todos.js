@@ -171,18 +171,18 @@ export const actions = {
   add: async ({ commit }, form) => {
     try {
       commit('SET_IS_TODO_LOADING', true)
-      const { data, error } = await supabase
+      const { data: createdTodo, error } = await supabase
         .from('todos')
         .insert({
           title: form.title,
         })
         .select()
+        .single()
 
       if (error) {
         throw new Error(error.message)
       }
 
-      const createdTodo = data[0]
       commit('ADD_TODO', createdTodo)
       commit('SET_IS_CREATING', false)
       commit('SET_CURRENT_TASKS')
@@ -192,70 +192,6 @@ export const actions = {
         data: {
           createdTodo,
         },
-      }
-    } catch (err) {
-      return {
-        success: false,
-        data: null,
-      }
-    } finally {
-      commit('SET_IS_TODO_LOADING', false)
-    }
-  },
-
-  update: async ({ commit }, updatedTodo) => {
-    try {
-      commit('SET_IS_TODO_LOADING', true)
-      const { data, error } = await supabase
-        .from('todos')
-        .update({ title: updatedTodo.title })
-        .eq('id', updatedTodo.id)
-        .select()
-        .single()
-
-      if (error) {
-        throw new Error(error.message)
-      }
-
-      commit('UPDATE_TODO', data)
-      commit('SET_EDITABLE_TODO', null)
-
-      return {
-        success: true,
-        data,
-      }
-    } catch (err) {
-      return {
-        success: false,
-        data: null,
-      }
-    } finally {
-      commit('SET_IS_TODO_LOADING', false)
-    }
-  },
-
-  completeAndUpdate: async ({ commit }, updatedTodo) => {
-    try {
-      commit('SET_IS_TODO_LOADING', true)
-      const { data, error } = await supabase
-        .from('todos')
-        .update({ title: updatedTodo.title, completedAt: new Date() })
-        .eq('id', updatedTodo.id)
-        .select()
-        .single()
-
-      if (error) {
-        throw new Error(error.message)
-      }
-
-      commit('UPDATE_COMPLETE_TODO', data)
-      commit('SET_EDITABLE_TODO', null)
-      commit('SET_CURRENT_TASKS')
-      commit('CHECK_LOAD_MORE')
-
-      return {
-        success: true,
-        data,
       }
     } catch (err) {
       return {
@@ -303,28 +239,59 @@ export const actions = {
     }
   },
 
-  complete: async ({ commit }, todoId) => {
+  update: async ({ commit }, updatedTodo) => {
     try {
       commit('SET_IS_TODO_LOADING', true)
-      commit('SET_LOADING_ID', todoId)
       const { data, error } = await supabase
         .from('todos')
-        .update({ completedAt: new Date() })
-        .eq('id', todoId)
+        .update({ title: updatedTodo.title })
+        .eq('id', updatedTodo.id)
         .select()
+        .single()
 
       if (error) {
         throw new Error(error.message)
       }
-      const updatedTodo = data[0]
-      commit('COMPLETE_TODO', updatedTodo)
+
+      commit('UPDATE_TODO', data)
+      commit('SET_EDITABLE_TODO', null)
+
+      return {
+        success: true,
+        data,
+      }
+    } catch (err) {
+      return {
+        success: false,
+        data: null,
+      }
+    } finally {
+      commit('SET_IS_TODO_LOADING', false)
+    }
+  },
+
+  complete: async ({ commit }, todoId) => {
+    try {
+      commit('SET_IS_TODO_LOADING', true)
+      commit('SET_LOADING_ID', todoId)
+      const { data: completedTodo, error } = await supabase
+        .from('todos')
+        .update({ completedAt: new Date() })
+        .eq('id', todoId)
+        .select()
+        .single()
+
+      if (error) {
+        throw new Error(error.message)
+      }
+      commit('COMPLETE_TODO', completedTodo)
       commit('SET_CURRENT_TASKS')
       commit('CHECK_LOAD_MORE')
 
       return {
         success: true,
         data: {
-          updatedTodo,
+          completedTodo,
         },
       }
     } catch (err) {
@@ -335,6 +302,39 @@ export const actions = {
     } finally {
       commit('SET_IS_TODO_LOADING', false)
       commit('SET_LOADING_ID', null)
+    }
+  },
+
+  completeAndUpdate: async ({ commit }, updatedTodo) => {
+    try {
+      commit('SET_IS_TODO_LOADING', true)
+      const { data, error } = await supabase
+        .from('todos')
+        .update({ title: updatedTodo.title, completedAt: new Date() })
+        .eq('id', updatedTodo.id)
+        .select()
+        .single()
+
+      if (error) {
+        throw new Error(error.message)
+      }
+
+      commit('UPDATE_COMPLETE_TODO', data)
+      commit('SET_EDITABLE_TODO', null)
+      commit('SET_CURRENT_TASKS')
+      commit('CHECK_LOAD_MORE')
+
+      return {
+        success: true,
+        data,
+      }
+    } catch (err) {
+      return {
+        success: false,
+        data: null,
+      }
+    } finally {
+      commit('SET_IS_TODO_LOADING', false)
     }
   },
 
