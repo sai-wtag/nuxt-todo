@@ -11,6 +11,7 @@ export default function toast(type, message) {
       toast.addEventListener('mouseenter', Swal.stopTimer)
       toast.addEventListener('mouseleave', Swal.resumeTimer)
     },
+    showCloseButton: true,
   })
 
   Toast.fire({

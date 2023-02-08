@@ -101,7 +101,7 @@ export default {
       const errorMessage = this.checkValidation()
       if (errorMessage) {
         this.errorMessage = errorMessage
-        toast('error', this.$t('something-went-wrong'))
+        toast('error', this.$t(this.errorMessage))
         return
       }
 
@@ -122,6 +122,7 @@ export default {
         id: this.getEditableTodo.id,
         title: this.form.title,
       })
+      toast('success', this.$t('updated', { item: this.$t('todos') }))
     },
 
     completeAndUpdateTodo() {
@@ -129,6 +130,7 @@ export default {
         id: this.getEditableTodo.id,
         title: this.form.title,
       })
+      toast('success', this.$t('completed', { item: this.$t('todos') }))
     },
 
     deleteCurrentTask() {
