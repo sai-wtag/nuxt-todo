@@ -18,7 +18,7 @@ export default {
 
     debounceSearchTasks: debounce(function (searchKey) {
       this.searchTasksByTitle(searchKey)
-    }, 3000),
+    }, 500),
 
     searchTasks(event) {
       this.setSearchStatus()

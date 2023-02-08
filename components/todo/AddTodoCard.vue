@@ -37,6 +37,8 @@
 </template>
 <script>
 import { mapGetters } from 'vuex'
+import toast from '@/utils/toast'
+
 export default {
   name: 'AddTodoCard',
 
@@ -93,6 +95,7 @@ export default {
       const errorMessage = this.checkValidation()
       if (errorMessage) {
         this.errorMessage = errorMessage
+        toast('error', this.$t(this.errorMessage))
         return
       }
 
@@ -113,6 +116,7 @@ export default {
         id: this.getEditableTodo.id,
         title: this.form.title,
       })
+      toast('success', this.$t('updated', { item: this.$t('todos') }))
     },
 
     completeAndUpdateTodo() {
@@ -120,6 +124,7 @@ export default {
         id: this.getEditableTodo.id,
         title: this.form.title,
       })
+      toast('success', this.$t('completed', { item: this.$t('todos') }))
     },
 
     deleteCurrentTask() {

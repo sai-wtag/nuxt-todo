@@ -16,6 +16,8 @@
 </template>
 <script>
 import { mapGetters } from 'vuex'
+import toast from '@/utils/toast'
+
 export default {
   name: 'TodoActions',
   props: {
@@ -32,10 +34,12 @@ export default {
     deleteTodo() {
       if (this.isTodoSearching) return
       this.$store.dispatch('todos/delete', this.todo.id)
+      toast('success', this.$t('deleted', { item: this.$t('todo') }))
     },
     completeTodo() {
       if (this.isTodoSearching) return
       this.$store.dispatch('todos/complete', this.todo.id)
+      toast('success', this.$t('completed', { item: this.$t('todo') }))
     },
     editTodo() {
       if (this.isTodoSearching) return
