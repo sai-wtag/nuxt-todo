@@ -116,6 +116,7 @@ export default {
         id: this.getEditableTodo.id,
         title: this.form.title,
       })
+      toast('success', this.$t('updated', { item: this.$t('todos') }))
     },
 
     completeAndUpdateTodo() {
@@ -123,6 +124,7 @@ export default {
         id: this.getEditableTodo.id,
         title: this.form.title,
       })
+      toast('success', this.$t('completed', { item: this.$t('todos') }))
     },
 
     deleteCurrentTask() {
