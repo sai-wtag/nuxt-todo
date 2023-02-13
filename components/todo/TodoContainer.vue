@@ -2,7 +2,10 @@
   <div class="todo-container">
     <h2>{{ $t('add-task') }}</h2>
     <div class="todo__header">
-      <button @click.prevent="setIsCreating">{{ $t('create') }}</button>
+      <button class="btn__create-task" @click.prevent="setIsCreating">
+        <PlusIcon />
+        <span>{{ $t('create') }}</span>
+      </button>
       <span v-if="isTodoSearching">{{ $t('searching') }}</span>
       <FilterOptions />
     </div>
@@ -22,10 +25,7 @@
       </template>
     </div>
 
-    <!-- No todos found -->
-    <div v-if="!isTodoFound" class="todo__not-found">
-      {{ $t('not-found', { item: $t('todos') }) }}
-    </div>
+    <TodoNotFound v-if="!isTodoFound" />
 
     <!-- Load more/less todos -->
     <TodoFooter />
@@ -36,7 +36,10 @@ import { mapGetters } from 'vuex'
 import FilterOptions from '@/components/todo/FilterOptions.vue'
 import AddTodoCard from '@/components/todo/AddTodoCard.vue'
 import TodoItem from '@/components/todo/TodoItem.vue'
+import TodoNotFound from '@/components/todo/utils/TodoNotFound.vue'
 import TodoFooter from '@/components/todo/utils/TodoFooter.vue'
+
+import PlusIcon from '@/icons/PlusIcon.vue'
 
 import toast from '@/utils/toast'
 
@@ -46,7 +49,9 @@ export default {
     FilterOptions,
     AddTodoCard,
     TodoItem,
+    TodoNotFound,
     TodoFooter,
+    PlusIcon,
   },
   data() {
     return {}
@@ -81,12 +86,14 @@ $grid-breakpoints: (
   768px: 2,
   1200px: 3,
 );
+
 .todo-container {
   @include flex(column, nowrap, space-between);
   gap: 10px;
 }
 .todo__header {
-  @include flex(row, nowrap, space-between);
+  @include flex;
+  width: 100%;
 }
 .card-container {
   @include grid(1, 5px, $grid-breakpoints);
@@ -98,15 +105,25 @@ $card-padding: 15px;
   border-radius: 5px;
   background-color: $bg-white;
   padding: $card-padding;
-  height: 160px;
+  height: 150px;
 }
 
 .todo-footer {
   @include flex(row, nowrap, center, center, 10px);
 }
 
-.todo__not-found {
-  text-align: center;
-  font-size: 20px;
+.btn__create-task {
+  @include flex(row, nowrap, center, center, 5px);
+  border: none;
+  outline: none;
+  background-color: #7a8dfd;
+  color: $bg-white;
+  width: 120px;
+  height: $button-height;
+  padding: 5px 10px;
+  border-radius: 5px;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
 }
 </style>
