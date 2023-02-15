@@ -56,7 +56,7 @@ export default {
 @import '@/assets/css/mixins';
 
 .todo__search {
-  @include flex(row, nowrap, center, center);
+  @include flex(row, nowrap, center, center, 15px);
 }
 .search-input {
   border: $border-1;
@@ -69,5 +69,15 @@ export default {
   width: 100%;
   font-size: 16px;
   font-weight: 500;
+
+  @media (min-width: 576px) {
+    width: 200px;
+  }
+  @media (min-width: 1024px) {
+    width: 300px;
+  }
+  @media (min-width: 1200px) {
+    width: 500px;
+  }
 }
 </style>
