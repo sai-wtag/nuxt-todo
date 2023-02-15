@@ -1,5 +1,6 @@
 import Toastify from 'toastify-js'
 import 'toastify-js/src/toastify.css'
+import { SUCCESS, ERROR } from '@/utils/constants.js'
 
 const styleProperties = {
   color: '#fff',
@@ -11,12 +12,12 @@ const styleProperties = {
 
 const getStyle = (type) => {
   switch (type) {
-    case 'success':
+    case SUCCESS:
       return {
         background: '#0BC375',
         ...styleProperties,
       }
-    case 'error':
+    case ERROR:
       return {
         background: '#E85F5F',
         ...styleProperties,
