@@ -11,9 +11,6 @@ export default {
   components: {
     LoaderIcon,
   },
-  data() {
-    return {}
-  },
 }
 </script>
 
