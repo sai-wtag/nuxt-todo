@@ -73,36 +73,36 @@ export default {
 }
 </script>
 <style scoped lang="scss">
+@import '@/assets/css/variables';
+@import '@/assets/css/mixins';
+
+$grid-breakpoints: (
+  576px: 1,
+  768px: 2,
+  1200px: 3,
+);
 .todo-container {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
+  @include flex(column, nowrap, space-between);
   gap: 10px;
 }
 .todo__header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+  @include flex(row, nowrap, space-between);
 }
 .card-container {
-  display: grid;
-  gap: 25px;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  @include grid(1, 5px, $grid-breakpoints);
 }
 
-$card-padding: 10px;
+$card-padding: 15px;
 .card-item {
-  border: 1px solid #ccc;
+  border: $border-1;
   border-radius: 5px;
+  background-color: $bg-white;
   padding: $card-padding;
-  height: 100px;
+  height: 160px;
 }
 
 .todo-footer {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 10px;
+  @include flex(row, nowrap, center, center, 10px);
 }
 
 .todo__not-found {

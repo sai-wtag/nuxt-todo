@@ -2,7 +2,7 @@
   <div class="add-todo-card">
     <form @submit.prevent="submitHandler">
       <div class="add-todo-card__body">
-        <input
+        <textarea
           ref="titleInputRef"
           v-model="form.title"
           type="text"
@@ -13,19 +13,19 @@
       </div>
 
       <div class="add-todo-card__footer">
-        <button type="submit">
+        <button class="btn__save" type="submit">
           {{ isTodoEditing ? $t('save') : $t('add') }}
         </button>
-        <button
+        <div
           v-if="isTodoEditing"
-          type="button"
+          :title="$t('complete')"
           @click.prevent="submitHandler($event, shouldComplete)"
         >
-          {{ $t('complete') }}
-        </button>
-        <button @click.prevent="deleteCurrentTask">
-          {{ isTodoEditing ? $t('cancel') : $t('delete') }}
-        </button>
+          <CompleteIcon />
+        </div>
+        <div :title="$t('delete')" @click.prevent="deleteCurrentTask">
+          <DeleteIcon />
+        </div>
         <div>
           <span v-if="errorMessage" class="error-message">{{
             errorMessage
@@ -39,9 +39,15 @@
 import { mapGetters } from 'vuex'
 import toast from '@/utils/toast'
 
+import CompleteIcon from '@/icons/CompleteIcon'
+import DeleteIcon from '@/icons/DeleteIcon'
+
 export default {
   name: 'AddTodoCard',
-
+  components: {
+    CompleteIcon,
+    DeleteIcon,
+  },
   props: {
     isTodoEditing: {
       type: Boolean,
@@ -159,28 +165,48 @@ export default {
 </script>
 
 <style scoped lang="scss">
+@import '@/assets/css/variables';
+@import '@/assets/css/mixins';
+
 $card-padding: 10px;
-$button-gap: 5px;
-form {
-  display: flex;
-  flex-direction: column;
+$button-gap: 15px;
+.add-todo-card {
   height: 100%;
-  gap: $button-gap;
+}
+form {
+  height: 100%;
+  @include flex(column, nowrap, space-between, stretch, 0);
 }
 
 .add-todo-card__footer {
-  display: flex;
-  align-items: center;
+  @include flex(row, nowrap, flex-start, center, $button-gap);
   width: 100%;
-  gap: $button-gap;
 }
 .add-todo-card__input {
+  border: 3px solid #d4d9f7;
   resize: none;
   outline: none;
   font-family: inherit;
-  font-size: 1rem;
+  font-size: 16px;
+  font-weight: 500;
+  color: #32394b;
   width: calc(100% - $card-padding);
-  height: 70px;
+  height: 80px;
+  &:focus {
+    border: 3px solid #d1d8ff;
+  }
+}
+
+.btn__save {
+  cursor: pointer;
+  border: $border-1;
+  border-radius: 5px;
+  padding: 5px 10px;
+  background-color: $bg-white;
+  font-size: 16px;
+  font-weight: 500;
+  color: #32394b;
+  height: 36px;
 }
 
 .error-message {

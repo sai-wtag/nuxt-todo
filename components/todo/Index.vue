@@ -19,15 +19,34 @@ export default {
   },
 }
 </script>
-<style scoped lang="scss">
-.header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+<style lang="scss">
+@import '@/assets/css/variables';
+
+$padding-breakpoints: (
+  576px: 20px,
+  768px: 40px,
+  992px: 60px,
+  1200px: 100px,
+);
+
+@mixin padding($min-padding: 20px, $breakpoints) {
+  padding: 0 $min-padding;
+  @each $breakpoint, $padding in $breakpoints {
+    @media (min-width: $breakpoint) {
+      padding: 0 $padding;
+    }
+  }
 }
 
-.container {
-  margin: 0 auto;
-  padding: 0 100px;
+body {
+  margin: 0;
+  @include padding(20px, $padding-breakpoints);
+  background-color: $bg-primary;
+  font-family: $font-family;
+  min-height: 100vh;
+}
+
+svg {
+  cursor: pointer;
 }
 </style>

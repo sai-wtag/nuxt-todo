@@ -15,14 +15,14 @@
     <div class="todo-item__footer">
       <TodoActions :todo="todo" />
       <div>
-        <span v-if="todo.isTodoCompleted" class="time">
+        <button v-if="todo.isTodoCompleted" class="btn__completed-in">
           {{ $t('completed-in') }}:
           {{ getCompletedInTime }}
-        </span>
+        </button>
       </div>
     </div>
   </div>
-  <div v-else>
+  <div v-else class="card__add">
     <AddTodoCard :todo="todo" :is-todo-editing="true" />
   </div>
 </template>
@@ -83,7 +83,10 @@ export default {
 </script>
 <style scoped lang="scss">
 .time {
-  font-size: 0.8rem;
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 16.41px;
+  color: #bbbdd0;
 }
 
 .todo-item {
@@ -105,10 +108,29 @@ export default {
 }
 
 .todo-title {
-  font-size: 1.5rem;
+  color: #32394b;
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 28.13px;
+}
+.text-line-through {
+  color: #0bc375;
+  text-decoration: line-through;
 }
 
-.text-line-through {
-  text-decoration: line-through;
+.btn__completed-in {
+  cursor: pointer;
+  border: none;
+  border-radius: 5px;
+  height: 24px;
+  background-color: #7a8dfd;
+  color: #ffffff;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 14.06px;
+}
+
+.card__add {
+  height: 100%;
 }
 </style>

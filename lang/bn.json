@@ -1,42 +1,42 @@
 {
-    "welcome": "স্বাগতম",
-    "add-task": "হালখাতা যোগ করুন",
-    "create": "তৈরি করুন",
-    "cancel": "বাতিল করুন",
-    "save": "সংরক্ষণ করুন",
-    "add": "যোগ করুন",
-    "todo": "হালখাতা",
-    "todos": "হালখাতা",
-    "edit": "সম্পাদনা করুন",
-    "delete": "মুছে ফেলুন",
-    "all": "সব",
-    "complete": "সম্পন্ন",
-    "incomplete": "অসম্পূর্ণ",
-    "language": "ভাষা",
-    "select-language": "ভাষা নির্বাচন করুন",
-    "search": "অনুসন্ধান করুন",
-    "min": "ন্যূনতম",
-    "max": "সর্বোচ্চ",
-    "created-at": "তৈরি করা হয়েছে",
-    "completed-in": "সম্পন্ন হতে সময় লেগেছে",
-    "characters": "অক্ষর",
-    "not-found": "কোন {item} পাওয়া যায়নি",
-    "load-more": "আরও লোড করুন",
-    "show-less": "কম দেখান",
-    "loading": "লোড হচ্ছে",
-    "searching": "অনুসন্ধান করা হচ্ছে ...",
-    "validation": {
-        "todo": {
-            "title": {
-                "required": "শিরোনাম প্রয়োজন",
-                "min-length": "শিরোনাম অন্তত {minLength} অক্ষর হতে হবে",
-                "max-length": "শিরোনাম সর্বোচ্চ {maxLength} অক্ষর হতে পারে"
-            }
-        }
-    },
-    "added": "সফলভাবে {item} যোগ করা হয়েছে",
-    "updated": "সফলভাবে {item} আপডেট করা হয়েছে",
-    "completed": "সফলভাবে {item} সম্পন্ন হয়েছে",
-    "deleted": "সফলভাবে {item} মুছে ফেলা হয়েছে",
-    "something-went-wrong": "কিছু ভুল হয়েছে !"
+  "welcome": "স্বাগতম",
+  "add-task": "হালখাতা যোগ করুন",
+  "create": "তৈরি করুন",
+  "cancel": "বাতিল করুন",
+  "save": "সংরক্ষণ করুন",
+  "add": "যোগ করুন",
+  "todo": "হালখাতা",
+  "todos": "হালখাতা",
+  "edit": "সম্পাদনা করুন",
+  "delete": "মুছে ফেলুন",
+  "all": "সব",
+  "complete": "সম্পন্ন",
+  "incomplete": "অসম্পূর্ণ",
+  "language": "ভাষা",
+  "select-language": "ভাষা নির্বাচন করুন",
+  "search": "অনুসন্ধান করুন",
+  "min": "ন্যূনতম",
+  "max": "সর্বোচ্চ",
+  "created-at": "তৈরি করা হয়েছে",
+  "completed-in": "সম্পন্ন হতে সময় লেগেছে",
+  "characters": "অক্ষর",
+  "not-found": "কোন {item} পাওয়া যায়নি",
+  "load-more": "আরও লোড করুন",
+  "show-less": "কম দেখান",
+  "loading": "লোড হচ্ছে",
+  "searching": "অনুসন্ধান করা হচ্ছে ...",
+  "validation": {
+    "todo": {
+      "title": {
+        "required": "শিরোনাম প্রয়োজন",
+        "min-length": "শিরোনাম অন্তত {minLength} অক্ষর হতে হবে",
+        "max-length": "শিরোনাম সর্বোচ্চ {maxLength} অক্ষর হতে পারে"
+      }
+    }
+  },
+  "added": "সফলভাবে {item} যোগ করা হয়েছে !",
+  "updated": "সফলভাবে {item} আপডেট করা হয়েছে !",
+  "completed": "সফলভাবে {item} সম্পন্ন হয়েছে !",
+  "deleted": "সফলভাবে {item} মুছে ফেলা হয়েছে !",
+  "something-went-wrong": "কিছু ভুল হয়েছে !"
 }

@@ -1,0 +1,25 @@
+@import 'variables';
+
+@mixin flex($direction: row, $wrap: nowrap, $justify: space-between, $align: stretch, $gap: 5px) {
+    display: flex;
+    flex-direction: $direction;
+    flex-wrap: $wrap;
+    justify-content: $justify;
+    align-items: $align;
+    gap: $gap;
+}
+@mixin grid($columns: 12, $gutter: 1rem, $breakpoints: $breakpoints) {
+    $grid-gap: $gutter;
+
+    display: grid;
+    grid-template-columns: repeat($columns, minmax(0, 1fr));
+    grid-gap: $grid-gap;
+    
+    @each $breakpoint, $value in $breakpoints {
+        $grid-gap: $grid-gap + 5px;
+        @media (min-width: $breakpoint) {
+            grid-template-columns: repeat($value, minmax(0, 1fr));
+            grid-gap:$grid-gap;
+        }
+    }
+}
