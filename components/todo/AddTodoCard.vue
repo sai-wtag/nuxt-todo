@@ -1,7 +1,7 @@
 <template>
   <div class="add-todo-card">
     <TodoCardLoader
-      v-if="isTodoLoading"
+      v-if="isTodoCreatingOrUpdating"
       :is-main-loader="true"
       icon-width="64"
       icon-height="64"
@@ -85,7 +85,15 @@ export default {
       'getEditableTodo',
       'isButtonDisabled',
       'isTodoLoading',
+      'isTodoAdding',
+      'isTodoUpdating',
     ]),
+    isTodoCreatingOrUpdating() {
+      if (this.isTodoEditing) {
+        return this.isTodoUpdating
+      }
+      return this.isTodoAdding
+    },
     titlePlaceholder() {
       const addTask = this.$t('add-task')
       const minWord = this.$t('min')
