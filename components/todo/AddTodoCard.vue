@@ -125,11 +125,17 @@ export default {
         return
       }
 
+      this.sanitizeForm()
+
       if (shouldCompleteTodo) {
         this.completeAndUpdateTodo()
         return
       }
       this.isTodoEditing ? this.editTodo() : this.addTodo()
+    },
+
+    sanitizeForm() {
+      this.form.title = this.form.title.replace(/<[^>]+>/g, '').trim()
     },
 
     async addTodo() {
