@@ -64,7 +64,13 @@ export const getters = {
     return state.isTodoListLoading
   },
   isButtonDisabled: (state) => {
-    return state.isSearching || state.isTodoLoading || state.isTodoListLoading
+    return (
+      state.isSearching ||
+      state.isTodoLoading ||
+      state.isTodoListLoading ||
+      state.isTodoAdding ||
+      state.isTodoUpdating
+    )
   },
   loadingId: (state) => {
     return state.loadingId
