@@ -34,7 +34,7 @@
         </div>
         <div>
           <span v-if="errorMessage" class="error-message">{{
-            errorMessage
+            $t('message', { message: errorMessage })
           }}</span>
         </div>
       </div>
@@ -121,7 +121,7 @@ export default {
       const errorMessage = this.checkValidation()
       if (errorMessage) {
         this.errorMessage = errorMessage
-        toast(ERROR, this.$t('message', { message: this.errorMessage }))
+        toast(ERROR, this.errorMessage)
         return
       }
 
