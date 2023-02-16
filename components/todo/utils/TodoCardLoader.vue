@@ -25,9 +25,6 @@ export default {
       default: '102',
     },
   },
-  data() {
-    return {}
-  },
 }
 </script>
 

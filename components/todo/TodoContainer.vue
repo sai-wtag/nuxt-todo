@@ -105,7 +105,8 @@ $grid-breakpoints: (
   width: 100%;
 }
 .card-container {
-  @include grid(1, 5px, $grid-breakpoints);
+  @include grid(1, 20px, $grid-breakpoints);
+  margin: 25px 0;
 }
 
 $card-padding: 15px;

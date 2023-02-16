@@ -134,6 +134,7 @@ export default {
   font-size: 24px;
   font-weight: 700;
   line-height: 28.13px;
+  overflow-wrap: break-word;
 }
 .text-line-through {
   color: #0bc375;

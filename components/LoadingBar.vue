@@ -1,6 +1,6 @@
 <template>
   <div v-if="loading" class="loading-page">
-    <p>Loading...</p>
+    <p>{{ $t('loading') }}</p>
   </div>
 </template>
 

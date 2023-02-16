@@ -23,7 +23,7 @@
   "not-found": "You didn’t add any task. Please, add one",
   "load-more": "Load More",
   "show-less": "Show Less",
-  "loading": "Loading",
+  "loading": "Loading ...",
   "searching": "Searching ...",
   "validation": {
     "todo": {
