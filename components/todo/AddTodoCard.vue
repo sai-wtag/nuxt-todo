@@ -121,7 +121,7 @@ export default {
       const errorMessage = this.checkValidation()
       if (errorMessage) {
         this.errorMessage = errorMessage
-        toast(ERROR, this.$t(this.errorMessage))
+        toast(ERROR, this.$t('message', { message: this.errorMessage }))
         return
       }
 
