@@ -203,8 +203,10 @@ export const actions = {
     }
   },
 
-  deleteCurrentTask: ({ commit }) => {
-    commit('SET_IS_CREATING', false)
+  deleteCurrentTask: ({ commit }, isTodoEditing = false) => {
+    if (!isTodoEditing) {
+      commit('SET_IS_CREATING', false)
+    }
     commit('SET_EDITABLE_TODO', null)
   },
 

@@ -160,7 +160,7 @@ export default {
 
     deleteCurrentTask() {
       if (this.isButtonDisabled) return
-      this.$store.dispatch('todos/deleteCurrentTask')
+      this.$store.dispatch('todos/deleteCurrentTask', this.isTodoEditing)
     },
 
     checkValidation() {
