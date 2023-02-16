@@ -44,6 +44,7 @@
 <script>
 import { mapGetters } from 'vuex'
 import toast from '@/utils/toast'
+import { SUCCESS, ERROR } from '@/utils/constants'
 
 import CompleteIcon from '@/icons/CompleteIcon'
 import DeleteIcon from '@/icons/DeleteIcon'
@@ -120,7 +121,7 @@ export default {
       const errorMessage = this.checkValidation()
       if (errorMessage) {
         this.errorMessage = errorMessage
-        toast('error', this.$t(this.errorMessage))
+        toast(ERROR, this.$t(this.errorMessage))
         return
       }
 
@@ -136,9 +137,9 @@ export default {
       this.form.title = ''
       const item = this.$t('todo')
       if (success) {
-        return toast('success', this.$t('added', { item }))
+        return toast(SUCCESS, this.$t('added', { item }))
       }
-      return toast('error', this.$t('something-went-wrong'))
+      return toast(ERROR, this.$t('something-went-wrong'))
     },
 
     async editTodo() {
@@ -147,9 +148,9 @@ export default {
         title: this.form.title,
       })
       if (success) {
-        return toast('success', this.$t('updated', { item: this.$t('todo') }))
+        return toast(SUCCESS, this.$t('updated', { item: this.$t('todo') }))
       }
-      return toast('error', this.$t('something-went-wrong'))
+      return toast(ERROR, this.$t('something-went-wrong'))
     },
 
     async completeAndUpdateTodo() {
@@ -161,9 +162,9 @@ export default {
         }
       )
       if (success) {
-        return toast('success', this.$t('completed', { item: this.$t('todo') }))
+        return toast(SUCCESS, this.$t('completed', { item: this.$t('todo') }))
       }
-      return toast('error', this.$t('something-went-wrong'))
+      return toast(ERROR, this.$t('something-went-wrong'))
     },
 
     deleteCurrentTask() {

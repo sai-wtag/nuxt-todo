@@ -16,6 +16,7 @@
 <script>
 import { mapGetters } from 'vuex'
 import toast from '@/utils/toast'
+import { SUCCESS, ERROR } from '@/utils/constants'
 
 import CompleteIcon from '@/icons/CompleteIcon'
 import EditIcon from '@/icons/EditIcon'
@@ -50,9 +51,9 @@ export default {
         this.todo.id
       )
       if (success) {
-        return toast('success', this.$t('deleted', { item: this.$t('todo') }))
+        return toast(SUCCESS, this.$t('deleted', { item: this.$t('todo') }))
       }
-      return toast('error', this.$t('something-went-wrong'))
+      return toast(ERROR, this.$t('something-went-wrong'))
     },
 
     async completeTodo() {
@@ -62,9 +63,9 @@ export default {
         this.todo.id
       )
       if (success) {
-        return toast('success', this.$t('completed', { item: this.$t('todo') }))
+        return toast(SUCCESS, this.$t('completed', { item: this.$t('todo') }))
       }
-      return toast('error', this.$t('something-went-wrong'))
+      return toast(ERROR, this.$t('something-went-wrong'))
     },
 
     editTodo() {
