@@ -217,7 +217,6 @@ export const actions = {
 
   delete: async ({ commit }, todoId) => {
     try {
-      commit('SET_IS_TODO_LOADING', true)
       commit('SET_LOADING_ID', todoId)
       const { error } = await supabase.from('todos').delete().eq('id', todoId)
 
@@ -236,7 +235,6 @@ export const actions = {
         success: false,
       }
     } finally {
-      commit('SET_IS_TODO_LOADING', false)
       commit('SET_LOADING_ID', null)
     }
   },
@@ -274,7 +272,6 @@ export const actions = {
 
   complete: async ({ commit }, todoId) => {
     try {
-      commit('SET_IS_TODO_LOADING', true)
       commit('SET_LOADING_ID', todoId)
       const { data: completedTodo, error } = await supabase
         .from('todos')
@@ -302,7 +299,6 @@ export const actions = {
         data: null,
       }
     } finally {
-      commit('SET_IS_TODO_LOADING', false)
       commit('SET_LOADING_ID', null)
     }
   },
