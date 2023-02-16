@@ -1,13 +1,15 @@
 <template>
   <div class="todo__search">
-    <input
-      v-if="isInputVisible"
-      ref="searchInputRef"
-      class="search-input"
-      type="text"
-      :placeholder="$t('search')"
-      @keyup.prevent="searchTasks"
-    />
+    <transition name="search">
+      <input
+        v-if="isInputVisible"
+        ref="searchInputRef"
+        class="search-input"
+        type="text"
+        :placeholder="$t('search')"
+        @keyup.prevent="searchTasks"
+      />
+    </transition>
     <div @click="toggleSearchInput"><SearchIcon /></div>
   </div>
 </template>
@@ -79,5 +81,14 @@ export default {
   @media (min-width: 1200px) {
     width: 500px;
   }
+}
+
+.search-enter-active,
+.search-leave-active {
+  transition: all 0.3s ease;
+}
+.search-enter,
+.search-leave-active {
+  opacity: 0;
 }
 </style>
