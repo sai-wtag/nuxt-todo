@@ -87,11 +87,11 @@ export default {
       'isButtonDisabled',
       'isTodoLoading',
       'isTodoAdding',
-      'isTodoUpdating',
+      'isSingleTodoUpdating',
     ]),
     isTodoCreatingOrUpdating() {
       if (this.isTodoEditing) {
-        return this.isTodoUpdating
+        return this.isSingleTodoUpdating
       }
       return this.isTodoAdding
     },

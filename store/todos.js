@@ -28,6 +28,8 @@ export const state = () => ({
   isLoadedMore: false,
   isTodoAdding: false,
   isTodoUpdating: false,
+  isTodoCompleting: false,
+  isTodoDeleting: false,
 })
 
 export const getters = {
@@ -64,10 +66,11 @@ export const getters = {
   isButtonDisabled: (state) => {
     return (
       state.isSearching ||
-      state.isTodoLoading ||
       state.isTodoListLoading ||
       state.isTodoAdding ||
-      state.isTodoUpdating
+      state.isTodoCompleting ||
+      state.isTodoUpdating ||
+      state.isTodoDeleting
     )
   },
   loadingId: (state) => {
@@ -76,7 +79,7 @@ export const getters = {
   isTodoAdding: (state) => {
     return state.isTodoAdding
   },
-  isTodoUpdating: (state) => {
+  isSingleTodoUpdating: (state) => {
     return state.isTodoUpdating && state.loadingId === state.editableTodo.id
   },
 }
@@ -183,6 +186,12 @@ export const mutations = {
   SET_IS_TODO_UPDATING: (state, status) => {
     state.isTodoUpdating = status
   },
+  SET_IS_TODO_COMPLETING: (state, status) => {
+    state.isTodoCompleting = status
+  },
+  SET_IS_TODO_DELETING: (state, status) => {
+    state.isTodoDeleting = status
+  },
 }
 
 export const actions = {
@@ -235,6 +244,7 @@ export const actions = {
 
   delete: async ({ commit }, todoId) => {
     try {
+      commit('SET_IS_TODO_DELETING', true)
       commit('SET_LOADING_ID', todoId)
       const { error } = await supabase.from('todos').delete().eq('id', todoId)
 
@@ -253,6 +263,7 @@ export const actions = {
         success: false,
       }
     } finally {
+      commit('SET_IS_TODO_DELETING', false)
       commit('SET_LOADING_ID', null)
     }
   },
@@ -293,6 +304,7 @@ export const actions = {
 
   complete: async ({ commit }, todoId) => {
     try {
+      commit('SET_IS_TODO_COMPLETING', true)
       commit('SET_LOADING_ID', todoId)
       const { data: completedTodo, error } = await supabase
         .from('todos')
@@ -320,13 +332,14 @@ export const actions = {
         data: null,
       }
     } finally {
+      commit('SET_IS_TODO_COMPLETING', false)
       commit('SET_LOADING_ID', null)
     }
   },
 
   completeAndUpdate: async ({ commit }, updatedTodo) => {
     try {
-      commit('SET_IS_TODO_LOADING', true)
+      commit('SET_IS_TODO_UPDATING', true)
       commit('SET_LOADING_ID', updatedTodo.id)
 
       const { data, error } = await supabase
@@ -355,7 +368,7 @@ export const actions = {
         data: null,
       }
     } finally {
-      commit('SET_IS_TODO_LOADING', false)
+      commit('SET_IS_TODO_UPDATING', false)
       commit('SET_LOADING_ID', null)
       commit('SET_EDITABLE_TODO', null)
     }
