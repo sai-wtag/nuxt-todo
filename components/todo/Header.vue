@@ -3,8 +3,11 @@
     <div class="header__left">
       <ProjectLogo w="34" h="34" />
       <span class="todo__title">{{ $t('todos') }}</span>
-      <select class="todo__language" @change="setLocale">
-        <option value="">{{ $t('select-language') }}</option>
+      <select
+        v-model="currentLocale"
+        class="todo__language"
+        @change="setLocale"
+      >
         <option
           v-for="locale in getLocals"
           :key="locale.code"
@@ -28,7 +31,11 @@ export default {
     SearchBar,
     ProjectLogo,
   },
-
+  data() {
+    return {
+      currentLocale: this.$i18n.locale,
+    }
+  },
   computed: {
     ...mapGetters('locale', ['getLocals']),
   },
