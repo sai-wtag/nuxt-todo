@@ -1,10 +1,8 @@
 import Database from '@/classes/Database'
-import { ALL, COMPLETE, INCOMPLETE } from '@/utils/constants.js'
+import { ALL, COMPLETE, INCOMPLETE, PER_PAGE } from '@/utils/constants.js'
 
 const database = new Database()
 const supabase = database.supabase
-
-const pageLimit = 3
 
 const getLimit = (state) => {
   let limit = state.limit
@@ -18,10 +16,9 @@ export const state = () => ({
   isTodoListLoading: false,
   isCreating: false,
   isSearching: false,
-  loadingId: null,
   searchKey: '',
   editableTodo: null,
-  limit: pageLimit,
+  limit: PER_PAGE,
   taskStates: [ALL, COMPLETE, INCOMPLETE],
   currentTaskState: ALL,
   isLoadedMore: false,
@@ -38,7 +35,7 @@ export const getters = {
   isTodoCreating: (state) => {
     return state.isCreating
   },
-  getEditableTodo: (state) => {
+  editingTodo: (state) => {
     return state.editableTodo
   },
   hasMoreTodos: (state) => {
@@ -69,14 +66,11 @@ export const getters = {
       state.isTodoDeleting
     )
   },
-  loadingId: (state) => {
-    return state.loadingId
-  },
   isTodoAdding: (state) => {
     return state.isTodoAdding
   },
-  isSingleTodoUpdating: (state) => {
-    return state.isTodoUpdating && state.loadingId === state.editableTodo.id
+  isTodoUpdating: (state) => {
+    return state.isTodoUpdating
   },
   searchKey: (state) => {
     return state.searchKey
@@ -85,6 +79,7 @@ export const getters = {
 
 export const mutations = {
   ADD_TODO: (state, newTodo) => {
+    newTodo.isLoading = false
     state.list = [newTodo, ...state.list]
   },
   SET_IS_CREATING: (state, creatingStatus = true) => {
@@ -96,6 +91,7 @@ export const mutations = {
   UPDATE_TODO: (state, updatedTodo) => {
     state.list = state.list.map((todo) => {
       if (todo.id === updatedTodo.id) {
+        todo.isLoading = false
         todo.title = updatedTodo.title
       }
       return todo
@@ -104,6 +100,7 @@ export const mutations = {
   COMPLETE_TODO: (state, updatedTodo) => {
     state.list = state.list.map((todo) => {
       if (todo.id === updatedTodo.id) {
+        todo.isLoading = false
         todo.completedAt = updatedTodo.completedAt
       }
       return todo
@@ -112,6 +109,7 @@ export const mutations = {
   UPDATE_COMPLETE_TODO: (state, updatedTodo) => {
     state.list = state.list.map((todo) => {
       if (todo.id === updatedTodo.id) {
+        todo.isLoading = false
         todo.title = updatedTodo.title
         todo.completedAt = updatedTodo.completedAt
       }
@@ -124,7 +122,7 @@ export const mutations = {
       : null
   },
   INCREMENT_PAGINATION_LIMIT: (state) => {
-    state.limit += pageLimit
+    state.limit += PER_PAGE
   },
   SET_LOAD_MORE: (state, status) => {
     state.isLoadedMore = status
@@ -157,10 +155,10 @@ export const mutations = {
     state.searchKey = searchKey
   },
   RESET_PAGINATION_LIMIT: (state) => {
-    state.limit = pageLimit
+    state.limit = PER_PAGE
   },
   CHECK_LOAD_MORE: (state) => {
-    if (state.currentTasks.length <= pageLimit) {
+    if (state.currentTasks.length <= PER_PAGE) {
       state.isLoadedMore = false
     }
   },
@@ -170,11 +168,11 @@ export const mutations = {
   SET_IS_TODO_LIST_LOADING: (state, status) => {
     state.isTodoListLoading = status
   },
-  SET_LOADING_ID: (state, id) => {
-    state.loadingId = id
-  },
   SET_ALL_TODOS: (state, todos) => {
-    state.list = todos
+    state.list = todos.map((todo) => {
+      todo.isLoading = false
+      return todo
+    })
   },
   SET_IS_TODO_ADDING: (state, status) => {
     state.isTodoAdding = status
@@ -187,6 +185,14 @@ export const mutations = {
   },
   SET_IS_TODO_DELETING: (state, status) => {
     state.isTodoDeleting = status
+  },
+  SET_IS_TODO_LOADING: (state, todoId) => {
+    state.list = state.list.map((todo) => {
+      if (todo.id === todoId) {
+        todo.isLoading = true
+      }
+      return todo
+    })
   },
 }
 
@@ -244,7 +250,7 @@ export const actions = {
   delete: async ({ commit }, todoId) => {
     try {
       commit('SET_IS_TODO_DELETING', true)
-      commit('SET_LOADING_ID', todoId)
+      commit('SET_IS_TODO_LOADING', todoId)
       const { error } = await supabase.from('todos').delete().eq('id', todoId)
 
       if (error) {
@@ -263,14 +269,13 @@ export const actions = {
       }
     } finally {
       commit('SET_IS_TODO_DELETING', false)
-      commit('SET_LOADING_ID', null)
     }
   },
 
   update: async ({ commit }, updatedTodo) => {
     try {
       commit('SET_IS_TODO_UPDATING', true)
-      commit('SET_LOADING_ID', updatedTodo.id)
+      commit('SET_IS_TODO_LOADING', updatedTodo.id)
 
       const { data, error } = await supabase
         .from('todos')
@@ -296,7 +301,6 @@ export const actions = {
       }
     } finally {
       commit('SET_IS_TODO_UPDATING', false)
-      commit('SET_LOADING_ID', null)
       commit('SET_EDITABLE_TODO', null)
     }
   },
@@ -304,7 +308,7 @@ export const actions = {
   complete: async ({ commit }, todoId) => {
     try {
       commit('SET_IS_TODO_COMPLETING', true)
-      commit('SET_LOADING_ID', todoId)
+      commit('SET_IS_TODO_LOADING', todoId)
       const { data: completedTodo, error } = await supabase
         .from('todos')
         .update({ completedAt: new Date() })
@@ -332,14 +336,13 @@ export const actions = {
       }
     } finally {
       commit('SET_IS_TODO_COMPLETING', false)
-      commit('SET_LOADING_ID', null)
     }
   },
 
   completeAndUpdate: async ({ commit }, updatedTodo) => {
     try {
       commit('SET_IS_TODO_UPDATING', true)
-      commit('SET_LOADING_ID', updatedTodo.id)
+      commit('SET_IS_TODO_LOADING', updatedTodo.id)
 
       const { data, error } = await supabase
         .from('todos')
@@ -368,7 +371,6 @@ export const actions = {
       }
     } finally {
       commit('SET_IS_TODO_UPDATING', false)
-      commit('SET_LOADING_ID', null)
       commit('SET_EDITABLE_TODO', null)
     }
   },

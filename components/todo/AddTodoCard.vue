@@ -83,14 +83,14 @@ export default {
 
   computed: {
     ...mapGetters('todos', [
-      'getEditableTodo',
+      'editingTodo',
       'isButtonDisabled',
       'isTodoAdding',
       'isSingleTodoUpdating',
     ]),
     isTodoCreatingOrUpdating() {
       if (this.isTodoEditing) {
-        return this.isSingleTodoUpdating
+        return this.editingTodo.isLoading
       }
       return this.isTodoAdding
     },
@@ -106,7 +106,7 @@ export default {
   },
   mounted() {
     if (this.isTodoEditing) {
-      this.form.title = this.getEditableTodo.title
+      this.form.title = this.editingTodo.title
     }
     this.$nextTick(() => {
       this.$refs.titleInputRef.focus()
@@ -148,7 +148,7 @@ export default {
 
     async editTodo() {
       const { success } = await this.$store.dispatch('todos/update', {
-        id: this.getEditableTodo.id,
+        id: this.editingTodo.id,
         title: this.form.title,
       })
       if (success) {
@@ -161,7 +161,7 @@ export default {
       const { success } = await this.$store.dispatch(
         'todos/completeAndUpdate',
         {
-          id: this.getEditableTodo.id,
+          id: this.editingTodo.id,
           title: this.form.title,
         }
       )

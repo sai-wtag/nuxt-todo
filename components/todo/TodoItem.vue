@@ -1,10 +1,6 @@
 <template>
   <div class="todo-item-container">
-    <TodoCardLoader
-      v-if="isTodoCompletingOrDeleting"
-      icon-width="64"
-      icon-height="64"
-    />
+    <TodoCardLoader v-if="todo.isLoading" icon-width="64" icon-height="64" />
     <div v-if="!isTodoEditing" class="todo-item">
       <div class="todo-item__header">
         <span
@@ -70,17 +66,12 @@ export default {
   },
 
   computed: {
-    ...mapGetters('todos', ['getEditableTodo', 'loadingId']),
+    ...mapGetters('todos', ['editingTodo', 'loadingId']),
     isTodoCompleted() {
       return !!this.todo.completedAt
     },
-    isTodoCompletingOrDeleting() {
-      return this.todo.id === this.loadingId
-    },
     isTodoEditing() {
-      return this.getEditableTodo
-        ? this.getEditableTodo.id === this.todo.id
-        : false
+      return this.editingTodo ? this.editingTodo.id === this.todo.id : false
     },
     getLocale() {
       let locale
