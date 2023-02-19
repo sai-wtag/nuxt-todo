@@ -4,7 +4,11 @@
 
     <span class="todo__add-text">{{ $t('add-task') }}</span>
     <div class="todo__header">
-      <button class="btn__create-task" @click.prevent="setIsCreating">
+      <button
+        class="btn__create-task"
+        :class="lightenClass"
+        @click.prevent="setIsCreating"
+      >
         <PlusIcon />
         <span>{{ $t('create') }}</span>
       </button>
@@ -60,6 +64,7 @@ export default {
       'isTodoSearching',
       'isButtonDisabled',
       'isTodoListLoading',
+      'isTodoAdding',
     ]),
     isTodoLoading() {
       return this.isTodoListLoading || this.isTodoSearching
@@ -69,6 +74,11 @@ export default {
     },
     isTodoFound() {
       return this.isTodoAvailable || this.isTodoCreating
+    },
+    lightenClass() {
+      return {
+        lighten: this.isTodoAdding,
+      }
     },
   },
   beforeCreate() {
@@ -143,5 +153,9 @@ $card-padding: 15px;
   font-weight: 700;
   line-height: 35.16px;
   color: #32394b;
+}
+
+.lighten {
+  opacity: 0.5;
 }
 </style>
