@@ -2,6 +2,7 @@ export const state = () => ({
   locals: [
     { code: 'en', name: 'English' },
     { code: 'bn', name: 'বাংলা' },
+    { code: 'es', name: 'Español' },
   ],
   currentLocale: { code: 'en', name: 'English' },
 })
