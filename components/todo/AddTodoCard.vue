@@ -85,7 +85,6 @@ export default {
     ...mapGetters('todos', [
       'getEditableTodo',
       'isButtonDisabled',
-      'isTodoLoading',
       'isTodoAdding',
       'isSingleTodoUpdating',
     ]),

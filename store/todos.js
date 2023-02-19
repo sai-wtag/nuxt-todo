@@ -16,7 +16,6 @@ export const state = () => ({
   list: [],
   currentTasks: [],
   isTodoListLoading: false,
-  isTodoLoading: false,
   isCreating: false,
   isSearching: false,
   loadingId: null,
@@ -56,9 +55,6 @@ export const getters = {
   },
   isTodoSearching: (state) => {
     return state.isSearching
-  },
-  isTodoLoading: (state) => {
-    return state.isTodoLoading
   },
   isTodoListLoading: (state) => {
     return state.isTodoListLoading
@@ -167,9 +163,6 @@ export const mutations = {
   },
   SET_IS_SEARCHING: (state, status) => {
     state.isSearching = status
-  },
-  SET_IS_TODO_LOADING: (state, status) => {
-    state.isTodoLoading = status
   },
   SET_IS_TODO_LIST_LOADING: (state, status) => {
     state.isTodoListLoading = status
