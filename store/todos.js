@@ -425,4 +425,9 @@ export const actions = {
       commit('SET_IS_TODO_LIST_LOADING', false)
     }
   },
+
+  resetSearchKey: ({ commit }) => {
+    commit('SET_SEARCH_KEY', '')
+    commit('SET_CURRENT_TASKS')
+  },
 }

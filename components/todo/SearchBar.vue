@@ -34,7 +34,11 @@ export default {
     ...mapGetters('todos', ['isButtonDisabled']),
   },
   methods: {
-    ...mapActions('todos', ['setSearchStatus', 'searchTasksByTitle']),
+    ...mapActions('todos', [
+      'setSearchStatus',
+      'searchTasksByTitle',
+      'resetSearchKey',
+    ]),
 
     debounceSearchTasks: debounce(function (searchKey) {
       this.searchTasksByTitle(searchKey)
@@ -48,11 +52,14 @@ export default {
 
     toggleSearchInput() {
       this.isInputVisible = !this.isInputVisible
-      if (this.isInputVisible) {
-        this.$nextTick(() => {
-          this.$refs.searchInputRef.focus()
-        })
+
+      if (!this.isInputVisible) {
+        return this.resetSearchKey()
       }
+
+      this.$nextTick(() => {
+        this.$refs.searchInputRef.focus()
+      })
     },
   },
 }
