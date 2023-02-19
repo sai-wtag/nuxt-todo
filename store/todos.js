@@ -78,6 +78,9 @@ export const getters = {
   isSingleTodoUpdating: (state) => {
     return state.isTodoUpdating && state.loadingId === state.editableTodo.id
   },
+  searchKey: (state) => {
+    return state.searchKey
+  },
 }
 
 export const mutations = {
@@ -191,6 +194,9 @@ export const actions = {
   add: async ({ commit }, form) => {
     try {
       commit('SET_IS_TODO_ADDING', true)
+      commit('SET_SEARCH_KEY', '')
+      commit('SET_CURRENT_TASK_STATE', ALL)
+
       const { data: createdTodo, error } = await supabase
         .from('todos')
         .insert({

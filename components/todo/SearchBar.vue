@@ -2,7 +2,7 @@
   <div class="todo__search">
     <transition name="search">
       <input
-        v-if="isInputVisible"
+        v-if="isInputVisible && !isTodoAdding"
         ref="searchInputRef"
         class="search-input"
         type="text"
@@ -31,7 +31,17 @@ export default {
     }
   },
   computed: {
-    ...mapGetters('todos', ['isButtonDisabled']),
+    ...mapGetters('todos', ['isButtonDisabled', 'isTodoAdding', 'searchKey']),
+    hasSearchKey() {
+      return this.searchKey.length > 0
+    },
+  },
+  watch: {
+    hasSearchKey() {
+      if (!this.hasSearchKey) {
+        this.isInputVisible = false
+      }
+    },
   },
   methods: {
     ...mapActions('todos', [
