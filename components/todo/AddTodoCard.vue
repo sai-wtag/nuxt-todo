@@ -97,13 +97,11 @@ export default {
     titlePlaceholder() {
       const addTask = this.$t('add-task')
       const minWord = this.$t('min')
-      const minValidation = this.validationRules.title.minLength
-
       const maxWord = this.$t('max')
-      const maxValidation = this.validationRules.title.maxLength
       const characters = this.$t('characters')
+      const { minLength, maxLength } = this.validationRules.title
 
-      return `${addTask} (${minWord} ${minValidation}, ${maxWord} ${maxValidation} ${characters})`
+      return `${addTask} (${minWord} ${minLength}, ${maxWord} ${maxLength} ${characters})`
     },
   },
   mounted() {
@@ -117,14 +115,15 @@ export default {
   methods: {
     submitHandler(_, shouldCompleteTodo = false) {
       if (this.isButtonDisabled) return
+
+      this.sanitizeForm()
+
       const errorMessage = this.checkValidation()
       if (errorMessage) {
         this.errorMessage = errorMessage
         toast(ERROR, this.errorMessage)
         return
       }
-
-      this.sanitizeForm()
 
       if (shouldCompleteTodo) {
         this.completeAndUpdateTodo()
@@ -179,22 +178,21 @@ export default {
 
     checkValidation() {
       const title = this.form.title.trim()
-      const minTitleLength = this.validationRules.title.minLength
-      const maxTitleLength = this.validationRules.title.maxLength
+      const { minLength, maxLength } = this.validationRules.title
 
       if (!title) {
         return this.$t('validation.todo.title.required')
       }
 
-      if (title.length < minTitleLength) {
+      if (title.length < minLength) {
         return this.$t('validation.todo.title.min-length', {
-          minLength: minTitleLength,
+          minLength,
         })
       }
 
-      if (title.length > maxTitleLength) {
+      if (title.length > maxLength) {
         return this.$t('validation.todo.title.max-length', {
-          maxLength: maxTitleLength,
+          maxLength,
         })
       }
       return null
