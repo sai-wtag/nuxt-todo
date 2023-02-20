@@ -427,9 +427,10 @@ export const actions = {
       }
 
       commit('SET_ALL_TODOS', data)
-      commit('SET_CURRENT_TASKS')
-      commit('SET_IS_TODO_LIST_LOADING', false)
     } catch (err) {
+      commit('SET_ALL_TODOS', [])
+    } finally {
+      commit('SET_CURRENT_TASKS')
       commit('SET_IS_TODO_LIST_LOADING', false)
     }
   },

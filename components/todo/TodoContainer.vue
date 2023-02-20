@@ -1,6 +1,6 @@
 <template>
   <div class="todo-container">
-    <TodoCardLoader v-if="isTodoLoading" class="loader" />
+    <TodoCardLoader v-if="isTodoSearching" class="loader" />
 
     <span class="todo__add-text">{{ $t('add-task') }}</span>
     <div class="todo__header">
@@ -63,12 +63,8 @@ export default {
       'todos',
       'isTodoSearching',
       'isButtonDisabled',
-      'isTodoListLoading',
       'isTodoAdding',
     ]),
-    isTodoLoading() {
-      return this.isTodoListLoading || this.isTodoSearching
-    },
     isTodoAvailable() {
       return this.todos.length > 0
     },
@@ -81,9 +77,7 @@ export default {
       }
     },
   },
-  beforeCreate() {
-    this.$store.dispatch('todos/fetchAllTodos')
-  },
+
   methods: {
     onAddTodo(todo) {},
     setIsCreating() {
