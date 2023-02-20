@@ -44,6 +44,20 @@ svg {
   cursor: pointer;
 }
 
+select {
+  width: 180px;
+  height: 36px;
+  padding: 0 10px;
+  border: 1px solid #e5e5e5;
+  outline: none;
+  border-radius: 5px;
+  font-size: 16px;
+  line-height: 19.69px;
+  color: #32394b;
+  background-color: #fff;
+  cursor: pointer;
+}
+
 .container {
   height: 100vh;
 }
