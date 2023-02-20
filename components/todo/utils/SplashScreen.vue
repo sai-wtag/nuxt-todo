@@ -23,7 +23,7 @@ export default {
   height: 100vh;
   width: 100vw;
   background-color: $bg-primary;
-  animation: fade 2s linear;
+  animation: fade 2s;
 }
 
 .project-title {
@@ -33,11 +33,10 @@ export default {
 }
 
 @keyframes fade {
-  0%,
-  100% {
+  from {
     opacity: 0;
   }
-  50% {
+  to {
     opacity: 1;
   }
 }
