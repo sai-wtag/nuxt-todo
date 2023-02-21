@@ -15,13 +15,12 @@ export default {
 </script>
 <style lang="scss">
 @import '@/assets/css/variables';
+@import '@/assets/css/mixins';
+
 .splash-screen {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 20px;
-  height: 100vh;
-  width: 100vw;
+  @include flex(row, nowrap, center, center, 20px);
+  height: 100dvh;
+  width: 100dvw;
   background-color: $bg-primary;
   animation: fade 2s linear;
 }
