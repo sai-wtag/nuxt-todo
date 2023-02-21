@@ -1,7 +1,7 @@
 <template>
   <header class="header">
     <div class="header__left">
-      <ProjectLogo w="34" h="34" />
+      <ProjectLogo width="36" height="36" />
       <span class="todo__title">{{ $t('todos') }}</span>
       <select class="todo__language" @change="setLocale">
         <option value="">{{ $t('select-language') }}</option>
