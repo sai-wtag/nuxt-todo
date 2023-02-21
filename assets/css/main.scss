@@ -1,16 +1,16 @@
 @import 'variables';
 
 html {
-    scroll-behavior: smooth;
+  scroll-behavior: smooth;
 }
   
 body {
-    margin: 0;
-    background-color: $bg-primary;
-    font-family: $font-family;
-    min-height: 100vh;
+  margin: 0;
+  background-color: $bg-primary;
+  font-family: $font-family;
+  min-height: 100vh;
 }
   
 svg {
-    cursor: pointer;
+  cursor: pointer;
 }
