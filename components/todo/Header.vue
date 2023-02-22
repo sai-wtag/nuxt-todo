@@ -31,6 +31,9 @@ export default {
 
   computed: {
     ...mapGetters('locale', ['getLocals']),
+    isMobile() {
+      return this.$store.state.isMobile
+    },
   },
 
   methods: {
@@ -84,8 +87,7 @@ header {
 }
 
 @media screen and (max-width: $md) {
-  .todo__title,
-  .todo__language {
+  .todo__title {
     display: none;
   }
 }
