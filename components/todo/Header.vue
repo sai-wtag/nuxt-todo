@@ -3,45 +3,22 @@
     <div class="header__left">
       <ProjectLogo width="36" height="36" />
       <span class="todo__title">{{ $t('todos') }}</span>
-      <select class="todo__language" @change="setLocale">
-        <option value="">{{ $t('select-language') }}</option>
-        <option
-          v-for="locale in getLocals"
-          :key="locale.code"
-          :value="locale.code"
-        >
-          {{ locale.name }}
-        </option>
-      </select>
+      <TodoLanguage />
     </div>
     <SearchBar />
   </header>
 </template>
 <script>
-import { mapGetters } from 'vuex'
 import SearchBar from '@/components/todo/SearchBar.vue'
 import ProjectLogo from '@/icons/ProjectLogo.vue'
+import TodoLanguage from '@/components/todo/utils/TodoLanguage.vue'
 
 export default {
   name: 'TodoIndex',
   components: {
     SearchBar,
     ProjectLogo,
-  },
-
-  computed: {
-    ...mapGetters('locale', ['getLocals']),
-    isMobile() {
-      return this.$store.state.isMobile
-    },
-  },
-
-  methods: {
-    setLocale(e) {
-      if (e.target.value !== '') {
-        this.$i18n.setLocale(e.target.value)
-      }
-    },
+    TodoLanguage,
   },
 }
 </script>
