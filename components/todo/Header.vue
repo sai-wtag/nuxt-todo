@@ -83,7 +83,7 @@ header {
   cursor: pointer;
 }
 
-@media screen and (max-width: 768px) {
+@media screen and (max-width: $md) {
   .todo__title,
   .todo__language {
     display: none;
