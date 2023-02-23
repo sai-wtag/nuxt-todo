@@ -30,17 +30,12 @@ export default {
     screenWidth: screen.width,
   }),
   computed: {
-    ...mapGetters('todos', [
-      'getTaskStates',
-      'getCurrentTaskState',
-      'isButtonDisabled',
-    ]),
+    ...mapGetters('todos', ['getTaskStates', 'getCurrentTaskState']),
     ...mapGetters(['isMobile']),
   },
   methods: {
     setCurrentTaskState(task) {
       if (task instanceof Event) task = task.target.value
-      if (this.isButtonDisabled) return
       this.$store.dispatch('todos/setCurrentTaskState', task)
     },
   },
