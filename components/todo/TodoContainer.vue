@@ -96,6 +96,13 @@ $grid-breakpoints: (
 .todo__header {
   @include flex;
   width: 100%;
+
+  @media (max-width: $sm) {
+    @include flex(column, nowrap, space-between);
+    & > * {
+      width: 100%;
+    }
+  }
 }
 .card-container {
   @include grid(1, 20px, $grid-breakpoints);
@@ -128,6 +135,10 @@ $card-padding: 15px;
   font-size: 16px;
   font-weight: 500;
   cursor: pointer;
+
+  @media (max-width: $sm) {
+    width: 100%;
+  }
 }
 
 .todo__add-text {

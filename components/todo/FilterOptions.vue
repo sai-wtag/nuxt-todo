@@ -63,5 +63,13 @@ export default {
       color: #fff;
     }
   }
+
+  @media (max-width: $sm) {
+    width: 100%;
+    select {
+      width: 100%;
+      text-align: center;
+    }
+  }
 }
 </style>
