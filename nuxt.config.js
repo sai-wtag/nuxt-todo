@@ -47,6 +47,10 @@ export default {
         code: 'bn',
         file: 'bn.json',
       },
+      {
+        code: 'es',
+        file: 'es.json',
+      },
     ],
     lazy: true,
     langDir: 'lang/',

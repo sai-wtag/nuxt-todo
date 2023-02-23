@@ -27,3 +27,11 @@ export default {
   },
 }
 </script>
+<style scoped lang="scss">
+@import '@/assets/css/variables';
+@media (max-width: $sm) {
+  .todo__language {
+    width: 32px;
+  }
+}
+
