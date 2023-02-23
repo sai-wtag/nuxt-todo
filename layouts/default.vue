@@ -1,33 +1,35 @@
 <template>
   <div>
-    {{ screenWidth }}
     <Nuxt />
   </div>
 </template>
 <script>
+import { mapActions, mapGetters } from 'vuex'
+
 export default {
   name: 'DefaultLayout',
-  data() {
-    return {
-      screenWidth: null,
-    }
-  },
   computed: {
-    isMobile() {
-      return this.screenWidth < 768
-    },
+    ...mapGetters(['isMobile', 'screenWidth']),
   },
   mounted() {
-    this.$nextTick(() => {
-      window.addEventListener('resize', this.handleResize)
-    })
+    this.handleResize()
+    window.addEventListener('resize', this.handleResize)
   },
   methods: {
+    ...mapActions(['setScreenWidth']),
     handleResize() {
-      this.screenWidth =
-        window.innerWidth ||
-        document.documentElement.clientWidth ||
-        document.body.clientWidth
+      this.setScreenWidth(this.getScreenWidth())
+    },
+    getScreenWidth() {
+      const screenWidth = 0
+      if (process.client) {
+        return (
+          window.innerWidth ||
+          document.documentElement.clientWidth ||
+          document.body.clientWidth
+        )
+      }
+      return screenWidth
     },
   },
 }
