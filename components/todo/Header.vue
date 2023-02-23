@@ -75,7 +75,7 @@ header {
   cursor: pointer;
 }
 
-@media screen and (max-width: $sm) {
+@media screen and (max-width: $md) {
   .todo__title,
   .todo__logo {
     display: none;
