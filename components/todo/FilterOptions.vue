@@ -1,32 +1,46 @@
 <template>
   <div class="btn__filter">
-    <button
-      v-for="task in getTaskStates"
-      :key="task"
-      type="button"
-      :class="{
-        active: task === getCurrentTaskState,
-      }"
-      @click.prevent="setCurrentTaskState(task)"
-    >
-      {{ $t(task) }}
-    </button>
+    <template v-if="!isMobile">
+      <button
+        v-for="task in getTaskStates"
+        :key="task"
+        type="button"
+        :class="{
+          active: task === getCurrentTaskState,
+        }"
+        @click.prevent="setCurrentTaskState(task)"
+      >
+        {{ $t(task) }}
+      </button>
+    </template>
+    <template v-else>
+      <select @change="setCurrentTaskState">
+        <option v-for="task in getTaskStates" :key="task" :value="task">
+          {{ $t(task) }}
+        </option>
+      </select>
+    </template>
   </div>
 </template>
 <script>
 import { mapGetters } from 'vuex'
 export default {
   name: 'FilterOptions',
+  data: () => ({
+    screenWidth: screen.width,
+  }),
   computed: {
     ...mapGetters('todos', [
       'getTaskStates',
       'getCurrentTaskState',
-      'isTodoSearching',
+      'isButtonDisabled',
     ]),
+    ...mapGetters(['isMobile']),
   },
   methods: {
     setCurrentTaskState(task) {
-      if (this.isTodoSearching) return
+      if (task instanceof Event) task = task.target.value
+      if (this.isButtonDisabled) return
       this.$store.dispatch('todos/setCurrentTaskState', task)
     },
   },
