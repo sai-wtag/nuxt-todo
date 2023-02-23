@@ -111,3 +111,11 @@
     </defs>
   </svg>
 </template>
+<style scoped lang="scss">
+@import '@/assets/css/variables';
+svg {
+  @media (max-width: $sm) {
+    width: 200px;
+  }
+}
+</style>
