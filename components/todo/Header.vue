@@ -1,7 +1,7 @@
 <template>
   <header class="header">
     <div class="header__left">
-      <ProjectLogo width="36" height="36" />
+      <ProjectLogo class="todo__logo" width="36" height="36" />
       <span class="todo__title">{{ $t('todos') }}</span>
       <TodoLanguage />
     </div>
@@ -28,17 +28,29 @@ export default {
 
 header {
   @include padding(20px, $padding-breakpoints);
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+  @include flex(row, nowrap, space-between, center);
   height: $header-height;
   background-color: #fff;
+
+  @media (max-width: $sm) {
+    @include flex(column, nowrap, space-between, center);
+    padding: 5px 20px;
+    height: auto;
+    & > * {
+      width: 100%;
+    }
+  }
 }
 
 .header__left {
-  display: flex;
-  align-items: center;
+  @include flex(row, nowrap, space-between, center);
   gap: 10px;
+
+  @media (max-width: $sm) {
+    & > * {
+      width: 100%;
+    }
+  }
 }
 
 .todo__title {
@@ -63,8 +75,9 @@ header {
   cursor: pointer;
 }
 
-@media screen and (max-width: $md) {
-  .todo__title {
+@media screen and (max-width: $sm) {
+  .todo__title,
+  .todo__logo {
     display: none;
   }
 }

@@ -1,5 +1,5 @@
 <template>
-  <select v-model="currentLocale" class="todo__language" @change="setLocale">
+  <select v-model="currentLocale" @change="setLocale">
     <option v-for="locale in getLocals" :key="locale.code" :value="locale.code">
       {{ locale.name }}
     </option>
@@ -30,8 +30,9 @@ export default {
 <style scoped lang="scss">
 @import '@/assets/css/variables';
 @media (max-width: $sm) {
-  .todo__language {
-    width: 32px;
+  select {
+    width: 100%;
+    text-align: center;
   }
 }
 
