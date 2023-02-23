@@ -24,7 +24,7 @@
       </template>
     </div>
 
-    <TodoNotFound class="todo__not-found" v-if="!isTodoFound" />
+    <TodoNotFound v-if="!isTodoFound" />
 
     <!-- Load more/less todos -->
     <TodoFooter />
