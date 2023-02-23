@@ -29,8 +29,8 @@
 <script>
 import { mapGetters } from 'vuex'
 import { format, formatDistance } from 'date-fns'
-import { bn, es } from 'date-fns/locale'
-import { BN, ES } from '@/utils/constants'
+import { bn, es, fr, it, de } from 'date-fns/locale'
+import { BN, ES, FR, IT, DE } from '@/utils/constants'
 
 import TodoActions from '@/components/todo/utils/TodoActions.vue'
 import AddTodoCard from '@/components/todo/AddTodoCard.vue'
@@ -52,6 +52,10 @@ export default {
       format,
       formatDistance,
       bn,
+      es,
+      fr,
+      it,
+      de,
     }
   },
   data() {
@@ -73,6 +77,15 @@ export default {
           break
         case ES.code:
           locale = { locale: es }
+          break
+        case FR.code:
+          locale = { locale: fr }
+          break
+        case IT.code:
+          locale = { locale: it }
+          break
+        case DE.code:
+          locale = { locale: de }
           break
         default:
           locale = {}
