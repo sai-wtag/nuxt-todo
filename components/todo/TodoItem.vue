@@ -112,6 +112,8 @@ export default {
 }
 </script>
 <style scoped lang="scss">
+@import '@/assets/css/variables';
+@import '@/assets/css/mixins';
 .time {
   font-size: 14px;
   font-weight: 700;
@@ -127,20 +129,15 @@ export default {
 
 .todo-item {
   height: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
+  @include flex(column, nowrap, space-between);
 }
 
 .todo-item__header {
-  display: flex;
-  flex-direction: column;
+  @include flex(column);
 }
 
 .todo-item__footer {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+  @include flex(row, nowrap, space-between, center);
 }
 
 .todo-title {
