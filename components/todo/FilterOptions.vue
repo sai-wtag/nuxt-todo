@@ -15,7 +15,12 @@
     </template>
     <template v-else>
       <select @change="setCurrentTaskState">
-        <option v-for="task in getTaskStates" :key="task" :value="task">
+        <option
+          v-for="task in getTaskStates"
+          :key="task"
+          :value="task"
+          :selected="task === getCurrentTaskState"
+        >
           {{ $t(task) }}
         </option>
       </select>
