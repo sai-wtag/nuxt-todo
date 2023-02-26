@@ -1,5 +1,7 @@
+import { SMALL_DEVICE_WIDTH, MEDIUM_DEVICE_WIDTH } from '@/utils/constants'
+
 export const state = () => ({
-  screenWidth: 0,
+  screenWidth: SMALL_DEVICE_WIDTH,
 })
 
 export const getters = {
@@ -7,13 +9,16 @@ export const getters = {
     return state.screenWidth
   },
   isMobile: (state) => {
-    return state.screenWidth < 768
+    return state.screenWidth < SMALL_DEVICE_WIDTH
   },
   isTablet: (state) => {
-    return state.screenWidth >= 768 && state.screenWidth < 1024
+    return (
+      state.screenWidth >= SMALL_DEVICE_WIDTH &&
+      state.screenWidth < MEDIUM_DEVICE_WIDTH
+    )
   },
   isDesktop: (state) => {
-    return state.screenWidth >= 1024
+    return state.screenWidth >= MEDIUM_DEVICE_WIDTH
   },
 }
 
