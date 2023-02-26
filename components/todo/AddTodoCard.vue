@@ -28,7 +28,7 @@
         </div>
         <div>
           <span v-if="errorMessage" class="error-message">{{
-            errorMessage
+            $t('message', { message: errorMessage })
           }}</span>
         </div>
       </div>
@@ -38,6 +38,7 @@
 <script>
 import { mapGetters } from 'vuex'
 import toast from '@/utils/toast'
+import { SUCCESS, ERROR } from '@/utils/constants'
 
 import CompleteIcon from '@/icons/CompleteIcon'
 import DeleteIcon from '@/icons/DeleteIcon'
@@ -77,13 +78,11 @@ export default {
     titlePlaceholder() {
       const addTask = this.$t('add-task')
       const minWord = this.$t('min')
-      const minValidation = this.validationRules.title.minLength
-
       const maxWord = this.$t('max')
-      const maxValidation = this.validationRules.title.maxLength
       const characters = this.$t('characters')
+      const { minLength, maxLength } = this.validationRules.title
 
-      return `${addTask} (${minWord} ${minValidation} ${characters}, ${maxWord} ${maxValidation} ${characters})`
+      return `${addTask} (${minWord} ${minLength}, ${maxWord} ${maxLength} ${characters})`
     },
   },
   mounted() {
@@ -101,7 +100,7 @@ export default {
       const errorMessage = this.checkValidation()
       if (errorMessage) {
         this.errorMessage = errorMessage
-        toast('error', this.$t(this.errorMessage))
+        toast(ERROR, this.errorMessage)
         return
       }
 
@@ -123,7 +122,7 @@ export default {
         id: this.getEditableTodo.id,
         title: this.form.title,
       })
-      toast('success', this.$t('updated', { item: this.$t('todo') }))
+      toast(SUCCESS, this.$t('updated', { item: this.$t('todo') }))
     },
 
     completeAndUpdateTodo() {
@@ -131,7 +130,7 @@ export default {
         id: this.getEditableTodo.id,
         title: this.form.title,
       })
-      toast('success', this.$t('completed', { item: this.$t('todo') }))
+      toast(SUCCESS, this.$t('completed', { item: this.$t('todo') }))
     },
 
     deleteCurrentTask() {
