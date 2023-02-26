@@ -48,6 +48,9 @@ export const getters = {
   isTodoSearching: (state) => {
     return state.isSearching
   },
+  searchKey: (state) => {
+    return state.searchKey
+  },
 }
 
 export const mutations = {
@@ -139,6 +142,7 @@ export const actions = {
   add: ({ commit }, todo) => {
     commit('ADD_TODO', todo)
     commit('SET_IS_CREATING', false)
+    commit('SET_SEARCH_KEY', '')
     commit('SET_CURRENT_TASK_STATE', ALL)
     commit('SET_CURRENT_TASKS')
   },

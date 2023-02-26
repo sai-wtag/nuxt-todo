@@ -14,7 +14,7 @@
   </div>
 </template>
 <script>
-import { mapActions } from 'vuex'
+import { mapGetters, mapActions } from 'vuex'
 import debounce from '@/helpers/debounce'
 
 import SearchIcon from '@/icons/SearchIcon'
@@ -30,8 +30,25 @@ export default {
       searchInputRef: null,
     }
   },
+  computed: {
+    ...mapGetters('todos', ['searchKey']),
+    hasSearchKey() {
+      return this.searchKey.length > 0
+    },
+  },
+  watch: {
+    hasSearchKey() {
+      if (!this.hasSearchKey) {
+        this.isInputVisible = false
+      }
+    },
+  },
   methods: {
-    ...mapActions('todos', ['setSearchStatus', 'searchTasksByTitle']),
+    ...mapActions('todos', [
+      'setSearchStatus',
+      'searchTasksByTitle',
+      'resetSearchKey',
+    ]),
 
     debounceSearchTasks: debounce(function (searchKey) {
       this.searchTasksByTitle(searchKey)
@@ -44,11 +61,14 @@ export default {
 
     toggleSearchInput() {
       this.isInputVisible = !this.isInputVisible
-      if (this.isInputVisible) {
-        this.$nextTick(() => {
-          this.$refs.searchInputRef.focus()
-        })
+
+      if (!this.isInputVisible) {
+        return this.resetSearchKey()
       }
+
+      this.$nextTick(() => {
+        this.$refs.searchInputRef.focus()
+      })
     },
   },
 }
