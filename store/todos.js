@@ -139,6 +139,7 @@ export const actions = {
   add: ({ commit }, todo) => {
     commit('ADD_TODO', todo)
     commit('SET_IS_CREATING', false)
+    commit('SET_CURRENT_TASK_STATE', ALL)
     commit('SET_CURRENT_TASKS')
   },
 
