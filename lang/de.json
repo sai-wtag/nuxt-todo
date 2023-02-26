@@ -1,0 +1,43 @@
+{
+  "message": "{message}",
+  "welcome": "Willkommen",
+  "add-task": "Aufgabe hinzufügen",
+  "create": "Erstellen",
+  "cancel": "Abbrechen",
+  "save": "Speichern",
+  "add": "Hinzufügen",
+  "todo": "Aufgabe",
+  "todos": "Aufgaben",
+  "edit":   "Bearbeiten",
+  "delete": "Löschen",
+  "all": "Alle",
+  "complete": "Fertig",
+  "incomplete": "Unvollständig",
+  "language": "Sprache",
+  "select-language": "Sprache auswählen",
+  "search": "Suche",
+  "min": "Min",
+  "max": "Max",
+  "created-at": "Erstellt am",
+  "completed-in": "Abgeschlossen in",
+  "characters": "Zeichen",
+  "not-found": "Nicht gefunden",
+  "load-more": "Mehr laden",
+  "show-less": "Weniger anzeigen",
+  "loading": "Laden ...",
+  "searching": "Suche ...",
+  "validation": {
+    "todo": {
+      "title": {
+        "required": "Titel ist erforderlich",
+        "min-length": "Der Titel muss mindestens {minLength} Zeichen lang sein",
+        "max-length": "Der Titel darf maximal {maxLength} Zeichen lang sein"
+      }
+    }
+  },
+  "added": "{item} hinzugefügt !",
+  "updated": "{item} aktualisiert !",
+  "completed": "{item} abgeschlossen !",
+  "deleted": "{item} gelöscht !",
+  "something-went-wrong": "Etwas ist schief gelaufen !"
+}

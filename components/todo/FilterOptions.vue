@@ -15,7 +15,12 @@
     </template>
     <template v-else>
       <select @change="setCurrentTaskState">
-        <option v-for="task in getTaskStates" :key="task" :value="task">
+        <option
+          v-for="task in getTaskStates"
+          :key="task"
+          :value="task"
+          :selected="task === getCurrentTaskState"
+        >
           {{ $t(task) }}
         </option>
       </select>
@@ -35,23 +40,14 @@ export default {
       'getCurrentTaskState',
       'isButtonDisabled',
     ]),
-    isMobile() {
-      return this.screenWidth <= 768
-    },
+    ...mapGetters(['isMobile']),
   },
-  mounted() {
-    this.$nextTick(() => {
-      window.addEventListener('resize', this.handleResize)
-    })
-  },
+
   methods: {
     setCurrentTaskState(task) {
       if (task instanceof Event) task = task.target.value
       if (this.isButtonDisabled) return
       this.$store.dispatch('todos/setCurrentTaskState', task)
-    },
-    handleResize() {
-      this.screenWidth = screen.width
     },
   },
 }
@@ -76,6 +72,14 @@ export default {
     &.active {
       background-color: #0bc375;
       color: #fff;
+    }
+  }
+
+  @media (max-width: $sm) {
+    width: 100%;
+    select {
+      width: 100%;
+      text-align: center;
     }
   }
 }

@@ -1,7 +1,7 @@
 <template>
   <div class="todo__not-found">
     <div @click="setIsCreating">
-      <NotFoundIcon />
+      <NotFoundIcon class="todo__not-found-icon" />
     </div>
     <span class="text__not-found">
       {{ $t('not-found', { item: $t('todos') }) }}
@@ -33,5 +33,21 @@ export default {
   font-size: 24px;
   color: #32394b;
   text-align: center;
+  overflow-wrap: break-word;
+}
+
+$not-found-breakpoints: (
+  #{$xxs}: 100px,
+  #{$xs}: 120px,
+  #{$sm}: 200px,
+  #{$md}: 250px,
+  #{$lg}: 300px
+);
+.todo__not-found-icon {
+  @each $breakpoint, $size in $not-found-breakpoints {
+    @media (min-width: $breakpoint) {
+      width: $size;
+    }
+  }
 }
 </style>

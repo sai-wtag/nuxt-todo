@@ -45,6 +45,14 @@ export default {
         code: 'es',
         file: 'es.json',
       },
+      {
+        code: 'fr',
+        file: 'fr.json',
+      },
+      {
+        code: 'it',
+        file: 'it.json',
+      },
     ],
     lazy: true,
     langDir: 'lang/',

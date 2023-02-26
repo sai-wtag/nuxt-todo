@@ -1,7 +1,7 @@
-import { EN, BN, ES } from '@/utils/constants'
+import { EN, BN, ES, FR, IT } from '@/utils/constants'
 
 export const state = () => ({
-  locals: [EN, BN, ES],
+  locals: [EN, BN, ES, FR, IT],
   currentLocale: EN,
 })
 
