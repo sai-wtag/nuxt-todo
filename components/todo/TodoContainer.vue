@@ -147,5 +147,6 @@ $card-padding: 15px;
   font-weight: 700;
   line-height: 35.16px;
   color: #32394b;
+  overflow-wrap: break-word;
 }
 </style>

@@ -220,4 +220,9 @@ export const actions = {
     commit('SET_IS_SEARCHING', false)
     commit('SET_LOAD_MORE', false)
   },
+
+  resetSearchKey: ({ commit }) => {
+    commit('SET_SEARCH_KEY', '')
+    commit('SET_CURRENT_TASKS')
+  },
 }

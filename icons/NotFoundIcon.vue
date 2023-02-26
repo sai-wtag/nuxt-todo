@@ -1,7 +1,6 @@
 <template>
   <svg
-    width="237"
-    height="213"
+    width="100"
     viewBox="0 0 237 213"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
@@ -111,11 +110,3 @@
     </defs>
   </svg>
 </template>
-<style scoped lang="scss">
-@import '@/assets/css/variables';
-svg {
-  @media (max-width: $sm) {
-    width: 200px;
-  }
-}
-</style>

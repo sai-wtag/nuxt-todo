@@ -3,7 +3,7 @@
     <div class="header__left">
       <ProjectLogo class="todo__logo" width="36" height="36" />
       <span class="todo__title">{{ $t('todos') }}</span>
-      <TodoLanguage />
+      <TodoLanguage class="todo__language" />
     </div>
     <SearchBar />
   </header>
@@ -47,7 +47,7 @@ header {
   gap: 10px;
 
   @media (max-width: $sm) {
-    & > * {
+    .todo__language {
       width: 100%;
     }
   }
@@ -76,8 +76,7 @@ header {
 }
 
 @media screen and (max-width: $md) {
-  .todo__title,
-  .todo__logo {
+  .todo__title {
     display: none;
   }
 }
