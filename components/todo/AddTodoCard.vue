@@ -140,22 +140,21 @@ export default {
 
     checkValidation() {
       const title = this.form.title.trim()
-      const minTitleLength = this.validationRules.title.minLength
-      const maxTitleLength = this.validationRules.title.maxLength
+      const { minLength, maxLength } = this.validationRules.title
 
       if (!title) {
         return this.$t('validation.todo.title.required')
       }
 
-      if (title.length < minTitleLength) {
+      if (title.length < minLength) {
         return this.$t('validation.todo.title.min-length', {
-          minLength: minTitleLength,
+          minLength,
         })
       }
 
-      if (title.length > maxTitleLength) {
+      if (title.length > maxLength) {
         return this.$t('validation.todo.title.max-length', {
-          maxLength: maxTitleLength,
+          maxLength,
         })
       }
       return null
