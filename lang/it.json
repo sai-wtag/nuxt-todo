@@ -21,7 +21,12 @@
     "created-at": "Creato il",
     "completed-in": "Completato in",
     "characters": "Caratteri",
-    "not-found": "Nessun risultato trovato",
+    "task": {
+      "name": "attività",
+      "add": "aggiungi",
+      "complete": "completa"
+    },
+    "not-found": "Non hai {taskStatus} nessuna {item}. Per favore {taskStatus} una.",
     "load-more": "Carica altro",
     "show-less": "Mostra meno",
     "loading": "Caricamento ...",
