@@ -26,7 +26,7 @@
     "add": "যোগ",
     "complete": "সম্পন্ন"
   },
-  "not-found": "আপনি কোনো {item} {taskStatus} করেননি। অনুগ্রহ করে, একটি যোগ করুন।",
+  "not-found": "আপনি কোনো {item} {taskStatus} করেননি। অনুগ্রহ করে, একটি {taskStatus} করুন।",
   "load-more": "আরও লোড করুন",
   "show-less": "কম দেখান",
   "loading": "লোড হচ্ছে ...",
