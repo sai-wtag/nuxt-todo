@@ -66,7 +66,7 @@ export default {
         title: {
           required: true,
           minLength: 5,
-          maxLength: 50,
+          maxLength: 2000,
         },
       },
       shouldComplete: true,
