@@ -16,12 +16,14 @@
     </div>
 
     <div class="card-container">
-      <AddTodoCard v-if="isTodoCreating" class="card-item" />
+      <div v-if="isTodoCreating" class="card-item">
+        <AddTodoCard @addTodo="onAddTodo" />
+      </div>
 
       <!-- List of todos -->
       <template v-if="isTodoAvailable">
         <div v-for="todo in todos" :key="todo.id" class="card-item">
-          <TodoItem :todo="todo" />
+          <TodoItem class="todo-item" :todo="todo" />
         </div>
       </template>
     </div>
@@ -91,11 +93,7 @@ export default {
 @import '@/assets/css/variables';
 @import '@/assets/css/mixins';
 
-$grid-breakpoints: (
-  576px: 1,
-  768px: 2,
-  1200px: 3,
-);
+$grid-breakpoints: (#{sm}: 1, 768px: 2, 1200px: 3);
 
 .todo-container {
   position: relative;
@@ -126,7 +124,11 @@ $card-padding: 15px;
   border-radius: 5px;
   background-color: $bg-white;
   padding: $card-padding;
-  height: 150px;
+  min-height: 150px;
+}
+
+.todo-item {
+  height: 100%;
 }
 
 .todo-footer {
