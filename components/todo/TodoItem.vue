@@ -115,7 +115,7 @@ export default {
 
 .todo-item {
   height: 100%;
-  @include flex(column, nowrap, space-between);
+  @include flex(column, nowrap, space-between, stretch, 16px);
 }
 
 .todo-item__header {
