@@ -92,13 +92,13 @@ export default {
   font-size: 16px;
   font-weight: 500;
 
-  @media (min-width: 576px) {
+  @media (min-width: $sm) {
     width: 200px;
   }
-  @media (min-width: 1024px) {
+  @media (min-width: $lg) {
     width: 300px;
   }
-  @media (min-width: 1200px) {
+  @media (min-width: $xl) {
     width: 500px;
   }
 }

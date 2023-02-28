@@ -80,7 +80,7 @@ export default {
 @import '@/assets/css/variables';
 @import '@/assets/css/mixins';
 
-$grid-breakpoints: (#{sm}: 1, 768px: 2, 1200px: 3);
+$grid-breakpoints: (#{$sm}: 2, #{$lg}: 3);
 
 .todo-container {
   @include padding(20px, $padding-breakpoints);
