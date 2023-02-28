@@ -142,7 +142,7 @@ export default {
   cursor: pointer;
   border: none;
   border-radius: 5px;
-  height: 24px;
+  min-height: 24px;
   background-color: #7a8dfd;
   color: #ffffff;
   font-size: 12px;
