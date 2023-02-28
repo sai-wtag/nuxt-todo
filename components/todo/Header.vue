@@ -26,6 +26,7 @@ export default {
 @import '@/assets/css/variables';
 @import '@/assets/css/mixins';
 
+$header-padding-top: 5px;
 header {
   @include padding(20px, $padding-breakpoints);
   @include flex(row, nowrap, space-between, center);
@@ -34,8 +35,8 @@ header {
 
   @media (max-width: $sm) {
     @include flex(column, nowrap, space-between, center);
-    padding: 5px 20px;
-    height: auto;
+    padding: $header-padding-top 20px;
+    height: $header-padding-top + $header-height;
     & > * {
       width: 100%;
     }
