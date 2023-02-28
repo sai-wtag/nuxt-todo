@@ -1,7 +1,7 @@
 <template>
   <header class="header">
     <div class="header__left">
-      <ProjectLogo class="todo__logo" width="36" height="36" />
+      <ProjectLogo class="todo__logo" />
       <span class="todo__title">{{ $t('todos') }}</span>
       <TodoLanguage class="todo__language" />
     </div>
@@ -26,6 +26,7 @@ export default {
 @import '@/assets/css/variables';
 @import '@/assets/css/mixins';
 
+$header-padding-top: 5px;
 header {
   @include padding(20px, $padding-breakpoints);
   @include flex(row, nowrap, space-between, center);
@@ -34,8 +35,8 @@ header {
 
   @media (max-width: $sm) {
     @include flex(column, nowrap, space-between, center);
-    padding: 5px 20px;
-    height: auto;
+    padding: $header-padding-top 20px;
+    height: $header-padding-top + $header-height;
     & > * {
       width: 100%;
     }
@@ -75,7 +76,13 @@ header {
   cursor: pointer;
 }
 
-@media screen and (max-width: $md) {
+$logo-size: 36px;
+.todo__logo {
+  width: $logo-size;
+  height: $logo-size;
+}
+
+@media (max-width: $md) {
   .todo__title {
     display: none;
   }
