@@ -4,8 +4,9 @@
       <span
         class="todo-title"
         :class="todo.isTodoCompleted ? 'text-line-through' : ''"
-        >{{ todo.title }}</span
       >
+        {{ todo.title }}
+      </span>
       <span class="time"
         >{{ $t('created-at') }}:
         {{ format(todo.createdAt, 'dd-MMM-yyyy') }}
@@ -14,12 +15,10 @@
 
     <div class="todo-item__footer">
       <TodoActions :todo="todo" />
-      <div>
-        <button v-if="todo.isTodoCompleted" class="btn__completed-in">
-          {{ $t('completed-in') }}:
-          {{ getCompletedInTime }}
-        </button>
-      </div>
+      <button v-if="todo.isTodoCompleted" class="btn__completed-in">
+        {{ $t('completed-in') }}:
+        {{ getCompletedInTime }}
+      </button>
     </div>
   </div>
   <div v-else class="card__add">
@@ -29,7 +28,8 @@
 <script>
 import { mapGetters } from 'vuex'
 import { format, formatDistance } from 'date-fns'
-import { bn } from 'date-fns/locale'
+import { bn, es, fr, it, de } from 'date-fns/locale'
+import { BN, ES, FR, IT, DE } from '@/utils/constants'
 
 import TodoActions from '@/components/todo/utils/TodoActions.vue'
 import AddTodoCard from '@/components/todo/AddTodoCard.vue'
@@ -51,6 +51,10 @@ export default {
       format,
       formatDistance,
       bn,
+      es,
+      fr,
+      it,
+      de,
     }
   },
   data() {
@@ -65,10 +69,28 @@ export default {
         : false
     },
     getLocale() {
-      let locale = {}
-      if (this.$i18n.locale === 'bn') {
-        locale = { locale: bn }
+      let locale
+      switch (this.$i18n.locale) {
+        case BN.code:
+          locale = { locale: bn }
+          break
+        case ES.code:
+          locale = { locale: es }
+          break
+        case FR.code:
+          locale = { locale: fr }
+          break
+        case IT.code:
+          locale = { locale: it }
+          break
+        case DE.code:
+          locale = { locale: de }
+          break
+        default:
+          locale = {}
+          break
       }
+
       return locale
     },
     getCompletedInTime() {
@@ -82,6 +104,8 @@ export default {
 }
 </script>
 <style scoped lang="scss">
+@import '@/assets/css/variables';
+@import '@/assets/css/mixins';
 .time {
   font-size: 14px;
   font-weight: 700;
@@ -91,20 +115,15 @@ export default {
 
 .todo-item {
   height: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
+  @include flex(column, nowrap, space-between, stretch, 16px);
 }
 
 .todo-item__header {
-  display: flex;
-  flex-direction: column;
+  @include flex(column);
 }
 
 .todo-item__footer {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+  @include flex(row, nowrap, space-between, center);
 }
 
 .todo-title {
@@ -112,6 +131,7 @@ export default {
   font-size: 24px;
   font-weight: 700;
   line-height: 28.13px;
+  overflow-wrap: break-word;
 }
 .text-line-through {
   color: #0bc375;
@@ -122,7 +142,7 @@ export default {
   cursor: pointer;
   border: none;
   border-radius: 5px;
-  height: 24px;
+  min-height: 24px;
   background-color: #7a8dfd;
   color: #ffffff;
   font-size: 12px;

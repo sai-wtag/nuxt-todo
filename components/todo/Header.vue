@@ -1,54 +1,90 @@
 <template>
   <header class="header">
     <div class="header__left">
-      <h1>{{ $t('todos') }}</h1>
-      <select @change="setLocale">
-        <option value="">{{ $t('select-language') }}</option>
-        <option
-          v-for="locale in getLocals"
-          :key="locale.code"
-          :value="locale.code"
-        >
-          {{ locale.name }}
-        </option>
-      </select>
+      <ProjectLogo class="todo__logo" />
+      <span class="todo__title">{{ $t('todos') }}</span>
+      <TodoLanguage class="todo__language" />
     </div>
     <SearchBar />
   </header>
 </template>
 <script>
-import { mapGetters } from 'vuex'
 import SearchBar from '@/components/todo/SearchBar.vue'
+import ProjectLogo from '@/icons/ProjectLogo.vue'
+import TodoLanguage from '@/components/todo/utils/TodoLanguage.vue'
 
 export default {
   name: 'TodoIndex',
   components: {
     SearchBar,
-  },
-
-  computed: {
-    ...mapGetters('locale', ['getLocals']),
-  },
-
-  methods: {
-    setLocale(e) {
-      if (e.target.value !== '') {
-        this.$i18n.setLocale(e.target.value)
-      }
-    },
+    ProjectLogo,
+    TodoLanguage,
   },
 }
 </script>
 <style scoped lang="scss">
-.header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+@import '@/assets/css/variables';
+@import '@/assets/css/mixins';
+
+$header-padding-top: 5px;
+header {
+  @include padding(20px, $padding-breakpoints);
+  @include flex(row, nowrap, space-between, center);
+  height: $header-height;
+  background-color: #fff;
+
+  @media (max-width: $sm) {
+    @include flex(column, nowrap, space-between, center);
+    padding: $header-padding-top 20px;
+    height: $header-padding-top + $header-height;
+    & > * {
+      width: 100%;
+    }
+  }
 }
 
 .header__left {
-  display: flex;
-  align-items: center;
+  @include flex(row, nowrap, space-between, center);
   gap: 10px;
+
+  @media (max-width: $sm) {
+    .todo__language {
+      width: 100%;
+    }
+  }
+}
+
+.todo__title {
+  width: 150px;
+  font-size: 36px;
+  font-weight: 700;
+  line-height: 42.19px;
+  color: #7a8dfd;
+}
+
+.todo__language {
+  width: 180px;
+  height: 36px;
+  padding: 0 10px;
+  border: 1px solid #e5e5e5;
+  outline: none;
+  border-radius: 5px;
+  font-size: 16px;
+  line-height: 19.69px;
+  color: #32394b;
+  background-color: #fff;
+  cursor: pointer;
+}
+
+$logo-size: 36px;
+.todo__logo {
+  width: $logo-size;
+  height: $logo-size;
+}
+
+@media (max-width: $md) {
+  .todo__title {
+    display: none;
+  }
 }
 </style>

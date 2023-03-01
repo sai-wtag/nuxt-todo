@@ -1,0 +1,49 @@
+{
+  "project-logo": "Project Logo",
+  "message": "{message}",
+  "welcome": "Benvenuta",
+  "add-task": "Aggiungi attività",
+  "create": "Crea",
+  "cancel": "Annulla",
+  "save": "Salva",
+  "add": "Aggiungi",
+  "todo": "Attività",
+  "todos": "Attività",
+  "edit": "Modifica",
+  "delete": "Elimina",
+  "all": "Tutti",
+  "complete": "Completato",
+  "incomplete": "Incompleto",
+  "language": "Lingua",
+  "select-language": "Seleziona la lingua",
+  "search": "Cerca",
+  "min": "Min",
+  "max": "Max",
+  "created-at": "Creato il",
+  "completed-in": "Completato in",
+  "characters": "Caratteri",
+  "task": {
+    "name": "attività",
+    "add": "aggiungi",
+    "complete": "completa"
+  },
+  "not-found": "Non hai {taskStatus} nessuna {item}. Per favore {taskStatus} una.",
+  "load-more": "Carica altro",
+  "show-less": "Mostra meno",
+  "loading": "Caricamento ...",
+  "searching": "Ricerca ...",
+  "validation": {
+    "todo": {
+      "title": {
+        "required": "Il titolo è obbligatorio",
+        "min-length": "Il titolo deve avere almeno {minLength} caratteri",
+        "max-length": "Il titolo deve avere al massimo {maxLength} caratteri"
+      }
+    }
+  },
+  "added": "{item} aggiunto con successo !",
+  "updated": "{item} aggiornato con successo !",
+  "completed": "{item} completato con successo !",
+  "deleted": "{item} eliminato con successo !",
+  "something-went-wrong": "Qualcosa è andato storto !"
+}

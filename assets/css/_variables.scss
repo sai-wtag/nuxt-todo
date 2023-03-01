@@ -1,17 +1,35 @@
 $font-family: 'Roboto', sans-serif;
 $bg-white: #fff;
 $bg-primary: #F8F9FF;
+$text-primary: #7A8DFD;
 
 $border-1: 1px solid #DDE2FF;
 
 $button-gap: 5px;
 $button-height: 36px;
+$header-height: 72px;
 
-$breakpoints: (
-    'sm': 576px,
-    'md': 768px,
-    'lg': 992px,
-    'xl': 1200px,
-    'xxl': 1400px
+$xxs: 320px;
+$xs: 480px;
+$sm: 576px;
+$md: 768px;
+$lg: 1024px;
+$xl: 1200px;
+$xxl: 1400px;
+
+$grid-breakpoints: (
+  #{$xs}: 1,
+  #{$sm}: 2,
+  #{$md}: 3,
+  #{$lg}: 4,
+  #{$xl}: 5,
+  #{$xxl}: 6,
+);
+
+$padding-breakpoints: (
+  #{$sm}: 20px,
+  #{$md}: 40px,
+  #{$lg}: 60px,
+  #{$xl}: 100px,
 );
 

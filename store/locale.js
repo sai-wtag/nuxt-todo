@@ -1,9 +1,8 @@
+import { EN, BN, ES, FR, IT } from '@/utils/constants'
+
 export const state = () => ({
-  locals: [
-    { code: 'en', name: 'English' },
-    { code: 'bn', name: 'বাংলা' },
-  ],
-  currentLocale: { code: 'en', name: 'English' },
+  locals: [BN, EN, ES, FR, IT],
+  currentLocale: EN,
 })
 
 export const getters = {

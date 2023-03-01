@@ -1,26 +1,23 @@
 <template>
   <div class="todo-container">
-    <h2>{{ $t('add-task') }}</h2>
+    <span class="todo__add-text">{{ $t('add-task') }}</span>
     <div class="todo__header">
       <button class="btn__create-task" @click.prevent="setIsCreating">
         <PlusIcon />
         <span>{{ $t('create') }}</span>
       </button>
-      <span v-if="isTodoSearching">{{ $t('searching') }}</span>
       <FilterOptions />
     </div>
 
     <div class="card-container">
-      <AddTodoCard
-        v-if="isTodoCreating"
-        class="card-item"
-        @addTodo="onAddTodo"
-      />
+      <div v-if="isTodoCreating" class="card-item">
+        <AddTodoCard @addTodo="onAddTodo" />
+      </div>
 
       <!-- List of todos -->
       <template v-if="isTodoAvailable">
         <div v-for="todo in todos" :key="todo.id" class="card-item">
-          <TodoItem :todo="todo" />
+          <TodoItem class="todo-item" :todo="todo" />
         </div>
       </template>
     </div>
@@ -29,6 +26,7 @@
 
     <!-- Load more/less todos -->
     <TodoFooter />
+    <TodoCardLoader v-if="isTodoSearching" />
   </div>
 </template>
 <script>
@@ -38,7 +36,7 @@ import AddTodoCard from '@/components/todo/AddTodoCard.vue'
 import TodoItem from '@/components/todo/TodoItem.vue'
 import TodoNotFound from '@/components/todo/utils/TodoNotFound.vue'
 import TodoFooter from '@/components/todo/utils/TodoFooter.vue'
-
+import TodoCardLoader from '@/components/todo/utils/TodoCardLoader.vue'
 import PlusIcon from '@/icons/PlusIcon.vue'
 
 import toast from '@/utils/toast'
@@ -51,6 +49,7 @@ export default {
     TodoItem,
     TodoNotFound,
     TodoFooter,
+    TodoCardLoader,
     PlusIcon,
   },
   data() {
@@ -81,22 +80,27 @@ export default {
 @import '@/assets/css/variables';
 @import '@/assets/css/mixins';
 
-$grid-breakpoints: (
-  576px: 1,
-  768px: 2,
-  1200px: 3,
-);
+$grid-breakpoints: (#{$sm}: 2, #{$lg}: 3);
 
 .todo-container {
+  @include padding(20px, $padding-breakpoints);
   @include flex(column, nowrap, space-between);
   gap: 10px;
 }
 .todo__header {
   @include flex;
   width: 100%;
+
+  @media (max-width: $sm) {
+    @include flex(column, nowrap, space-between);
+    & > * {
+      width: 100%;
+    }
+  }
 }
 .card-container {
-  @include grid(1, 5px, $grid-breakpoints);
+  @include grid(1, 20px, $grid-breakpoints);
+  margin: 25px 0;
 }
 
 $card-padding: 15px;
@@ -105,7 +109,11 @@ $card-padding: 15px;
   border-radius: 5px;
   background-color: $bg-white;
   padding: $card-padding;
-  height: 150px;
+  min-height: 150px;
+}
+
+.todo-item {
+  height: 100%;
 }
 
 .todo-footer {
@@ -125,5 +133,18 @@ $card-padding: 15px;
   font-size: 16px;
   font-weight: 500;
   cursor: pointer;
+
+  @media (max-width: $sm) {
+    width: 100%;
+  }
+}
+
+.todo__add-text {
+  margin: 25px 0;
+  font-size: 30px;
+  font-weight: 700;
+  line-height: 35.16px;
+  color: #32394b;
+  overflow-wrap: break-word;
 }
 </style>

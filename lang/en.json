@@ -1,4 +1,6 @@
 {
+  "project-logo": "Project Logo",
+  "message": "{message}",
   "welcome": "Welcome",
   "add-task": "Add Task",
   "create": "Create",
@@ -20,10 +22,15 @@
   "created-at": "Created At",
   "completed-in": "Completed In",
   "characters": "characters",
-  "not-found": "You didn’t add any task. Please, add one",
+  "task": {
+    "name": "task",
+    "add": "add",
+    "complete": "complete"
+  },
+  "not-found": "You didn't {taskStatus} any {item}. Please {taskStatus} one.",
   "load-more": "Load More",
   "show-less": "Show Less",
-  "loading": "Loading",
+  "loading": "Loading ...",
   "searching": "Searching ...",
   "validation": {
     "todo": {
