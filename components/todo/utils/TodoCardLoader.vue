@@ -1,6 +1,6 @@
 <template>
   <div class="loader-overlay">
-    <LoaderIcon class="loader-icon" :width="iconWidth" :height="iconHeight" />
+    <LoaderIcon class="loader-icon" />
   </div>
 </template>
 
@@ -31,23 +31,23 @@ export default {
 <style lang="scss" scoped>
 @import '@/assets/css/variables';
 .loader-overlay {
-  position: absolute;
   background: rgba(255, 255, 255, 0.7);
   z-index: 999;
-  height: 100%;
+  height: calc(100% - #{$header-height});
   width: 100%;
-  top: 0%;
+  top: $header-height;
   left: 0%;
-
-  .loader-icon {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    translate: -50% -50%;
-    animation: spin 3s linear infinite;
-  }
 }
-
+.loader-overlay,
+.loader-overlay .loader-icon {
+  position: absolute;
+}
+.loader-overlay .loader-icon {
+  top: 50%;
+  left: 50%;
+  translate: -50% -50%;
+  animation: spin 4s linear infinite;
+}
 @keyframes spin {
   100% {
     transform: rotate(360deg);

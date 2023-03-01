@@ -96,10 +96,8 @@ export default {
 $grid-breakpoints: (#{$sm}: 2, #{$lg}: 3);
 
 .todo-container {
-  position: relative;
-  height: calc(100% - #{$header-height});
   @include padding(20px, $padding-breakpoints);
-  @include flex(column, nowrap, flex-start);
+  @include flex(column, nowrap, space-between);
   gap: 10px;
 }
 .todo__header {
