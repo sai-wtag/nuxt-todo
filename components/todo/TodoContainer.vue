@@ -164,4 +164,8 @@ $card-padding: 15px;
 .lighten {
   opacity: 0.5;
 }
+
+.loader {
+  height: calc(100% - #{$header-height});
+}
 </style>
