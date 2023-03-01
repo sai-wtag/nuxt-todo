@@ -7,7 +7,7 @@ export default {
     background: 'white',
   },
   head: {
-    title: 'nuxt-todo',
+    title: 'Nuxt Todo',
     htmlAttrs: {
       lang: 'en',
     },
@@ -17,7 +17,7 @@ export default {
       { hid: 'description', name: 'description', content: '' },
       { name: 'format-detection', content: 'telephone=no' },
     ],
-    link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
+    link: [{ rel: 'icon', type: 'image/x-icon', href: '/logo.svg' }],
   },
 
   // Global CSS: https://go.nuxtjs.dev/config-css
