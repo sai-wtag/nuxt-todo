@@ -37,7 +37,7 @@ export const todos = {
       }
     },
     hasMoreTodos: () => {},
-    getTaskStates: () => {},
+    getTaskStates: (state) => [ALL, COMPLETE, INCOMPLETE],
     getCurrentTaskState: () => {},
     isLoadedMore: () => {},
     isTodoSearching: () => {},

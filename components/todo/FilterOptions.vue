@@ -32,7 +32,7 @@ import { mapGetters } from 'vuex'
 export default {
   name: 'FilterOptions',
   data: () => ({
-    screenWidth: screen.width,
+    currentTaskState: 'all',
   }),
   computed: {
     ...mapGetters('todos', [
@@ -46,6 +46,7 @@ export default {
   methods: {
     setCurrentTaskState(task) {
       if (task instanceof Event) task = task.target.value
+      this.currentTaskState = task
       if (this.isButtonDisabled) return
       this.$store.dispatch('todos/setCurrentTaskState', task)
     },
