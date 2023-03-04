@@ -1,4 +1,5 @@
 import { jest } from '@jest/globals'
+import uuid4 from 'uuid4'
 import { ALL, COMPLETE, INCOMPLETE, PER_PAGE } from '@/utils/constants.js'
 
 export const todos = {
@@ -24,7 +25,17 @@ export const todos = {
   getters: {
     todos: () => {},
     isTodoCreating: () => {},
-    editingTodo: () => {},
+    editingTodo: () => {
+      return {
+        id: uuid4(),
+        title: 'Test title',
+        isLoading: false,
+        isEditing: true,
+        isCompleted: false,
+        completedAt: null,
+        createdAt: new Date(),
+      }
+    },
     hasMoreTodos: () => {},
     getTaskStates: () => {},
     getCurrentTaskState: () => {},
