@@ -124,7 +124,7 @@ describe('@/components/todo/AddTodoCard.vue', () => {
       expect(wrapper.find('.btn__save').text()).toBe(i18nMock[currLocale].add)
     })
 
-    it(`render @/icons/CompleteIcon.vue`, () => {
+    it(`does not render @/icons/CompleteIcon.vue`, () => {
       const wrapper = wrapperFactory({
         propsData: {
           isTodoEditing: false,
