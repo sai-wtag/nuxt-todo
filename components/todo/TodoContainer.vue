@@ -17,7 +17,7 @@
 
     <div class="card-container">
       <div v-if="isTodoCreating" class="card-item">
-        <AddTodoCard @addTodo="onAddTodo" />
+        <AddTodoCard />
       </div>
 
       <!-- List of todos -->
@@ -81,7 +81,6 @@ export default {
   },
 
   methods: {
-    onAddTodo(todo) {},
     setIsCreating() {
       if (this.isButtonDisabled) return
       this.$store.dispatch('todos/setIsCreating')

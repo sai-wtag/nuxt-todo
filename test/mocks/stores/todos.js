@@ -23,7 +23,28 @@ export const todos = {
   },
 
   getters: {
-    todos: () => {},
+    todos: () => {
+      return [
+        {
+          id: uuid4(),
+          title: 'Test title 1',
+          isLoading: false,
+          isEditing: false,
+          isCompleted: false,
+          completedAt: null,
+          createdAt: new Date(),
+        },
+        {
+          id: uuid4(),
+          title: 'Test title 2',
+          isLoading: false,
+          isEditing: true,
+          isCompleted: false,
+          completedAt: null,
+          createdAt: new Date(),
+        },
+      ]
+    },
     isTodoCreating: () => {},
     editingTodo: () => {
       return {
