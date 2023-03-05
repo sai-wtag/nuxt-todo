@@ -1,4 +1,4 @@
-import { describe, expect, it } from '@jest/globals'
+import { jest, describe, expect, it } from '@jest/globals'
 import { shallowMount } from '@vue/test-utils'
 import VueI18n from 'vue-i18n'
 import { Store } from 'vuex'
@@ -82,8 +82,7 @@ describe('@/components/todo/TodoContainer.vue', () => {
 
     it('calls "setIsCreating" when "create button" is clicked', async () => {
       const wrapper = wrapperFactory()
-      const setIsCreating = jest.fn()
-      wrapper.setMethods({ setIsCreating })
+      const setIsCreating = jest.spyOn(wrapper.vm, 'setIsCreating')
       await wrapper.find('button.btn__create-task').trigger('click')
       expect(setIsCreating).toHaveBeenCalled()
     })
