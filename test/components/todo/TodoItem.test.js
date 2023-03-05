@@ -80,79 +80,47 @@ describe('@/components/todo/TodoItem.vue', () => {
     })
 
     describe('when todo is not editing', () => {
-      it('render todo item', () => {
-        const wrapper = wrapperFactory({
+      let wrapper
+      beforeEach(() => {
+        wrapper = wrapperFactory({
           computed: {
             isTodoEditing: () => false,
           },
         })
+      })
+      it('render todo item', () => {
         expect(wrapper.find('div.todo-item').exists()).toBe(true)
       })
 
       it('does not render @/components/todo/AddTodoCard.vue', () => {
-        const wrapper = wrapperFactory({
-          computed: {
-            isTodoEditing: () => false,
-          },
-        })
         expect(wrapper.findComponent(AddTodoCard).exists()).toBe(false)
       })
 
       describe('todo header', () => {
         it('render todo item header', () => {
-          const wrapper = wrapperFactory({
-            computed: {
-              isTodoEditing: () => false,
-            },
-          })
           expect(wrapper.find('div.todo-item__header').exists()).toBe(true)
         })
 
         it('render todo item title', () => {
-          const wrapper = wrapperFactory({
-            computed: {
-              isTodoEditing: () => false,
-            },
-          })
           expect(wrapper.find('span.todo-title').exists()).toBe(true)
         })
 
         it('render "created-at" text', () => {
-          const wrapper = wrapperFactory({
-            computed: {
-              isTodoEditing: () => false,
-            },
-          })
           expect(wrapper.find('span.time').exists()).toBe(true)
         })
       })
 
       describe('todo footer', () => {
         it('render todo item footer', () => {
-          const wrapper = wrapperFactory({
-            computed: {
-              isTodoEditing: () => false,
-            },
-          })
           expect(wrapper.find('div.todo-item__footer').exists()).toBe(true)
         })
 
         it('render @/components/todo/utils/TodoActions.vue', () => {
-          const wrapper = wrapperFactory({
-            computed: {
-              isTodoEditing: () => false,
-            },
-          })
           expect(wrapper.findComponent(TodoActions).exists()).toBe(true)
         })
 
         describe('when todo is completed', () => {
           it('render "completed-at" text', async () => {
-            const wrapper = wrapperFactory({
-              computed: {
-                isTodoEditing: () => false,
-              },
-            })
             await wrapper.setProps({
               todo: {
                 ...todo,
@@ -166,11 +134,6 @@ describe('@/components/todo/TodoItem.vue', () => {
 
         describe('when todo is not completed', () => {
           it('does not render "completed-at" text', async () => {
-            const wrapper = wrapperFactory({
-              computed: {
-                isTodoEditing: () => false,
-              },
-            })
             await wrapper.setProps({
               todo: {
                 ...todo,
@@ -187,21 +150,19 @@ describe('@/components/todo/TodoItem.vue', () => {
     })
 
     describe('when todo is editing', () => {
-      it('does not render todo item if todo not editing', () => {
-        const wrapper = wrapperFactory({
+      let wrapper
+      beforeEach(() => {
+        wrapper = wrapperFactory({
           computed: {
             isTodoEditing: () => true,
           },
         })
+      })
+      it('does not render todo item if todo not editing', () => {
         expect(wrapper.find('div.todo-item').exists()).toBe(false)
       })
 
       it('render @/components/todo/AddTodoCard.vue', () => {
-        const wrapper = wrapperFactory({
-          computed: {
-            isTodoEditing: () => true,
-          },
-        })
         expect(wrapper.findComponent(AddTodoCard).exists()).toBe(true)
       })
     })
