@@ -58,12 +58,11 @@ export const getters = {
   },
   isButtonDisabled: (state) => {
     return (
-      state.isSearching ||
-      state.isTodoListLoading ||
-      state.isTodoAdding ||
-      state.isTodoCompleting ||
-      state.isTodoUpdating ||
-      state.isTodoDeleting
+      state.isSearching || state.isTodoListLoading
+      // state.isTodoAdding ||
+      // state.isTodoCompleting ||
+      // state.isTodoUpdating ||
+      // state.isTodoDeleting
     )
   },
   isTodoAdding: (state) => {

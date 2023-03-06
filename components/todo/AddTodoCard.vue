@@ -14,6 +14,7 @@
           type="text"
           class="add-todo-card__input"
           :placeholder="titlePlaceholder"
+          @keyup.enter.prevent="submitHandler"
           @focus="errorMessage = null"
         />
       </div>
