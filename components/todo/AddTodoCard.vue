@@ -245,7 +245,7 @@ form {
   font-size: 16px;
   font-weight: 500;
   color: #32394b;
-  height: 36px;
+  min-height: 36px;
 }
 
 .error-message {
