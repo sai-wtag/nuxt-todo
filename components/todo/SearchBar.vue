@@ -39,7 +39,7 @@ export default {
   watch: {
     hasSearchKey() {
       if (!this.hasSearchKey) {
-        this.isInputVisible = false
+        this.$refs.searchInputRef.value = ''
       }
     },
   },
