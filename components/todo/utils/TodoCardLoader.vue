@@ -1,6 +1,6 @@
 <template>
   <div class="loader-overlay">
-    <LoaderIcon class="loader-icon" />
+    <LoaderIcon class="loader-icon" :w="iconWidth" :h="iconHeight" />
   </div>
 </template>
 
@@ -11,17 +11,31 @@ export default {
   components: {
     LoaderIcon,
   },
+  props: {
+    isMainLoader: {
+      type: Boolean,
+      default: true,
+    },
+    iconWidth: {
+      type: String,
+      default: '102',
+    },
+    iconHeight: {
+      type: String,
+      default: '102',
+    },
+  },
 }
 </script>
 
 <style lang="scss" scoped>
 @import '@/assets/css/variables';
+@import '@/assets/css/mixins';
 .loader-overlay {
   background: rgba(255, 255, 255, 0.7);
   z-index: 999;
-  height: calc(100% - #{$header-height});
+  height: 100%;
   width: 100%;
-  top: $header-height;
   left: 0%;
 }
 .loader-overlay,

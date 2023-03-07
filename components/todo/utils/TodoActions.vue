@@ -1,6 +1,6 @@
 <template>
   <div class="action-buttons">
-    <div v-if="!todo.isTodoCompleted" class="btn__not-completed">
+    <div v-if="!isTodoCompleted" class="btn__not-completed">
       <span :title="$t('complete')" @click.prevent="completeTodo">
         <CompleteIcon />
       </span>
@@ -16,6 +16,7 @@
 <script>
 import { mapGetters } from 'vuex'
 import toast from '@/utils/toast'
+import { SUCCESS, ERROR } from '@/utils/constants'
 
 import CompleteIcon from '@/icons/CompleteIcon'
 import EditIcon from '@/icons/EditIcon'
@@ -36,22 +37,39 @@ export default {
   },
 
   computed: {
-    ...mapGetters('todos', ['isTodoSearching']),
+    ...mapGetters('todos', ['isButtonDisabled']),
+    isTodoCompleted() {
+      return !!this.todo.completedAt
+    },
   },
 
   methods: {
-    deleteTodo() {
-      if (this.isTodoSearching) return
-      this.$store.dispatch('todos/delete', this.todo.id)
-      toast('success', this.$t('deleted', { item: this.$t('todo') }))
+    async deleteTodo() {
+      if (this.isButtonDisabled) return
+      const { success } = await this.$store.dispatch(
+        'todos/delete',
+        this.todo.id
+      )
+      if (success) {
+        return toast(SUCCESS, this.$t('deleted', { item: this.$t('todo') }))
+      }
+      return toast(ERROR, this.$t('something-went-wrong'))
     },
-    completeTodo() {
-      if (this.isTodoSearching) return
-      this.$store.dispatch('todos/complete', this.todo.id)
-      toast('success', this.$t('completed', { item: this.$t('todo') }))
+
+    async completeTodo() {
+      if (this.isButtonDisabled) return
+      const { success } = await this.$store.dispatch(
+        'todos/complete',
+        this.todo.id
+      )
+      if (success) {
+        return toast(SUCCESS, this.$t('completed', { item: this.$t('todo') }))
+      }
+      return toast(ERROR, this.$t('something-went-wrong'))
     },
+
     editTodo() {
-      if (this.isTodoSearching) return
+      if (this.isButtonDisabled) return
       this.$store.dispatch('todos/setEditableTodo', this.todo.id)
     },
   },
