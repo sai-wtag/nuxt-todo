@@ -16,3 +16,6 @@ export const DE = { code: 'de', name: 'Deutsch', file: 'de.json' }
 
 export const SMALL_DEVICE_WIDTH = 768
 export const MEDIUM_DEVICE_WIDTH = 1024
+
+export const ERROR_SOUND_PATH = '/sounds/error.mp3'
+export const SUCCESS_SOUND_PATH = '/sounds/success.mp3'
