@@ -1,6 +1,11 @@
 import Toastify from 'toastify-js'
 import 'toastify-js/src/toastify.css'
-import { SUCCESS, ERROR } from '@/utils/constants.js'
+import {
+  SUCCESS,
+  ERROR,
+  SUCCESS_SOUND_PATH,
+  ERROR_SOUND_PATH,
+} from '@/utils/constants.js'
 
 const styleProperties = {
   color: '#fff',
@@ -35,6 +40,10 @@ const toast = (type, message) => {
     stopOnFocus: true, // Prevents dismissing of toast on hover
     style: getStyle(type),
   }).showToast()
+
+  const soundUrl = type === SUCCESS ? SUCCESS_SOUND_PATH : ERROR_SOUND_PATH
+  const sound = new Audio(soundUrl)
+  sound.play()
 }
 
 export default toast
