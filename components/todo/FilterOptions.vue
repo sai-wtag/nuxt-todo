@@ -29,10 +29,12 @@
 </template>
 <script>
 import { mapGetters } from 'vuex'
+import { ALL } from '@/utils/constants'
+
 export default {
   name: 'FilterOptions',
   data: () => ({
-    currentTaskState: 'all',
+    currentTaskState: ALL,
   }),
   computed: {
     ...mapGetters('todos', [
