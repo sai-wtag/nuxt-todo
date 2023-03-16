@@ -68,4 +68,8 @@ export default {
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {},
+  env: {
+    DATABASE_URL: process.env.SUPABASE_URL,
+    DATABASE_KEY: process.env.SUPABASE_KEY,
+  },
 }

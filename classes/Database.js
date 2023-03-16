@@ -9,8 +9,8 @@ export default class Database {
     }
 
     this.supabase = createClient(
-      'https://zhsepptcavyowohakieh.supabase.co',
-      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inpoc2VwcHRjYXZ5b3dvaGFraWVoIiwicm9sZSI6ImFub24iLCJpYXQiOjE2NzU0OTE3NzEsImV4cCI6MTk5MTA2Nzc3MX0.SxdLsTGvb6mtyTtqf7zpBkt7IxAVuHvl3r7b3DGVLH8'
+      process.env.DATABASE_URL,
+      process.env.DATABASE_KEY
     )
 
     Database.instance = this
