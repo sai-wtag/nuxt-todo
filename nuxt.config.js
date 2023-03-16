@@ -1,11 +1,5 @@
 export default {
   // Global page headers: https://go.nuxtjs.dev/config-head
-  loading: '~/components/LoadingBar.vue',
-  loadingIndicator: {
-    name: 'circle',
-    color: '#3B8070',
-    background: 'white',
-  },
   head: {
     title: 'Nuxt Todo',
     htmlAttrs: {
@@ -74,4 +68,8 @@ export default {
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {},
+  env: {
+    DATABASE_URL: process.env.SUPABASE_URL,
+    DATABASE_KEY: process.env.SUPABASE_KEY,
+  },
 }

@@ -29,18 +29,27 @@
 </template>
 <script>
 import { mapGetters } from 'vuex'
+import { ALL } from '@/utils/constants'
+
 export default {
   name: 'FilterOptions',
   data: () => ({
-    screenWidth: screen.width,
+    currentTaskState: ALL,
   }),
   computed: {
-    ...mapGetters('todos', ['getTaskStates', 'getCurrentTaskState']),
+    ...mapGetters('todos', [
+      'getTaskStates',
+      'getCurrentTaskState',
+      'isButtonDisabled',
+    ]),
     ...mapGetters(['isMobile']),
   },
+
   methods: {
     setCurrentTaskState(task) {
       if (task instanceof Event) task = task.target.value
+      this.currentTaskState = task
+      if (this.isButtonDisabled) return
       this.$store.dispatch('todos/setCurrentTaskState', task)
     },
   },

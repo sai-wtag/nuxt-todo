@@ -1,8 +1,14 @@
 <template>
   <div class="todo-container">
+    <TodoCardLoader v-if="isTodoSearching" class="loader" />
+
     <span class="todo__add-text">{{ $t('add-task') }}</span>
     <div class="todo__header">
-      <button class="btn__create-task" @click.prevent="setIsCreating">
+      <button
+        class="btn__create-task"
+        :class="lightenClass"
+        @click.prevent="setIsCreating"
+      >
         <PlusIcon />
         <span>{{ $t('create') }}</span>
       </button>
@@ -11,7 +17,7 @@
 
     <div class="card-container">
       <div v-if="isTodoCreating" class="card-item">
-        <AddTodoCard @addTodo="onAddTodo" />
+        <AddTodoCard />
       </div>
 
       <!-- List of todos -->
@@ -26,7 +32,6 @@
 
     <!-- Load more/less todos -->
     <TodoFooter />
-    <TodoCardLoader v-if="isTodoSearching" />
   </div>
 </template>
 <script>
@@ -38,8 +43,6 @@ import TodoNotFound from '@/components/todo/utils/TodoNotFound.vue'
 import TodoFooter from '@/components/todo/utils/TodoFooter.vue'
 import TodoCardLoader from '@/components/todo/utils/TodoCardLoader.vue'
 import PlusIcon from '@/icons/PlusIcon.vue'
-
-import toast from '@/utils/toast'
 
 export default {
   name: 'TodoContainer',
@@ -55,22 +58,31 @@ export default {
   data() {
     return {}
   },
+
   computed: {
-    ...mapGetters('todos', ['isTodoCreating', 'todos', 'isTodoSearching']),
+    ...mapGetters('todos', [
+      'isTodoCreating',
+      'todos',
+      'isTodoSearching',
+      'isButtonDisabled',
+      'isTodoAdding',
+    ]),
     isTodoAvailable() {
       return this.todos.length > 0
     },
     isTodoFound() {
       return this.isTodoAvailable || this.isTodoCreating
     },
-  },
-  methods: {
-    onAddTodo(todo) {
-      this.$store.dispatch('todos/add', todo)
-      toast('success', this.$t('added', { item: this.$t('todo') }))
+    lightenClass() {
+      return {
+        lighten: this.isTodoAdding,
+      }
     },
+  },
+
+  methods: {
     setIsCreating() {
-      if (this.isTodoSearching) return
+      if (this.isButtonDisabled) return
       this.$store.dispatch('todos/setIsCreating')
     },
   },
@@ -146,5 +158,13 @@ $card-padding: 15px;
   line-height: 35.16px;
   color: #32394b;
   overflow-wrap: break-word;
+}
+
+.lighten {
+  opacity: 0.5;
+}
+
+.loader {
+  height: calc(100% - #{$header-height});
 }
 </style>

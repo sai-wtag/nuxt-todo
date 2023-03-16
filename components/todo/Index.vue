@@ -1,11 +1,12 @@
 <template>
-  <SplashScreen v-if="isSplashScreenVisible" />
+  <SplashScreen v-if="isTodoListLoading" />
   <div v-else class="container">
     <TodoHeader />
     <TodoContainer />
   </div>
 </template>
 <script>
+import { mapGetters } from 'vuex'
 import TodoHeader from '@/components/todo/Header.vue'
 import TodoContainer from '@/components/todo/TodoContainer.vue'
 import SplashScreen from '@/components/todo/utils/SplashScreen.vue'
@@ -17,15 +18,11 @@ export default {
     TodoContainer,
     SplashScreen,
   },
-  data() {
-    return {
-      isSplashScreenVisible: true,
-    }
+  computed: {
+    ...mapGetters('todos', ['isTodoListLoading']),
   },
-  mounted() {
-    setTimeout(() => {
-      this.isSplashScreenVisible = false
-    }, 1000)
+  beforeCreate() {
+    this.$store.dispatch('todos/fetchAllTodos')
   },
 }
 </script>

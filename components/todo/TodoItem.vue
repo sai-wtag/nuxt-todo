@@ -1,43 +1,49 @@
 <template>
-  <div v-if="!isTodoEditing" class="todo-item">
-    <div class="todo-item__header">
-      <span
-        class="todo-title"
-        :class="todo.isTodoCompleted ? 'text-line-through' : ''"
-      >
-        {{ todo.title }}
-      </span>
-      <span class="time"
-        >{{ $t('created-at') }}:
-        {{ format(todo.createdAt, 'dd-MMM-yyyy') }}
-      </span>
-    </div>
+  <div class="todo-item-container">
+    <TodoCardLoader v-if="todo.isLoading" icon-width="64" icon-height="64" />
+    <div v-if="!isTodoEditing" class="todo-item">
+      <div class="todo-item__header">
+        <span
+          class="todo-title"
+          :class="isTodoCompleted ? 'text-line-through' : ''"
+          >{{ todo.title }}</span
+        >
+        <span class="time"
+          >{{ $t('created-at') }}:
+          {{ format(parseISO(todo.createdAt), 'dd-MMM-yyyy') }}
+        </span>
+      </div>
 
-    <div class="todo-item__footer">
-      <TodoActions :todo="todo" />
-      <button v-if="todo.isTodoCompleted" class="btn__completed-in">
-        {{ $t('completed-in') }}:
-        {{ getCompletedInTime }}
-      </button>
+      <div class="todo-item__footer">
+        <TodoActions :todo="todo" />
+        <div>
+          <button v-if="isTodoCompleted" class="btn__completed-in">
+            {{ $t('completed-in') }}:
+            {{ getCompletedInTime }}
+          </button>
+        </div>
+      </div>
     </div>
-  </div>
-  <div v-else class="card__add">
-    <AddTodoCard :todo="todo" :is-todo-editing="true" />
+    <div v-else class="card__add">
+      <AddTodoCard :todo="todo" :is-todo-editing="true" />
+    </div>
   </div>
 </template>
 <script>
 import { mapGetters } from 'vuex'
-import { format, formatDistance } from 'date-fns'
+import { format, formatDistance, parseISO } from 'date-fns'
 import { bn, es, fr, it, de } from 'date-fns/locale'
 import { BN, ES, FR, IT, DE } from '@/utils/constants'
 
 import TodoActions from '@/components/todo/utils/TodoActions.vue'
 import AddTodoCard from '@/components/todo/AddTodoCard.vue'
+import TodoCardLoader from '@/components/todo/utils/TodoCardLoader.vue'
 
 export default {
   components: {
     TodoActions,
     AddTodoCard,
+    TodoCardLoader,
   },
   props: {
     todo: {
@@ -50,6 +56,7 @@ export default {
     return {
       format,
       formatDistance,
+      parseISO,
       bn,
       es,
       fr,
@@ -62,11 +69,12 @@ export default {
   },
 
   computed: {
-    ...mapGetters('todos', ['getEditableTodo']),
+    ...mapGetters('todos', ['editingTodo', 'loadingId']),
+    isTodoCompleted() {
+      return !!this.todo.completedAt
+    },
     isTodoEditing() {
-      return this.getEditableTodo
-        ? this.getEditableTodo.id === this.todo.id
-        : false
+      return this.editingTodo ? this.editingTodo.id === this.todo.id : false
     },
     getLocale() {
       let locale
@@ -95,8 +103,8 @@ export default {
     },
     getCompletedInTime() {
       return formatDistance(
-        this.todo.createdAt,
-        this.todo.completedAt,
+        parseISO(this.todo.createdAt),
+        parseISO(this.todo.completedAt),
         this.getLocale
       )
     },
@@ -111,6 +119,12 @@ export default {
   font-weight: 700;
   line-height: 16.41px;
   color: #bbbdd0;
+}
+
+.todo-item-container {
+  position: relative;
+  height: 100%;
+  width: 100%;
 }
 
 .todo-item {

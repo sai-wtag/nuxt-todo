@@ -1,5 +1,11 @@
 <template>
   <div class="add-todo-card">
+    <TodoCardLoader
+      v-if="isTodoCreatingOrUpdating"
+      :is-main-loader="true"
+      icon-width="64"
+      icon-height="64"
+    />
     <form @submit.prevent="submitHandler">
       <div class="add-todo-card__body">
         <textarea
@@ -8,6 +14,7 @@
           type="text"
           class="add-todo-card__input"
           :placeholder="titlePlaceholder"
+          @keyup.enter.prevent="submitHandler"
           @focus="errorMessage = null"
         />
       </div>
@@ -42,12 +49,14 @@ import { SUCCESS, ERROR } from '@/utils/constants'
 
 import CompleteIcon from '@/icons/CompleteIcon'
 import DeleteIcon from '@/icons/DeleteIcon'
+import TodoCardLoader from '@/components/todo/utils/TodoCardLoader.vue'
 
 export default {
   name: 'AddTodoCard',
   components: {
     CompleteIcon,
     DeleteIcon,
+    TodoCardLoader,
   },
   props: {
     isTodoEditing: {
@@ -74,7 +83,18 @@ export default {
   },
 
   computed: {
-    ...mapGetters('todos', ['getEditableTodo', 'isTodoSearching']),
+    ...mapGetters('todos', [
+      'editingTodo',
+      'isButtonDisabled',
+      'isTodoAdding',
+      'isSingleTodoUpdating',
+    ]),
+    isTodoCreatingOrUpdating() {
+      if (this.isTodoEditing) {
+        return this.editingTodo.isLoading
+      }
+      return this.isTodoAdding
+    },
     titlePlaceholder() {
       const addTask = this.$t('add-task')
       const minWord = this.$t('min')
@@ -87,7 +107,7 @@ export default {
   },
   mounted() {
     if (this.isTodoEditing) {
-      this.form.title = this.getEditableTodo.title
+      this.form.title = this.editingTodo.title
     }
     this.$nextTick(() => {
       this.$refs.titleInputRef.focus()
@@ -95,7 +115,9 @@ export default {
   },
   methods: {
     submitHandler(_, shouldCompleteTodo = false) {
-      if (this.isTodoSearching) return
+      if (this.isButtonDisabled) return
+
+      this.sanitizeForm()
 
       const errorMessage = this.checkValidation()
       if (errorMessage) {
@@ -111,31 +133,48 @@ export default {
       this.isTodoEditing ? this.editTodo() : this.addTodo()
     },
 
-    addTodo() {
-      this.$emit('addTodo', this.form)
+    sanitizeForm() {
+      this.form.title = this.form.title.replace(/<[^>]+>/g, '').trim()
+    },
 
+    async addTodo() {
+      const { success } = await this.$store.dispatch('todos/add', this.form)
       this.form.title = ''
+      const item = this.$t('todo')
+      if (success) {
+        return toast(SUCCESS, this.$t('added', { item }))
+      }
+      return toast(ERROR, this.$t('something-went-wrong'))
     },
 
-    editTodo() {
-      this.$store.dispatch('todos/update', {
-        id: this.getEditableTodo.id,
+    async editTodo() {
+      const { success } = await this.$store.dispatch('todos/update', {
+        id: this.editingTodo.id,
         title: this.form.title,
       })
-      toast(SUCCESS, this.$t('updated', { item: this.$t('todo') }))
+      if (success) {
+        return toast(SUCCESS, this.$t('updated', { item: this.$t('todo') }))
+      }
+      return toast(ERROR, this.$t('something-went-wrong'))
     },
 
-    completeAndUpdateTodo() {
-      this.$store.dispatch('todos/completeAndUpdate', {
-        id: this.getEditableTodo.id,
-        title: this.form.title,
-      })
-      toast(SUCCESS, this.$t('completed', { item: this.$t('todo') }))
+    async completeAndUpdateTodo() {
+      const { success } = await this.$store.dispatch(
+        'todos/completeAndUpdate',
+        {
+          id: this.editingTodo.id,
+          title: this.form.title,
+        }
+      )
+      if (success) {
+        return toast(SUCCESS, this.$t('completed', { item: this.$t('todo') }))
+      }
+      return toast(ERROR, this.$t('something-went-wrong'))
     },
 
     deleteCurrentTask() {
-      if (this.isTodoSearching) return
-      this.$store.dispatch('todos/deleteCurrentTask')
+      if (this.isButtonDisabled) return
+      this.$store.dispatch('todos/deleteCurrentTask', this.isTodoEditing)
     },
 
     checkValidation() {
@@ -170,9 +209,11 @@ export default {
 $card-padding: 10px;
 $button-gap: 15px;
 .add-todo-card {
+  position: relative;
   height: 100%;
 }
 form {
+  width: 100%;
   height: 100%;
   @include flex(column, nowrap, space-between, stretch, 0);
 }
@@ -205,7 +246,7 @@ form {
   font-size: 16px;
   font-weight: 500;
   color: #32394b;
-  height: 36px;
+  min-height: 36px;
 }
 
 .error-message {

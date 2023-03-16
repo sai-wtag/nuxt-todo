@@ -31,7 +31,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters('todos', ['searchKey']),
+    ...mapGetters('todos', ['isButtonDisabled', 'searchKey']),
     hasSearchKey() {
       return this.searchKey.length > 0
     },
@@ -39,7 +39,7 @@ export default {
   watch: {
     hasSearchKey() {
       if (!this.hasSearchKey) {
-        this.isInputVisible = false
+        this.$refs.searchInputRef.value = ''
       }
     },
   },
@@ -55,6 +55,7 @@ export default {
     }, 500),
 
     searchTasks(event) {
+      if (this.isButtonDisabled) return
       this.setSearchStatus()
       this.debounceSearchTasks(event.target.value)
     },
