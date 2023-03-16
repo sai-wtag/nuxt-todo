@@ -50,6 +50,12 @@ describe('@/components/todo/AddTodoCard.vue', () => {
   })
 
   describe('Form tests', () => {
+    beforeEach(() => {
+      jest.spyOn(HTMLAudioElement.prototype, 'play')
+      const playMock = jest.fn()
+      HTMLAudioElement.prototype.play = playMock
+    })
+
     describe('clicks submit button', () => {
       it(`calls 'submitHandler'`, async () => {
         const wrapper = wrapperFactory()
