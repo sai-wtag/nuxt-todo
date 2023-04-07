@@ -35,7 +35,7 @@ export default {
 @import '@/assets/css/variables';
 .todo-footer {
   button {
-    margin: 5px;
+    margin: 10px 0;
     height: 36px;
     padding: 5px 10px;
     border: $border-1;
